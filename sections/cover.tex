@@ -1,43 +1,66 @@
-\begin{center}
-    
-    \includegraphics[width=3.5cm]{figures/logo_utpl.jpg} % Asegúrate de tener el logo
-    
-    \vspace{1cm}
-    
-    {\Large \textbf{UNIVERSIDAD TÉCNICA PARTICULAR DE LOJA}}\\
-    {\large \textit{La Universidad Católica de Loja}}
-    
-    \vspace{1cm}
-    
-    {\large \textbf{FACULTAD DE XXXXXXX}}
-    
-    \vspace{1cm}
-    
-    {\large \textbf{MAESTRÍA EN XXXXXXXX}}
-    
-    \vspace{1cm}
-    
-    {\Large \textbf{Xxxxx xxxx xxxxxx xxxx}}
-    
-    \vspace{1cm}
-    
-    {\large Trabajo de titulación previo a la obtención del título de:}
-    
-    \vspace{1cm}
-    
-    {\large \textbf{XXXXXXX XXXXXXX}}
-    
-    \vspace{2cm}
-    
-    \begin{flushleft}
-    \hspace{3cm}{\large \textbf{Autor:} Apellido1 Apellido2, Nombre1 Nombre2}\\
-    \vspace{0.5cm}
-    \hspace{3cm}{\large \textbf{Director:} Apellido1 Apellido2, Nombre1 Nombre2}
-    \end{flushleft}
-    
-    \vfill
-    
-    {\large LOJA}\\
-    {\large 2025}
-    
-    \end{center}
+\newcommand{\UTPLmotto}[1]{%
+  {\bellmt\fontsize{16}{19.2}\itshape #1\par}%
+}
+
+\newcommand{\UTPLfaculty}{FACULTAD DE XXXXXXX}
+\newcommand{\UTPLdegree}{MAESTRÍA EN XXXXXXXX}
+\newcommand{\UTPLtitle}{Xxxxx xxxx xxxxxx xxxx}
+
+\newcommand{\UTPLauthor}{Apellido1 Apellido2, Nombre1 Nombre2}
+\newcommand{\UTPLadvisor}{Apellido1 Apellido2, Nombre1 Nombre2}
+
+\newcommand{\UTPLcity}{LOJA}
+\newcommand{\UTPLyear}{2025}
+
+
+\begin{titlepage}
+  \centering
+
+  % --- Logotipo ---
+  \includegraphics[width=3.5cm]{figures/logo_utpl.jpg}\par
+  \vspace{1cm}
+
+  % --- Nombre de la universidad ---
+  {\fontsize{18}{21.6}\bfseries\MakeUppercase{Universidad Técnica Particular de Loja}\par}
+
+  % --- Lema ---
+  \UTPLmotto{La Universidad Católica de Loja}
+
+  \vspace{1cm}
+
+  % --- Facultad y programa ---
+  {\fontsize{18}{21.6}\bfseries\MakeUppercase{\UTPLfaculty}\par}
+  \vspace{1cm}
+  {\fontsize{18}{21.6}\bfseries\MakeUppercase{\UTPLdegree}\par}
+
+  \vspace{1cm}
+
+  % --- Título de tesis ---
+  {\fontsize{16}{19.2}\bfseries \UTPLtitle\par}
+
+  \vspace{1cm}
+
+  {\fontsize{12}{14.4}\selectfont Trabajo de titulación previo a la obtención del título de:\par}
+  \vspace{1cm}
+
+  {\fontsize{18}{21.6}\bfseries\MakeUppercase{XXXXXXX XXXXXXX}\par}
+
+  \vspace{1cm}
+
+  % --- Autor y director (tabla sin líneas) ---
+  \raggedright
+  {\fontsize{12}{24}\selectfont\bfseries Autor:}
+  {\fontsize{12}{24}\selectfont \UTPLauthor}\par
+
+  {\fontsize{12}{24}\selectfont\bfseries Director:}
+  {\fontsize{12}{24}\selectfont \UTPLadvisor}\par
+
+
+  \centering
+
+  \vfill
+
+  % --- Ciudad y año ---
+  {\fontsize{12}{14.4}\MakeUppercase{\UTPLcity}\par}
+  {\fontsize{12}{14.4}\UTPLyear\par}
+\end{titlepage}
