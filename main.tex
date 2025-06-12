@@ -1,11 +1,12 @@
 % main.tex - Archivo principal de la tesis UTPL
-\documentclass[12pt,a4paper]{report}
+\documentclass[11pt,a4paper]{report}
 
 % Paquetes necesarios
 \usepackage[utf8]{inputenc}
 \usepackage[spanish,es-tabla]{babel}
 \usepackage[margin=2.54cm]{geometry} % Márgenes de 2.54cm
-\usepackage{times} % Fuente similar a Arial
+% Arial no disponible en LaTeX, usar fuente sans-serif más similar
+\usepackage{cmbright} % Fuente sans-serif clara
 \usepackage{setspace} % Control de interlineado
 \usepackage{graphicx} % Para incluir imágenes
 \usepackage{fancyhdr} % Para encabezados y pies de página
@@ -27,12 +28,8 @@
 % Configuración de bibliografía
 \addbibresource{references.bib}
 
-% Configuración de fuente (Arial no está disponible, usamos helvet que es similar)
-\usepackage{helvet}
+% Configuración de fuente Arial 11pt (usando cmbright como equivalente)
 \renewcommand{\familydefault}{\sfdefault}
-
-% Configuración del tamaño de fuente (11pt equivalente)
-\usepackage[fontsize=11pt]{scrextend}
 
 % Configuración de interlineado
 \doublespacing % Interlineado doble
@@ -49,33 +46,38 @@
 \fancyhead[R]{\thepage} % Número de página en esquina superior derecha
 \renewcommand{\headrulewidth}{0pt} % Sin línea en encabezado
 
-% Configuración de formato de títulos según tabla del documento
+% Configuración de formato de títulos según FORMAT.md
+% Nivel 1: Bold, 14-18pt, UPPERCASE, centrado, sin numeración
 \titleformat{\chapter}[display]
-{\normalfont\bfseries\centering\doublespacing}{\chaptertitlename\ \thechapter}{0pt}{\MakeUppercase}
+{\normalfont\bfseries\centering\fontsize{16}{19.2}\selectfont}{}{0pt}{\MakeUppercase}
 \titlespacing*{\chapter}{0pt}{-30pt}{20pt}
 
+% Nivel 2: Bold, 11pt, izquierda, sin numeración
 \titleformat{\section}
-{\normalfont\bfseries\raggedright\doublespacing}{\thesection}{1em}{}
-\titlespacing*{\section}{0pt}{12pt}{12pt}
+{\normalfont\bfseries\raggedright}{}{0pt}{}
+\titlespacing*{\section}{0pt}{0pt}{0pt}
 
+% Nivel 3: Bold Italic, 11pt, izquierda, sin numeración
 \titleformat{\subsection}
-{\normalfont\bfseries\itshape\raggedright\doublespacing}{\thesubsection}{1em}{}
-\titlespacing*{\subsection}{0pt}{12pt}{12pt}
+{\normalfont\bfseries\itshape\raggedright}{}{0pt}{}
+\titlespacing*{\subsection}{0pt}{0pt}{0pt}
 
+% Nivel 4: Bold, sangría 1.27cm, inline con punto
 \titleformat{\subsubsection}[runin]
-{\normalfont\bfseries\doublespacing}{\thesubsubsection}{1em}{}[.]
-\titlespacing*{\subsubsection}{\parindent}{12pt}{1em}
+{\normalfont\bfseries}{}{0pt}{}[.]
+\titlespacing*{\subsubsection}{\parindent}{0pt}{1em}
 
+% Nivel 5: Bold Italic, sangría 1.27cm, inline con punto
 \titleformat{\paragraph}[runin]
-{\normalfont\bfseries\itshape\doublespacing}{\theparagraph}{1em}{}[.]
-\titlespacing*{\paragraph}{\parindent}{12pt}{1em}
+{\normalfont\bfseries\itshape}{}{0pt}{}[.]
+\titlespacing*{\paragraph}{\parindent}{0pt}{1em}
 
-% Configuración de captions para tablas y figuras
+% Configuración de captions para tablas y figuras (Arial 10pt)
 \captionsetup{
-    font={small,doublespacing},
+    font={footnotesize,doublespacing},
     labelfont=bf,
     textfont=it,
-    justification=raggedright,
+    justification=centering,
     singlelinecheck=false
 }
 
@@ -90,12 +92,23 @@
     \addtocounter{page}{1}
 }
 
+% Comando para eliminar sangría (para secciones preliminares)
+\newcommand{\noindentpages}{%
+    \setlength{\parindent}{0pt}
+}
+
+% Comando para restaurar sangría (desde Introducción)
+\newcommand{\restoreindent}{%
+    \setlength{\parindent}{1.27cm}
+}
+
 % Documento principal
 \begin{document}
 
-% Páginas preliminares con números romanos
+% Páginas preliminares con números romanos (sin sangría)
 \pagenumbering{roman}
 \setcounter{page}{1}
+\noindentpages
 
 % Carátula (sin numerar pero contada)
 \unnumberedpage
@@ -130,7 +143,7 @@
 \listoffigures
 \clearpage
 
-% Cambio a números arábigos desde el resumen
+% Cambio a números arábigos desde el resumen (sin sangría aún)
 \pagenumbering{arabic}
 \setcounter{page}{1}
 
@@ -142,7 +155,8 @@
 \input{sections/abstract}
 \clearpage
 
-% Introducción
+% Introducción (restaurar sangría desde aquí)
+\restoreindent
 \input{sections/introduction}
 \clearpage
 
@@ -165,8 +179,8 @@
 \clearpage
 
 % Referencias
-% \printbibliography[heading=bibintoc,title={Referencias}]
-% \clearpage
+\printbibliography[heading=bibintoc,title={Referencias}]
+\clearpage
 
 
 \end{document}
