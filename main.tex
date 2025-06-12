@@ -1,12 +1,8 @@
-% main.tex - Archivo principal de la tesis UTPL
 \documentclass[11pt,a4paper]{report}
 
 % Paquetes necesarios
-\usepackage[utf8]{inputenc}
 \usepackage[spanish,es-tabla]{babel}
 \usepackage[margin=2.54cm]{geometry} % Márgenes de 2.54cm
-% Arial no disponible en LaTeX, usar fuente sans-serif más similar
-\usepackage{cmbright} % Fuente sans-serif clara
 \usepackage{setspace} % Control de interlineado
 \usepackage{graphicx} % Para incluir imágenes
 \usepackage{fancyhdr} % Para encabezados y pies de página
@@ -28,8 +24,14 @@
 % Configuración de bibliografía
 \addbibresource{references.bib}
 
-% Configuración de fuente Arial 11pt (usando cmbright como equivalente)
-\renewcommand{\familydefault}{\sfdefault}
+% Configuración de fuente Arial 11pt
+% Para usar Arial real, compila con XeLaTeX en lugar de pdfLaTeX
+\usepackage{fontspec}
+\setmainfont{Arial}
+\setsansfont{Arial}
+
+% Alternativa para pdfLaTeX (comentar las líneas de arriba):
+% \renewcommand{\familydefault}{\sfdefault}
 
 % Configuración de interlineado
 \doublespacing % Interlineado doble
@@ -72,9 +74,10 @@
 {\normalfont\bfseries\itshape}{}{0pt}{}[.]
 \titlespacing*{\paragraph}{\parindent}{0pt}{1em}
 
-% Configuración de captions para tablas y figuras (Arial 10pt)
+% Configuración de captions para tablas y figuras (Arial 10pt exacto)
+\DeclareCaptionFont{arial10}{\fontsize{10}{12}\selectfont}
 \captionsetup{
-    font={footnotesize,doublespacing},
+    font={arial10,doublespacing},
     labelfont=bf,
     textfont=it,
     justification=centering,
