@@ -1,4 +1,172 @@
-\documentclass{article}
+% main.tex - Archivo principal de la tesis UTPL
+\documentclass[12pt,a4paper]{report}
+
+% Paquetes necesarios
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[margin=2.54cm]{geometry} % Márgenes de 2.54cm
+\usepackage{times} % Fuente similar a Arial
+\usepackage{setspace} % Control de interlineado
+\usepackage{graphicx} % Para incluir imágenes
+\usepackage{fancyhdr} % Para encabezados y pies de página
+\usepackage{titlesec} % Para formato de títulos
+\usepackage{tocloft} % Para personalizar índices
+\usepackage{indentfirst} % Sangría en primer párrafo
+\usepackage{hyperref} % Enlaces en el PDF
+\usepackage{float} % Para posicionamiento de figuras
+\usepackage{caption} % Para personalizar captions
+\usepackage{subcaption} % Para subfiguras
+\usepackage{array} % Para tablas
+\usepackage{booktabs} % Para tablas profesionales
+\usepackage{multirow} % Para celdas multirow en tablas
+\usepackage{amsmath} % Para matemáticas
+\usepackage{csquotes} % Para citas
+\usepackage[style=apa,backend=biber]{biblatex} % Para bibliografía APA 7
+\usepackage{appendix} % Para apéndices
+
+% Configuración de bibliografía
+\addbibresource{references.bib}
+
+% Configuración de fuente (Arial no está disponible, usamos helvet que es similar)
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+% Configuración del tamaño de fuente (11pt equivalente)
+\usepackage[fontsize=11pt]{scrextend}
+
+% Configuración de interlineado
+\doublespacing % Interlineado doble
+
+% Configuración de sangría
+\setlength{\parindent}{1.27cm} % Sangría de primera línea
+
+% Configuración de espaciado entre párrafos
+\setlength{\parskip}{0pt} % Sin espacio extra entre párrafos
+
+% Configuración de numeración de páginas
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\thepage} % Número de página en esquina superior derecha
+\renewcommand{\headrulewidth}{0pt} % Sin línea en encabezado
+
+% Configuración de formato de títulos según tabla del documento
+\titleformat{\chapter}[display]
+{\normalfont\bfseries\centering\doublespacing}{\chaptertitlename\ \thechapter}{0pt}{\MakeUppercase}
+\titlespacing*{\chapter}{0pt}{-30pt}{20pt}
+
+\titleformat{\section}
+{\normalfont\bfseries\raggedright\doublespacing}{\thesection}{1em}{}
+\titlespacing*{\section}{0pt}{12pt}{12pt}
+
+\titleformat{\subsection}
+{\normalfont\bfseries\itshape\raggedright\doublespacing}{\thesubsection}{1em}{}
+\titlespacing*{\subsection}{0pt}{12pt}{12pt}
+
+\titleformat{\subsubsection}[runin]
+{\normalfont\bfseries\doublespacing}{\thesubsubsection}{1em}{}[.]
+\titlespacing*{\subsubsection}{\parindent}{12pt}{1em}
+
+\titleformat{\paragraph}[runin]
+{\normalfont\bfseries\itshape\doublespacing}{\theparagraph}{1em}{}[.]
+\titlespacing*{\paragraph}{\parindent}{12pt}{1em}
+
+% Configuración de captions para tablas y figuras
+\captionsetup{
+    font={small,doublespacing},
+    labelfont=bf,
+    textfont=it,
+    justification=raggedright,
+    singlelinecheck=false
+}
+
+% Configuración de índices
+\renewcommand{\contentsname}{Índice de contenido}
+\renewcommand{\listtablename}{Índice de tablas}
+\renewcommand{\listfigurename}{Índice de figuras}
+
+% Comando para páginas sin numeración pero contadas
+\newcommand{\unnumberedpage}{%
+    \thispagestyle{empty}
+    \addtocounter{page}{1}
+}
+
+% Documento principal
 \begin{document}
-Hola Mundo ss
+
+% Páginas preliminares con números romanos
+\pagenumbering{roman}
+\setcounter{page}{1}
+
+% Carátula (sin numerar pero contada)
+\unnumberedpage
+\input{sections/cover}
+\clearpage
+
+% Aprobación del director
+\input{sections/approval}
+\clearpage
+
+% Declaración de autoría
+\input{sections/authorship}
+\clearpage
+
+% Dedicatoria
+\input{sections/dedication}
+\clearpage
+
+% Agradecimiento
+\input{sections/thanks}
+\clearpage
+
+% Índice de contenido
+\tableofcontents
+\clearpage
+
+% Índice de tablas
+\listoftables
+\clearpage
+
+% Índice de figuras
+\listoffigures
+\clearpage
+
+% Cambio a números arábigos desde el resumen
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% Resumen
+\input{sections/summary}
+\clearpage
+
+% Abstract
+\input{sections/abstract}
+\clearpage
+
+% Introducción
+\input{sections/introduction}
+\clearpage
+
+% Capítulos
+\input{chapters/chapter1}
+\clearpage
+
+\input{chapters/chapter2}
+\clearpage
+
+\input{chapters/chapter3}
+\clearpage
+
+% Conclusiones
+\input{sections/conclusions}
+\clearpage
+
+% Recomendaciones
+\input{sections/recommendations}
+\clearpage
+
+% Referencias
+\printbibliography[heading=bibintoc,title={Referencias}]
+\clearpage
+
+
 \end{document}
