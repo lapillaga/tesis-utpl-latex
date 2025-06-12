@@ -1,6 +1,12 @@
 \documentclass[11pt,a4paper]{report}
 
 % Paquetes necesarios
+
+% Configuración de fuente Arial 11pt
+% Para usar Arial real, compila con XeLaTeX en lugar de pdfLaTeX
+\usepackage{fontspec}
+\setmainfont{Arial}
+
 \usepackage[spanish,es-tabla]{babel}
 \usepackage[margin=2.54cm]{geometry} % Márgenes de 2.54cm
 \usepackage{setspace} % Control de interlineado
@@ -23,15 +29,6 @@
 
 % Configuración de bibliografía
 \addbibresource{references.bib}
-
-% Configuración de fuente Arial 11pt
-% Para usar Arial real, compila con XeLaTeX en lugar de pdfLaTeX
-\usepackage{fontspec}
-\setmainfont{Arial}
-\setsansfont{Arial}
-
-% Alternativa para pdfLaTeX (comentar las líneas de arriba):
-% \renewcommand{\familydefault}{\sfdefault}
 
 % Configuración de interlineado
 \doublespacing % Interlineado doble
