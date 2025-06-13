@@ -97,6 +97,19 @@
 \renewcommand{\listtablename}{Índice de tablas}
 \renewcommand{\listfigurename}{Índice de figuras}
 
+% Configuración del formato del título del índice
+\makeatletter
+\renewcommand\tableofcontents{%
+    \chapter*{\centering\normalfont\bfseries\fontsize{11}{13.2}\selectfont\contentsname}%
+    \@mkboth{\MakeUppercase\contentsname}{\MakeUppercase\contentsname}%
+    \@starttoc{toc}%
+}
+\makeatother
+
+% Configuración de puntitos (leaders) para todos los niveles
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+\setlength{\cftbeforechapskip}{0pt}
+
 % Comando para páginas sin numeración pero contadas
 \newcommand{\unnumberedpage}{%
     \thispagestyle{empty}
@@ -127,6 +140,7 @@
 \noindentpages
 
 % Aprobación del director (primera página numerada)
+\addcontentsline{toc}{chapter}{Carátula}
 \input{sections/approval}
 \clearpage
 
