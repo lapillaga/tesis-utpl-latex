@@ -49,10 +49,17 @@
 \fancyhead[R]{\thepage} % Número de página en esquina superior derecha
 \renewcommand{\headrulewidth}{0pt} % Sin línea en encabezado
 
+% Forzar el estilo fancy en todas las páginas
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \fancyhead[R]{\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+}
+
 % Configuración de formato de títulos según FORMAT.md
-% Nivel 1: Bold, 14-18pt, UPPERCASE, centrado, sin numeración
+% Nivel 1: Bold, 11pt, Arial, centrado, sin numeración
 \titleformat{\chapter}[display]
-{\normalfont\bfseries\centering\fontsize{16}{19.2}\selectfont}{}{0pt}{\MakeUppercase}
+{\normalfont\bfseries\centering\fontsize{11}{13.2}\selectfont}{}{0pt}{}
 \titlespacing*{\chapter}{0pt}{-30pt}{20pt}
 
 % Nivel 2: Bold, 11pt, izquierda, sin numeración
@@ -109,17 +116,17 @@
 % Documento principal
 \begin{document}
 
-% Páginas preliminares con números romanos (sin sangría)
-\pagenumbering{roman}
-\setcounter{page}{1}
-\noindentpages
-
-% Carátula (sin numerar pero contada)
-\unnumberedpage
+% Carátula (sin numerar)
+\thispagestyle{empty}
 \input{sections/cover}
 \clearpage
 
-% Aprobación del director
+% Páginas preliminares con números romanos en mayúsculas (sin sangría)
+\pagenumbering{Roman}
+\setcounter{page}{1}
+\noindentpages
+
+% Aprobación del director (primera página numerada)
 \input{sections/approval}
 \clearpage
 
