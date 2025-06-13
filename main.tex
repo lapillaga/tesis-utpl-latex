@@ -62,9 +62,29 @@
 }
 
 % Configuración de formato de títulos según FORMAT.md
-% Nivel 1: Bold, 11pt, Arial, centrado, sin numeración
+% Definir números de capítulos en palabras
+\makeatletter
+\newcommand{\chapterwordnumber}{%
+  \ifcase\value{chapter}%
+    \or uno%
+    \or dos%
+    \or tres%
+    \or cuatro%
+    \or cinco%
+    \or seis%
+    \or siete%
+    \or ocho%
+    \or nueve%
+    \or diez%
+  \fi%
+}
+\makeatother
+
+% Nivel 1: Bold, 11pt, Arial, centrado, con "CAPÍTULO [NÚMERO]" en línea separada
 \titleformat{\chapter}[display]
-{\normalfont\bfseries\centering\fontsize{11}{13.2}\selectfont}{}{0pt}{}
+{\normalfont\bfseries\centering\fontsize{11}{13.2}\selectfont}
+{Capítulo \chapterwordnumber}
+{11pt}{}
 \titlespacing*{\chapter}{0pt}{-30pt}{20pt}
 
 % Nivel 2: Bold, 11pt, izquierda, con numeración
