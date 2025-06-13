@@ -1,3 +1,5 @@
+---
+
 # UTPL Thesis Formatting Guide (Quick Reference)
 
 > Summarised from *Consideraciones generales para aplicar en el Trabajo de Titulación* — Biblioteca UTPL. Use this as a checklist for automated format validation.
@@ -28,32 +30,43 @@
 
 ---
 
-## 3 · Heading Hierarchy & Typography
+## 3 · Heading Levels & Paragraph Rules
 
-| Level | Example                 | Style                             | Alignment | Terminates            |
-| ----- | ----------------------- | --------------------------------- | --------- | --------------------- |
-| 1     | *Capítulo Uno*          | **Bold**, 14‑18 pt, UPPERCASE     | Centred   | *(no period)*         |
-| 2     | *Marco teórico*         | **Bold**, 11 pt                   | Left      | *(no period)*         |
-| 3     | *Aprendizaje profundo*  | **Bold Italic**, 11 pt            | Left      | *(no period)*         |
-| 4     | *Métodos supervisados.* | **Bold**, indented 1.27 cm        | Inline    | `.` then text follows |
-| 5     | *Algoritmo SVM.*        | **Bold Italic**, indented 1.27 cm | Inline    | `.` then text follows |
+### 3.1 Tabla de niveles de título
 
-**Rules**
+| Nivel | Ejemplo de título         | Estilo de título                                                    | Ubicación / Continuación                       |
+| ----- | ------------------------- | ------------------------------------------------------------------- | ---------------------------------------------- |
+| 1     | *Capítulo uno*            | Centrado, **negrita**, 11 pt, UPPERCASE                             | Texto inicia en un nuevo párrafo con sangría   |
+| 2     | *Tema*                    | Alineado a la izquierda, **negrita**, 11 pt                         | Texto inicia en un nuevo párrafo con sangría   |
+| 3     | *Subtema*                 | Alineado a la izquierda, **negrita cursiva**, 11 pt                 | Texto inicia en un nuevo párrafo con sangría   |
+| 4     | *Título de cuarto nivel.* | Sangría 1.27 cm, **negrita**, 11 pt, finaliza con punto (.)         | Texto continúa en la misma línea tras el punto |
+| 5     | *Título de quinto nivel.* | Sangría 1.27 cm, **negrita cursiva**, 11 pt, finaliza con punto (.) | Texto continúa en la misma línea tras el punto |
 
-* Never prefix headings with numbers, letters, or bullets.
-* Never insert blank lines before/after a heading (even at page breaks).
+### 3.2 Otros lineamientos
+
+* **Tablas y figuras:** centradas; **Tabla/Figura N** en negrita, título en *cursiva*; **Nota.** alineada a la izquierda en Arial 10 pt (ver pp. 5‑6).
+* **Apéndices:** etiquetar secuencialmente (Apéndice A, B, C…). Las tablas/figuras dentro siguen la misma letra (Tabla A1, Figura A1) y **no** se incluyen en los índices principales.
+* **Número de páginas:** colocar en la esquina superior derecha. Páginas preliminares = números romanos (la carátula se cuenta pero no se imprime); desde **Resumen** = números arábigos iniciando en 1.
+
+**Reglas generales**
+
+* No se anteponen números, letras ni viñetas a los títulos.
+* No se agregan líneas en blanco antes o después de un título, incluso si coincide con un salto de página.
+
+<details>
+<summary>Markdown example</summary>
 
 ```markdown
-# Capítulo Uno
-## Marco teórico
+# Capítulo uno
+## Introducción
 ### Aprendizaje profundo
-    #### Métodos supervisados. El aprendizaje...
-        ##### Algoritmo SVM. Su aplicación...
+#### Métodos supervisados. El aprendizaje...
+##### Algoritmo SVM. Su aplicación...
 ```
 
----
+</details>
 
-## 4 · Carátula (Cover Page)
+## 4 · Carátula (Cover Page) · Carátula (Cover Page)
 
 * Main headings (University, Faculty, Degree): **Arial 18 pt, bold, UPPERCASE, centred**.
 * Motto lines: Bell MT 16 pt, *italic*, centred.
@@ -71,10 +84,10 @@
    * **Table/Figure N** (bold)
    * *Title in italics*
 3. Use Arial 10 pt for captions and content.
-4. **Nota.** (italic word) left‑aligned below the object, double‑spaced.
+4. **Nota.** (italic) left‑aligned below the object, double‑spaced.
 5. Cite sources or copyright when not self‑created.
 
-> *Example*
+> **Example**
 > **Tabla 1** *Distribución de acceso a Internet*
 > *(table here)*
 > *Nota.* Adaptado de Rojas (2019).
@@ -92,7 +105,7 @@
 7. **Resumen** (≤ 180 words) + *Palabras clave* (max 3)
 8. **Abstract** + *Keywords*
 9. **Introducción** (≤ 2 pages)
-10. Capítulos 1‑n (Marco teórico, Metodología, Resultados)
+10. Capítulos 1‑n (Marco teórico, Metodología, Resultados)
 11. **Conclusiones** (new page)
 12. **Recomendaciones** (new page)
 13. **Referencias**
@@ -110,7 +123,7 @@
 
 ### 7.2 Introducción
 
-* Arial 11 pt, double‑spaced, justified, **first‑line indent 1.27 cm**.
+* Arial 11 pt, double‑spaced, justified, **first‑line indent 1.27 cm**.
 * Summarise problem, objectives, methodology, chapter outline, and significance in ≤ 2 pages.
 
 ### 7.3 Conclusiones & Recomendaciones
@@ -121,7 +134,7 @@
 ### 7.4 Referencias
 
 * APA 7 format, alphabetical order.
-* Hanging indent 1.27 cm.
+* Hanging indent 1.27 cm.
 * Double‑spaced, Arial 11 pt.
 * Shorten URLs with Bitly.
 
@@ -141,6 +154,9 @@
 * [ ] References use APA 7 + hanging indent; links shortened.
 * [ ] PDF verified after library corrections; re‑sent to **[bbc\_revision@utpl.onmicrosoft.com](mailto:bbc_revision@utpl.onmicrosoft.com)**.
 
+## 9 Capítulos, temas y subtemas
+El desarrollo  de  los  capítulos,  temas  y subtemas se presenta  en cada  uno  de los capítulos desarrollados; para la numeración de éstas páginas se utilizan números arábigos (1, 2, 3....). 
+En el desarrollo de los capítulos se debe presentar marco teórico (estado del arte), diseño metodológico, análisis e interpretación de resultados.
 ---
 
-*(Generated for LLM ingestion — last updated 2025‑06‑12)*
+*(Last updated: 2025‑06‑13)*

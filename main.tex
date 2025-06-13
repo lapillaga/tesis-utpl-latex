@@ -67,14 +67,14 @@
 {\normalfont\bfseries\centering\fontsize{11}{13.2}\selectfont}{}{0pt}{}
 \titlespacing*{\chapter}{0pt}{-30pt}{20pt}
 
-% Nivel 2: Bold, 11pt, izquierda, sin numeración
+% Nivel 2: Bold, 11pt, izquierda, con numeración
 \titleformat{\section}
-{\normalfont\bfseries\raggedright}{}{0pt}{}
+{\normalfont\bfseries\raggedright}{\thesection\quad}{0pt}{}
 \titlespacing*{\section}{0pt}{0pt}{0pt}
 
-% Nivel 3: Bold Italic, 11pt, izquierda, sin numeración
+% Nivel 3: Bold Italic, 11pt, izquierda, con numeración
 \titleformat{\subsection}
-{\normalfont\bfseries\itshape\raggedright}{}{0pt}{}
+{\normalfont\bfseries\itshape\raggedright}{\thesubsection\quad}{0pt}{}
 \titlespacing*{\subsection}{0pt}{0pt}{0pt}
 
 % Nivel 4: Bold, sangría 1.27cm, inline con punto
@@ -220,8 +220,6 @@
 \input{chapters/chapter2}
 \clearpage
 
-\input{chapters/chapter3}
-\clearpage
 
 % Conclusiones
 \input{sections/conclusions}
