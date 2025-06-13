@@ -1,13 +1,14 @@
 \newcommand{\UTPLmotto}[1]{%
-  {\bellmt\fontsize{16}{19.2}\itshape #1\par}%
+  {\bellmt\fontsize{16}{19.2}\itshape #1}%
 }
 
-\newcommand{\UTPLfaculty}{FACULTAD DE XXXXXXX}
-\newcommand{\UTPLdegree}{MAESTRÍA EN XXXXXXXX}
-\newcommand{\UTPLtitle}{Xxxxx xxxx xxxxxx xxxx}
+\newcommand{\UTPLfaculty}{FACULTAD DE INGENIERÍAS Y ARQUITECTURA}
+\newcommand{\UTPLdegree}{MAESTRÍA EN INTELIGENCIA ARTIFICIAL APLICADA}
+\newcommand{\UTPLtitle}{Desarrollo de un prototipo móvil para la lectura de medidores de agua
+potable usando técnicas de procesamiento de imágenes}
 
-\newcommand{\UTPLauthor}{Apellido1 Apellido2, Nombre1 Nombre2}
-\newcommand{\UTPLadvisor}{Apellido1 Apellido2, Nombre1 Nombre2}
+\newcommand{\UTPLauthor}{Pillaga Zhagñay, Luis Antonio}
+\newcommand{\UTPLadvisor}{Riofrio Calderón, Guido Eduardo}
 
 \newcommand{\UTPLcity}{LOJA}
 \newcommand{\UTPLyear}{2025}
@@ -17,11 +18,11 @@
   \centering
 
   % --- Logotipo ---
-  \includegraphics[width=3.5cm]{figures/logo_utpl.jpg}\par
-  \vspace{1cm}
+  \includegraphics[width=3.5cm]{figures/logo_utpl.jpg}
+  \vspace{1.5cm}
 
   % --- Nombre de la universidad ---
-  {\fontsize{18}{21.6}\bfseries\MakeUppercase{Universidad Técnica Particular de Loja}\par}
+  {\fontsize{18}{21.6}\bfseries\MakeUppercase{Universidad Técnica Particular de Loja}}
 
   % --- Lema ---
   \UTPLmotto{La Universidad Católica de Loja}
@@ -29,32 +30,34 @@
   \vspace{1cm}
 
   % --- Facultad y programa ---
-  {\fontsize{18}{21.6}\bfseries\MakeUppercase{\UTPLfaculty}\par}
-  \vspace{1cm}
-  {\fontsize{18}{21.6}\bfseries\MakeUppercase{\UTPLdegree}\par}
+  {\fontsize{18}{21.6}\bfseries\MakeUppercase{\UTPLfaculty}}
+  
+  \vspace{0.5cm}
+
+  {\fontsize{16}{19.2}\bfseries\MakeUppercase{\UTPLdegree}}
 
   \vspace{1cm}
 
   % --- Título de tesis ---
-  {\fontsize{16}{19.2}\bfseries \UTPLtitle\par}
+  {\fontsize{16}{19.2}\bfseries \UTPLtitle}
 
   \vspace{1cm}
 
-  {\fontsize{12}{14.4}\selectfont Trabajo de titulación previo a la obtención del título de:\par}
+  Trabajo de titulación previo a la obtención del título de:
+
   \vspace{1cm}
 
-  {\fontsize{18}{21.6}\bfseries\MakeUppercase{XXXXXXX XXXXXXX}\par}
+  {\fontsize{16}{19.2}\bfseries\MakeUppercase{Magíster en Inteligencia Artificial Aplicada}}
 
   \vspace{1cm}
 
   % --- Autor y director (tabla sin líneas) ---
   \raggedright
   {\fontsize{12}{24}\selectfont\bfseries Autor:}
-  {\fontsize{12}{24}\selectfont \UTPLauthor}\par
+  {\fontsize{12}{24}\selectfont \UTPLauthor}
 
   {\fontsize{12}{24}\selectfont\bfseries Director:}
-  {\fontsize{12}{24}\selectfont \UTPLadvisor}\par
-
+  {\fontsize{12}{24}\selectfont \UTPLadvisor}
 
   \centering
 
@@ -62,5 +65,5 @@
 
   % --- Ciudad y año ---
   {\fontsize{12}{14.4}\MakeUppercase{\UTPLcity}\par}
-  {\fontsize{12}{14.4}\UTPLyear\par}
+  {\fontsize{12}{14.4}\UTPLyear}
 \end{titlepage}
