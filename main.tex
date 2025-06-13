@@ -20,6 +20,11 @@
 \usepackage{tocloft} % Para personalizar índices
 \usepackage{indentfirst} % Sangría en primer párrafo
 \usepackage{hyperref} % Enlaces en el PDF
+
+% Configuración de hyperref para eliminar bordes rojos
+\hypersetup{
+    hidelinks
+}
 \usepackage{float} % Para posicionamiento de figuras
 \usepackage{caption} % Para personalizar captions
 \usepackage{subcaption} % Para subfiguras
@@ -93,9 +98,11 @@
 }
 
 % Configuración de índices
-\renewcommand{\contentsname}{Índice de contenido}
-\renewcommand{\listtablename}{Índice de tablas}
-\renewcommand{\listfigurename}{Índice de figuras}
+\addto\captionsspanish{%
+  \renewcommand{\contentsname}{Índice de contenido}%
+  \renewcommand{\listtablename}{Índice de tablas}%
+  \renewcommand{\listfigurename}{Índice de figuras}%
+}
 
 % Configuración del formato del título del índice
 \makeatletter
@@ -104,11 +111,32 @@
     \@mkboth{\MakeUppercase\contentsname}{\MakeUppercase\contentsname}%
     \@starttoc{toc}%
 }
+
+% Configuración usando tocloft para los títulos de los índices
+% Centrado perfecto, negrita, 11pt
+\renewcommand{\cfttoctitlefont}{\hfill\normalfont\bfseries\fontsize{11}{13.2}\selectfont}
+\renewcommand{\cftaftertoctitle}{\hfill\mbox{}}
+\renewcommand{\cftlottitlefont}{\hfill\normalfont\bfseries\fontsize{11}{13.2}\selectfont}
+\renewcommand{\cftafterlottitle}{\hfill\mbox{}}
+\renewcommand{\cftloftitlefont}{\hfill\normalfont\bfseries\fontsize{11}{13.2}\selectfont}
+\renewcommand{\cftafterloftitle}{\hfill\mbox{}}
+
+% Eliminar el espacio vertical antes de los títulos de los índices
+\setlength{\cftbeforetoctitleskip}{-30pt}
+\setlength{\cftaftertoctitleskip}{20pt}
+\setlength{\cftbeforelottitleskip}{-30pt}
+\setlength{\cftafterlottitleskip}{20pt}
+\setlength{\cftbeforeloftitleskip}{-30pt}
+\setlength{\cftafterloftitleskip}{20pt}
+
 \makeatother
 
 % Configuración de puntitos (leaders) para todos los niveles
 \renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
 \setlength{\cftbeforechapskip}{0pt}
+
+% Reducir la separación entre los puntos (valor por defecto es 4.5)
+\renewcommand{\cftdotsep}{0}
 
 % Comando para páginas sin numeración pero contadas
 \newcommand{\unnumberedpage}{%
