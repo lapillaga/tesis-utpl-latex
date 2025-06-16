@@ -1,16 +1,150 @@
-% capitulo2.tex
-\chapter{Marco Teórico y Revisión de Literatura}
+\chapter{Marco Teórico}
+\label{chap:marco_teorico}
 
-\section{Xxxxxxxxxx xxxxxx xxxxxxx xxxx}
+\section{Gestión Comunitaria del Agua Potable y Saneamiento}
+\label{sec:gestion_agua}
+Esta sección contextualiza el ámbito de aplicación del proyecto, centrándose en el modelo de gestión del agua en las zonas rurales del Ecuador, el cual es operado por organizaciones comunitarias.
 
-Xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.
+\subsection{Las Juntas Administradoras de Agua Potable y Saneamiento (JAAPS)}
+\label{ssec:jaaps}
+Aquí se profundizará en el rol de las JAAPS como entidades de gestión. Se analizará su marco legal, su estructura organizativa y los procesos operativos que rigen su funcionamiento, poniendo especial énfasis en los desafíos que enfrentan actualmente.
 
-Xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.
+\subsubsection{Origen, marco legal y rol en el sector rural ecuatoriano}
+\label{sssec:jaaps_origen}
+Se investigará el marco normativo que regula a las JAAPS en Ecuador, su historia y su importancia estratégica para garantizar el acceso al agua potable en comunidades rurales, alineándose con los planes de desarrollo nacionales.
 
-\section{Xxxxxxx xxxxxx xxxxxxxxx xxxxxxx}
+\subsubsection{Modelo de gestión: operación, administración y mantenimiento}
+\label{sssec:jaaps_modelo}
+Se describirá el ciclo de gestión típico de una JAAP, detallando los procesos de lectura de medidores, facturación, recaudación y mantenimiento de la infraestructura. El objetivo es identificar los cuellos de botella y las áreas de mejora.
 
-Xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.
+\subsubsection{Problemáticas operativas: la lectura manual y sus implicaciones}
+\label{sssec:jaaps_problemas}
+Análisis específico de la problemática central: el proceso de lectura manual de medidores. Se cuantificarán y describirán las ineficiencias asociadas, como los errores de digitación, los altos tiempos operativos y los costos administrativos derivados.
 
-Xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.
+\subsection{Hacia la Digitalización de los Servicios Básicos Rurales}
+\label{ssec:digitalizacion_rural}
+Se abordará la transformación digital como una herramienta para superar las brechas de eficiencia en el sector rural, vinculando la tecnología con los objetivos de desarrollo sostenible.
 
-Xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+\subsubsection{Brecha digital en el contexto rural}
+\label{sssec:brecha_digital}
+Esta subsección explorará los desafíos de la implementación tecnológica en zonas rurales, considerando factores como la conectividad intermitente, la alfabetización digital y la disponibilidad de infraestructura.
+
+\subsubsection{Objetivos de Desarrollo Sostenible (ODS 6) y su relación con la gestión eficiente del agua}
+\label{sssec:ods6}
+Se enmarcará el proyecto dentro de la Agenda 2030, específicamente en la Meta 6.B del ODS 6, que promueve el apoyo y fortalecimiento de la participación de las comunidades locales en la mejora de la gestión del agua y el saneamiento.
+
+\section{Fundamentos de Visión por Computadora para el Análisis de Medidores}
+\label{sec:vision_computadora}
+Esta sección detalla las bases teóricas de la visión artificial que permitirán la correcta identificación y extracción de la lectura del medidor a partir de una imagen.
+
+\subsection{Procesamiento Digital de Imágenes en Dispositivos Móviles}
+\label{ssec:pdi_movil}
+Se estudiarán las técnicas necesarias para preparar la imagen capturada por la cámara del móvil antes de ser procesada por el modelo de IA, asegurando la calidad y consistencia de la entrada.
+
+\subsubsection{Adquisición y representación de la imagen: del sensor de la cámara al pre-procesamiento}
+\label{sssec:adquisicion_imagen}
+Se analizará cómo las imágenes son capturadas y representadas digitalmente, y las primeras etapas de normalización requeridas para el análisis computacional.
+
+\subsubsection{Técnicas de pre-procesamiento para realce en condiciones de campo}
+\label{sssec:preprocesamiento}
+Investigación sobre algoritmos de mejora de imagen (ajuste de contraste, brillo, corrección de perspectiva, eliminación de ruido) cruciales para manejar las condiciones variables de campo (luz solar, sombras, reflejos).
+
+\subsubsection{Segmentación de la región de interés (ROI): Localización del display del medidor}
+\label{sssec:roi}
+Se abordarán métodos para aislar automáticamente el área del contador numérico dentro de la imagen del medidor, separándola del resto del fondo para enfocar el análisis posterior.
+
+\subsection{Modelos de Detección de Objetos}
+\label{ssec:deteccion_objetos}
+Se revisarán las arquitecturas de aprendizaje profundo especializadas en localizar objetos, que en este caso se aplicarán para encontrar con precisión la región del contador.
+
+\subsubsection{Arquitecturas ligeras para inferencia en el borde (Edge AI)}
+\label{sssec:edge_ai}
+Estudio de modelos de redes neuronales (como MobileNet, EfficientDet) diseñados específicamente para ejecutarse de manera eficiente en dispositivos con recursos limitados, como los teléfonos móviles.
+
+\subsubsection{Métricas de evaluación para modelos de detección}
+\label{sssec:metricas_deteccion}
+Se definirán y justificarán las métricas de rendimiento (como IoU - Intersection over Union y mAP - mean Average Precision) que se utilizarán para evaluar la precisión del modelo de detección de la ROI.
+
+\section{Reconocimiento Óptico de Caracteres (OCR) Aplicado}
+\label{sec:ocr}
+Esta sección se centra en el núcleo de la solución: las técnicas de OCR que permitirán "leer" los dígitos del medidor una vez que la región de interés ha sido localizada.
+
+\subsection{Evolución de las Técnicas de OCR}
+\label{ssec:evolucion_ocr}
+Se presentará una perspectiva histórica y conceptual del OCR, comparando los enfoques tradicionales con las soluciones modernas basadas en aprendizaje profundo para entender las ventajas de estas últimas.
+
+\subsubsection{Métodos clásicos basados en análisis de contornos y plantillas}
+\label{sssec:ocr_clasico}
+Breve revisión de los algoritmos históricos de OCR para contextualizar el avance tecnológico en el área.
+
+\subsubsection{OCR basado en Deep Learning: el estándar actual}
+\label{sssec:ocr_dl}
+Se explicará por qué las redes neuronales convolucionales y recurrentes han superado a los métodos clásicos, gracias a su capacidad para aprender características robustas directamente de los datos.
+
+\subsection{Arquitecturas Neuronales para el Reconocimiento de Texto}
+\label{ssec:arquitecturas_ocr}
+Se investigarán las arquitecturas de redes neuronales específicas para la tarea de reconocer secuencias de caracteres, como los números en un medidor.
+
+\subsubsection{Redes Neuronales Convolucionales (CNN) para la extracción de características de los dígitos}
+\label{sssec:cnn_ocr}
+Se describirá el papel de las CNN como extractores de características visuales de cada dígito individual en la imagen del contador.
+
+\subsubsection{Modelos de secuencia (CRNN) para la lectura de los números del medidor}
+\label{sssec:crnn}
+Análisis de arquitecturas como CRNN (Convolutional Recurrent Neural Network) que combinan CNN con Redes Neuronales Recurrentes (RNN) para interpretar la secuencia de dígitos como un todo, mejorando la precisión contextual.
+
+\subsection{Optimización de Modelos para Inferencia Local}
+\label{ssec:optimizacion_modelos}
+La ejecución en un móvil sin conexión a internet requiere modelos pequeños y rápidos. Esta sección explorará las técnicas para lograrlo.
+
+\subsubsection{TensorFlow Lite: Cuantización, delegación y rendimiento en Android}
+\label{sssec:tflite}
+Investigación sobre el framework TensorFlow Lite, enfocándose en técnicas como la cuantización (reducción de la precisión de los pesos del modelo) y el uso de delegados (NNAPI, GPU) para acelerar la inferencia en el hardware de Android.
+
+\subsubsection{Data Augmentation para robustecer el modelo ante variaciones en los medidores}
+\label{sssec:data_augmentation}
+Se estudiarán técnicas de aumento de datos (rotaciones, cambios de iluminación, zoom sintético) para crear un conjunto de entrenamiento más diverso y robusto a partir de un número limitado de imágenes reales.
+
+\section{Desarrollo de Sistemas Móviles con Capacidades Offline}
+\label{sec:desarrollo_movil}
+Esta sección cubre los conceptos de desarrollo de software necesarios para construir el prototipo de aplicación móvil, con un enfoque en la funcionalidad offline.
+
+\subsection{Arquitectura de Aplicaciones Android Modernas}
+\label{ssec:arquitectura_android}
+Se revisarán los patrones de diseño y las herramientas recomendadas para construir una aplicación Android robusta, escalable y mantenible.
+
+\subsubsection{Componentes clave: Activities, ViewModels, CameraX para el control de la cámara}
+\label{sssec:android_componentes}
+Estudio de los componentes fundamentales del SDK de Android y las librerías de Jetpack (como CameraX y ViewModel) que facilitarán el desarrollo de la aplicación.
+
+\subsection{Estrategias de Persistencia de Datos Offline-First}
+\label{ssec:offline_first}
+Dado que la conectividad en campo es poco fiable, la aplicación debe funcionar sin internet. Aquí se explorarán las estrategias para almacenar y gestionar los datos localmente.
+
+\subsubsection{Bases de datos locales}
+\label{sssec:db_local}
+Análisis de las opciones de bases de datos embebidas en Android, principalmente SQLite y la capa de abstracción Room, para persistir las lecturas de los medidores y otros datos de la aplicación.
+
+\subsubsection{Patrones de sincronización de datos para entornos con conectividad intermitente}
+\label{sssec:sincronizacion}
+Se investigarán estrategias y patrones de software para gestionar la sincronización de los datos locales con un servidor central cuando el dispositivo recupere la conexión a internet.
+
+\section{Trabajos Relacionados y Estado del Arte}
+\label{sec:estado_del_arte}
+Esta sección final del marco teórico analizará la literatura científica y las soluciones existentes para la lectura automática de medidores, identificando las brechas y la contribución original de este proyecto.
+
+\subsection{Sistemas de Lectura Automática de Medidores (AMR/AMI)}
+\label{ssec:amr_ami}
+Se revisarán los sistemas automáticos que dependen de hardware de comunicación especializado (como radiofrecuencia o PLC) para contextualizar dónde se ubica una solución basada en visión por computadora.
+
+\subsection{Aplicaciones de Visión por Computadora para la lectura de medidores}
+\label{ssec:cv_medidores}
+Búsqueda y análisis de trabajos de investigación que hayan propuesto soluciones similares basadas en el procesamiento de imágenes para leer medidores de agua, gas o electricidad.
+
+\subsection{Implementaciones de OCR en dispositivos móviles para casos de uso de campo}
+\label{ssec:ocr_movil_campo}
+Se estudiarán aplicaciones de OCR móvil en otros dominios (lectura de placas, escaneo de documentos) para extraer lecciones aprendidas sobre los desafíos de la implementación en condiciones de campo no controladas.
+
+\subsection{Análisis comparativo de soluciones existentes}
+\label{ssec:analisis_comparativo}
+Se sintetizará la información recopilada, creando una tabla comparativa que evalúe las soluciones existentes en función de su precisión, velocidad, requisitos de hardware, dependencia de la nube y aplicabilidad al contexto de las JAAPS.
