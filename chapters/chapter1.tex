@@ -1,63 +1,96 @@
 \chapter{Introducción}
 
-\section{Antecedentes}
+\section{Contextualización del Problema: El Agua y Saneamiento en el Sector Rural}
+\label{sec:context}
 
-\subsection{Rol y marco legal de las JAAPS en Ecuador}
+El acceso a agua potable y saneamiento constituye un derecho humano fundamental y es una piedra angular para el desarrollo sostenible, la salud pública y la prosperidad económica. La comunidad internacional ha ratificado su importancia a través de la Agenda 2030, donde el Objetivo de Desarrollo Sostenible 6 (ODS 6) insta a ``garantizar la disponibilidad y la gestión sostenible del agua y el saneamiento para todos'' \parencite{NacionesUnidas2015}. A pesar de los avances globales, persisten brechas significativas, especialmente en las zonas rurales de países en desarrollo, donde las comunidades a menudo dependen de modelos de gestión descentralizados y comunitarios para la prestación de estos servicios esenciales.
 
+En el contexto de América Latina, y específicamente en Ecuador, las Juntas Administradoras de Agua Potable y Saneamiento (JAAPS) emergen como la estructura predominante para la gestión del agua en el sector rural. Estas organizaciones, de naturaleza comunitaria, son responsables de la administración, operación y mantenimiento de los sistemas de agua, desempeñando un rol crucial que el Estado no siempre logra cubrir \parencite{RoaGarcia2019}. Su labor no solo garantiza el suministro de agua a millones de personas, sino que también fomenta la cohesión social y la gobernanza local de los recursos naturales.
 
-\subsection{Contexto de la gestión del agua en zonas rurales}
-
-
-\subsection{Tecnologías actuales de medición de consumo de agua}
-
+Sin embargo, la sostenibilidad de estas organizaciones enfrenta desafíos sistémicos. Estudios sobre la gestión comunitaria del agua en la región andina señalan que, si bien estos modelos son efectivos para expandir la cobertura, a menudo luchan con limitaciones técnicas, financieras y administrativas que comprometen su viabilidad a largo plazo \parencite{Toma2020}. La falta de herramientas tecnológicas adaptadas a su realidad operativa, caracterizada por recursos limitados y brechas de capacidad técnica, agrava estas dificultades y amenaza la calidad y continuidad del servicio, impactando directamente en el bienestar de las comunidades a las que sirven. Este trabajo de titulación se enmarca en la búsqueda de soluciones tecnológicas pertinentes y adaptadas para fortalecer a estas organizaciones vitales.
 
 \section{Problemática}
+\label{sec:problem_statement}
 
+Si bien las JAAPS son un pilar en la gestión del agua rural, su modelo operativo tradicional se ve amenazado por un conjunto de ineficiencias críticas que comprometen su sostenibilidad financiera y la confianza de la comunidad. El núcleo de esta problemática reside en el proceso de toma de lecturas, una tarea manual que es fundamental para el ciclo de facturación y la gestión del recurso. Este proceso, que generalmente implica el desplazamiento de un operario para transcribir los valores de cada medidor en papel, es inherentemente lento y propenso a errores humanos que contribuyen directamente a las \textit{pérdidas comerciales} del sistema. Estas pérdidas aparentes, causadas por factores como errores en la lectura de medidores y en la manipulación de datos para la facturación, pueden generar una subvaloración significativa del consumo real, conduciendo a una facturación imprecisa y a la pérdida de ingresos vitales para la junta \parencite{ANC2025}.
 
-\subsection{Descripción del proceso manual actual}
+Estas imprecisiones se ven agravadas por los desafíos logísticos. El personal de las JAAPS debe cubrir áreas geográficamente dispersas, a menudo con topografía compleja, lo que resulta en demoras operativas. Además, la dependencia de una conectividad a internet intermitente o inexistente en muchas de estas zonas rurales ha sido una barrera histórica para la adopción de soluciones digitales, que frecuentemente requieren una conexión constante para sincronizar datos con una plataforma centralizada \parencite{Fieldeke2021}.
+Esta ``brecha digital'' obliga a las JAAPS a perpetuar flujos de trabajo basados en papel, con la consecuente duplicación de esfuerzos para la digitación de datos en sistemas contables, un paso que no solo consume tiempo valioso sino que también introduce una segunda fuente de posibles errores.
 
-
-\subsection{Demoras operativas en la lectura de medidores}
-
-
-\subsection{Problemas de conectividad en zonas rurales}
-
-
-\subsection{Errores de digitación y su impacto económico}
-
+Las consecuencias de estas fallas operativas son sistémicas. Una facturación errónea erosiona la confianza de los usuarios en la administración de la junta, lo que puede derivar en una cultura de impago y afectar la recaudación. A su vez, la falta de datos de consumo fiables y oportunos impide a la directiva de la JAAPS realizar análisis técnicos esenciales, como el cálculo del balance hídrico o la detección temprana de fugas y consumos no autorizados, componentes clave del agua no contabilizada \parencite{ANC2025}. En última instancia, este círculo vicioso de ineficiencia administrativa y debilidad técnica limita la capacidad de las JAAPS para planificar inversiones, realizar mantenimientos preventivos y garantizar la sostenibilidad a largo plazo del servicio de agua potable para la comunidad.
 
 \section{Justificación}
+\label{sec:justification}
 
-\subsection{Componente de investigación}
+La presente investigación se justifica en tres dimensiones interconectadas que responden directamente a la problemática expuesta.
 
-\subsubsection{Avances en visión por computadora móvil}
+En primer lugar, desde una perspectiva tecnológica, el proyecto es oportuno y pertinente. Los avances recientes en el campo del aprendizaje profundo (deep learning), específicamente en arquitecturas de redes neuronales convolucionales (CNN) optimizadas para dispositivos de bajos recursos, han abierto la puerta a soluciones que antes eran inviables. El uso de frameworks como TensorFlow Lite permite encapsular modelos de visión por computadora potentes en un formato ligero, capaz de ejecutar la inferencia directamente en un teléfono móvil estándar sin depender de una conexión a internet \parencite{Carvalho2023}. Esta capacidad de procesamiento local (edge computing) es precisamente la innovación técnica que permite superar la barrera de la conectividad intermitente, el principal obstáculo para la digitalización de procesos en las zonas rurales atendidas por las JAAPS.
 
-\subsubsection{Estado actual del OCR en dispositivos edge}
+En segundo lugar, la justificación social y económica es directa y de alto impacto. Al automatizar el proceso de lectura de medidores, el prototipo propuesto tiene el potencial de reducir drásticamente los errores de facturación, incrementando la precisión y, por ende, la recuperación de ingresos para las juntas. Esta optimización de recursos no solo fortalece la sostenibilidad financiera de la organización, sino que también libera tiempo del personal, que puede ser reasignado a tareas críticas de mantenimiento y operación de la red. De esta manera, el proyecto se alinea con la Meta 6.B de la Agenda 2030 para el Desarrollo Sostenible, que promueve explícitamente el apoyo y fortalecimiento de la participación de las comunidades locales en la mejora de la gestión del agua y el saneamiento \parencite{NacionesUnidas2015}.
 
-\subsubsection{Brechas identificadas en la literatura}
-
-\subsection{Componente de innovación}
-
-\subsubsection{Solución novedosa para contexto rural}
-
-\subsubsection{Adaptación tecnológica a recursos limitados}
-
-\subsubsection{Potencial de escalabilidad}
-
-\subsection{Componente técnico}
-
-\subsubsection{Viabilidad técnica demostrada}
-
-\subsubsection{Tecnologías maduras disponibles}
-
-\subsubsection{Capacidades actuales de dispositivos móviles}
+Finalmente, el proyecto presenta una clara justificación científica. Si bien existen soluciones genéricas de Reconocimiento Óptico de Caracteres (OCR), su rendimiento en condiciones no controladas (``in the wild'') es a menudo deficiente. La contribución de esta tesis radica en el desarrollo y la validación de un pipeline de visión artificial especializado para el dominio específico de los medidores de agua en contextos rurales, los cuales presentan una alta variabilidad de modelos, estados de deterioro, condiciones de iluminación y oclusiones parciales. La investigación aportará un dataset específico para esta tarea y analizará la eficacia de arquitecturas de modelos ligeros y técnicas de \textit{data augmentation} para lograr la alta precisión (\textgreater=98\%) requerida. Por lo tanto, el trabajo no solo resuelve un problema práctico, sino que también contribuye con conocimiento aplicable al campo del OCR en entornos industriales desafiantes y en hardware con recursos limitados.
 
 \section{Objetivos}
+\label{sec:objectives}
 
 \subsection{Objetivo general}
+\label{ssec:general_objective}
+
+Desarrollar un prototipo móvil para la lectura automática de medidores de agua potable mediante técnicas de procesamiento de imágenes, que permita extraer indicadores de consumo con alta precisión y eficiencia.
 
 \subsection{Objetivos específicos}
+\label{ssec:specific_objectives}
 
-\section{Metodología}
+\begin{enumerate}
+\item Realizar una revisión sistemática de la literatura sobre técnicas de detección de objetos y reconocimiento óptico de caracteres (OCR) aplicadas a la lectura de medidores, con énfasis en modelos optimizados para dispositivos móviles.
+\item Construir un dataset de imágenes de medidores de agua potable, capturadas en condiciones reales de las JAAPS, que sirva para el entrenamiento y la validación de los modelos de inteligencia artificial.
+\item Desarrollar e implementar un modelo de aprendizaje profundo para la detección y lectura de los dígitos del medidor, optimizado para una alta precisión y una baja latencia de inferencia en un entorno móvil.
+\item Diseñar y desarrollar una aplicación móvil para la plataforma Android que integre el modelo de IA y ofrezca un flujo de trabajo completo, desde la captura de la imagen hasta el registro de la lectura de forma local.
+\item Validar el prototipo en condiciones de campo controladas, evaluando su precisión, eficiencia y usabilidad en comparación con el método de lectura manual tradicional utilizado por las JAAPS.
+\end{enumerate}
 
-\section{Estructura del documento}
+\section{Alcance y Limitaciones}
+\label{sec:scope_limitations}
+
+A continuación, se definen las fronteras del presente trabajo de titulación, especificando tanto los entregables y funcionalidades que se desarrollarán, como los aspectos que quedan fuera del estudio.
+
+\subsection{Alcance del Proyecto}
+\label{ssec:scope}
+
+El alcance de esta investigación cubre los siguientes puntos:
+\begin{itemize}
+\item El desarrollo de un prototipo funcional de una aplicación móvil para la plataforma Android, capaz de capturar imágenes de medidores de agua.
+\item La creación de un dataset de imágenes propio, compuesto por fotografías de medidores de agua analógicos, recolectadas en condiciones de campo representativas de las Juntas Administradoras de Agua Potable y Saneamiento (JAAPS) rurales.
+\item El entrenamiento y la optimización de un modelo de aprendizaje profundo (OCR), específicamente diseñado para la detección y lectura de los dígitos de los medidores de agua, y preparado para su ejecución local en el dispositivo móvil (offline).
+\item La implementación de un flujo de trabajo en la aplicación que permite al usuario capturar la imagen, recibir la lectura procesada por el modelo de IA y registrarla de forma local en el dispositivo.
+\item La validación técnica del prototipo en un entorno de campo controlado, donde se medirá y comparará su precisión y el tiempo de lectura frente al método manual tradicional.
+\end{itemize}
+
+\subsection{Limitaciones de la Investigación}
+\label{ssec:limitations}
+
+Para mantener el enfoque del proyecto, se establecen las siguientes limitaciones:
+\begin{itemize}
+\item El prototipo no es un sistema de gestión comercial completo. No incluirá funcionalidades avanzadas de facturación, gestión de abonados, o generación de reportes complejos, aunque su diseño permitirá la integración futura con dichos sistemas.
+\item El modelo de OCR se especializará en los medidores de tipo analógico (de reloj o dial) identificados en el estudio. No se abordará la lectura de medidores digitales ni de modelos analógicos con características muy atípicas que no formen parte del dataset.
+\item La aplicación móvil se desarrollará exclusivamente para la plataforma Android. No se crearán versiones para otros sistemas operativos como iOS.
+\item La validación se centrará en la viabilidad y el rendimiento técnico (precisión, eficiencia) del prototipo. No se realizará un estudio a largo plazo sobre el impacto socioeconómico de la adopción de la herramienta en las JAAPS.
+\item El despliegue y las pruebas de campo se realizarán con un número limitado y representativo de JAAPS, por lo que los resultados no pueden ser generalizados a todas las juntas del país sin estudios adicionales de escalabilidad.
+\end{itemize}
+
+\section{Estructura del Documento}
+\label{sec:structure}
+
+El presente trabajo de titulación se organiza en cinco capítulos, estructurados de la siguiente manera para presentar la investigación de forma lógica y coherente:
+
+\begin{itemize}
+\item \textbf{Capítulo 1: Introducción.} En el presente capítulo se ha contextualizado la problemática de la gestión del agua en las JAAPS rurales, se ha planteado el problema de la lectura manual de medidores y se ha justificado la necesidad de la investigación desde una perspectiva tecnológica, social y científica. Además, se han definido los objetivos, el alcance y las limitaciones del proyecto.
+
+\item \textbf{Capítulo 2: Marco Teórico y Estado del Arte.} Este capítulo presentará una revisión sistemática de la literatura científica. Se abordarán los fundamentos de la visión por computadora, las arquitecturas de redes neuronales convolucionales para detección de objetos, y las técnicas de Reconocimiento Óptico de Caracteres (OCR), con un enfoque en su aplicación y optimización para dispositivos móviles.
+
+\item \textbf{Capítulo 3: Metodología.} Se detallará el plan de trabajo y el diseño experimental de la investigación. Se describirá el proceso de recolección y anotación de imágenes para la creación del dataset, la selección de la arquitectura del modelo de IA, las métricas de evaluación, y el protocolo diseñado para la validación del prototipo en condiciones de campo.
+
+\item \textbf{Capítulo 4: Desarrollo y Resultados.} En este capítulo se expondrá el proceso de desarrollo de la aplicación móvil y la implementación del modelo de IA. Posteriormente, se presentarán de manera objetiva los resultados obtenidos durante la fase de validación, incluyendo las métricas de precisión, eficiencia y una comparativa con el método manual.
+
+\item \textbf{Capítulo 5: Discusión.} Se realizará un análisis crítico y una interpretación de los resultados presentados en el capítulo anterior, poniéndolos en diálogo con la literatura científica y los objetivos de la investigación. Se examinarán las implicaciones de los hallazgos y el valor de la solución propuesta.
+\end{itemize}
