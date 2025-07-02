@@ -1,162 +1,98 @@
 \chapter{Estado del arte}
 \label{chap:theoretical_framework}
 
-\section{Fundamentos de visión por computadora en entornos reales}
-\label{sec:computer_vision_real_environments}
-Esta sección establece las bases teóricas de la visión artificial aplicada a la captura y procesamiento de imágenes en condiciones no controladas, como las que se encuentran en el campo durante la lectura de medidores de agua.
+\section{Gestión del agua en comunidades rurales: contexto y desafíos tecnológicos}
+\label{sec:rural_water_management}
+Esta sección establece el contexto específico de la gestión del agua en comunidades rurales ecuatorianas, enfocándose en las JAAPS y los desafíos tecnológicos que enfrentan.
 
-\subsection{Procesamiento digital de imágenes en dispositivos móviles}
-\label{ssec:mobile_image_processing}
-Se analizarán las técnicas de adquisición, representación y pre-procesamiento de imágenes desde sensores de cámara móvil, considerando las limitaciones y ventajas específicas de estos dispositivos.
+\subsection{Las JAAPS como modelo de gestión comunitaria del agua}
+\label{ssec:jaaps_model}
+Caracterización del modelo JAAPS en Ecuador, procesos operativos críticos con enfoque en la lectura de medidores, e impacto de la precisión en la sostenibilidad financiera.
 
-\subsection{Desafíos de la visión por computadora en condiciones de campo}
-\label{ssec:field_challenges}
-Estudio de los factores ambientales que afectan la calidad de la imagen (iluminación variable, sombras, reflejos, oclusiones parciales) y las estrategias para mitigar su impacto en el rendimiento del sistema.
+\subsection{Evolución tecnológica en la lectura de medidores de agua}
+\label{ssec:meter_reading_evolution}
+Métodos tradicionales y sus limitaciones, tecnologías AMR/AMI con ventajas y barreras de adopción rural, y emergencia de soluciones basadas en visión artificial.
 
-\subsection{Técnicas de pre-procesamiento para realce de imagen}
-\label{ssec:preprocessing_techniques}
-Investigación sobre algoritmos de mejora de imagen específicos para condiciones adversas: corrección de perspectiva, normalización de iluminación, eliminación de ruido y realce de contraste.
+\subsection{Requisitos específicos para soluciones en contextos rurales}
+\label{ssec:rural_requirements}
+Restricciones de conectividad y recursos, factores ambientales y operativos, y criterios de viabilidad técnico-económica.
 
-\section{Reconocimiento óptico de caracteres (OCR): evolución y aplicaciones}
-\label{sec:ocr_evolution}
-Esta sección examina la evolución histórica del OCR desde métodos clásicos hasta las implementaciones modernas basadas en aprendizaje profundo, contextualizando su aplicación en la lectura de medidores.
+\section{Reconocimiento óptico de caracteres aplicado a medidores}
+\label{sec:ocr_meters}
+Esta sección examina las tecnologías OCR específicamente aplicadas al reconocimiento de dígitos en medidores de agua, desde fundamentos hasta implementaciones avanzadas.
 
-\subsection{Métodos clásicos de OCR}
-\label{ssec:classical_ocr}
-Revisión de enfoques tradicionales basados en análisis de contornos, coincidencia de plantillas y técnicas de reconocimiento de patrones, estableciendo las limitaciones que motivaron el desarrollo de métodos más avanzados.
+\subsection{Fundamentos del OCR en entornos industriales}
+\label{ssec:ocr_industrial}
+Del OCR tradicional al deep learning, características específicas de dígitos en medidores analógicos, y métricas de evaluación y umbrales de precisión requeridos.
 
-\subsection{OCR basado en aprendizaje profundo}
-\label{ssec:deep_learning_ocr}
-Análisis de la revolución introducida por las redes neuronales convolucionales en el OCR, destacando arquitecturas como CNN, CRNN y Transformer-based OCR, y su superioridad en términos de robustez y precisión.
+\subsection{Arquitecturas de redes neuronales para OCR}
+\label{ssec:neural_architectures}
+CNNs para detección y segmentación, modelos end-to-end como CRNN, EAST y TextSnake, y trade-offs entre precisión y eficiencia computacional.
 
-\subsection{OCR especializado para dígitos en medidores}
-\label{ssec:meter_ocr}
-Estudio específico de las características únicas de los dígitos en medidores (fuentes mecánicas, desgaste, variabilidad de modelos) y cómo estas características influyen en el diseño de sistemas OCR especializados.
+\subsection{Datasets y benchmarks relevantes}
+\label{ssec:datasets_benchmarks}
+Análisis de datasets públicos de medidores, estrategias de anotación y calidad de datos, y técnicas de data augmentation específicas del dominio.
 
-\section{Modelos ligeros de deep learning para dispositivos móviles}
-\label{sec:lightweight_models}
-Esta sección explora las arquitecturas de redes neuronales diseñadas específicamente para ejecutarse eficientemente en dispositivos con recursos limitados, como smartphones.
+\section{Deep Learning en dispositivos móviles con recursos limitados}
+\label{sec:mobile_deep_learning}
+Esta sección explora las tecnologías de deep learning optimizadas para dispositivos móviles, considerando las limitaciones de recursos y requisitos de eficiencia.
 
-\subsection{Arquitecturas eficientes: MobileNets, EfficientNet y similares}
+\subsection{Arquitecturas eficientes para edge computing}
 \label{ssec:efficient_architectures}
-Análisis detallado de arquitecturas ligeras que utilizan técnicas como convoluciones separables en profundidad, búsqueda de arquitectura neuronal (NAS) y escalado compuesto para optimizar el balance entre precisión y eficiencia.
+MobileNet, EfficientNet y variantes, técnicas de diseño como depthwise separable convolutions y squeeze-and-excitation, y comparativa de arquitecturas para OCR móvil.
 
-\subsection{Técnicas de compresión de modelos}
-\label{ssec:model_compression}
-Estudio de métodos para reducir el tamaño y la complejidad computacional de los modelos: cuantización, poda de parámetros, destilación de conocimiento y factorización de matrices.
+\subsection{Optimización y compresión de modelos}
+\label{ssec:model_optimization}
+Cuantización post-training vs quantization-aware training, pruning y knowledge distillation, y benchmarks en dispositivos Android de gama media.
 
-\subsection{Métricas de evaluación para modelos móviles}
-\label{ssec:mobile_metrics}
-Definición de métricas específicas para evaluar modelos en dispositivos móviles: latencia de inferencia, uso de memoria, consumo energético y precisión bajo restricciones de recursos.
+\subsection{Frameworks de inferencia móvil}
+\label{ssec:mobile_frameworks}
+TensorFlow Lite con arquitectura y optimizaciones, aceleración hardware mediante NNAPI y GPU delegates, y gestión de recursos y consumo energético.
 
-\section{TensorFlow Lite, NNAPI y frameworks similares: ventajas y limitaciones}
-\label{sec:mobile_frameworks}
-Esta sección examina los frameworks y herramientas específicos para la implementación de modelos de IA en dispositivos móviles, con énfasis en el ecosistema Android.
+\section{Sistemas de visión artificial para lectura automática de medidores}
+\label{sec:computer_vision_systems}
+Esta sección aborda los sistemas completos de visión artificial diseñados específicamente para la lectura automática de medidores, incluyendo robustez y implementaciones existentes.
 
-\subsection{TensorFlow Lite: arquitectura y optimizaciones}
-\label{ssec:tensorflow_lite}
-Análisis profundo del framework TensorFlow Lite, incluyendo su pipeline de conversión, operadores optimizados, y técnicas de cuantización post-entrenamiento y durante el entrenamiento.
+\subsection{Pipeline completo de procesamiento}
+\label{ssec:processing_pipeline}
+Detección y localización del medidor, pre-procesamiento y normalización de imagen, y segmentación y reconocimiento de dígitos.
 
-\subsection{Aceleración por hardware: NNAPI, GPU y NPU}
-\label{ssec:hardware_acceleration}
-Estudio de las interfaces de programación y delegados para aprovechar el hardware especializado disponible en dispositivos móviles modernos, incluyendo Neural Network API (NNAPI), aceleración por GPU y unidades de procesamiento neural (NPU).
+\subsection{Robustez ante condiciones adversas}
+\label{ssec:adverse_conditions}
+Variaciones de iluminación y ángulo, oclusiones y deterioro de medidores, y técnicas de mejora de imagen en tiempo real.
 
-\subsection{Frameworks alternativos y comparativas}
-\label{ssec:alternative_frameworks}
-Revisión de otras opciones como ONNX Runtime Mobile, Core ML (iOS), y PyTorch Mobile, estableciendo criterios de comparación en términos de rendimiento, compatibilidad y facilidad de integración.
+\subsection{Implementaciones existentes: análisis crítico}
+\label{ssec:existing_implementations}
+Soluciones académicas vs comerciales, evaluación de precisión y escalabilidad, y limitaciones identificadas para contextos rurales.
 
-\section{Aumento de datos (Data Augmentation) en visión artificial}
-\label{sec:data_augmentation}
-Esta sección aborda las técnicas para amplificar y diversificar conjuntos de datos limitados, crítico para el entrenamiento de modelos robustos en el dominio específico de medidores de agua.
-
-\subsection{Técnicas clásicas de aumento de datos}
-\label{ssec:classical_augmentation}
-Estudio de transformaciones geométricas (rotación, escalado, traslación), fotométricas (cambios de brillo, contraste, saturación) y sus efectos en la robustez del modelo.
-
-\subsection{Aumento de datos sintético y generativo}
-\label{ssec:synthetic_augmentation}
-Exploración de técnicas avanzadas como GANs (Generative Adversarial Networks), autocodificadores variacionales y síntesis de imágenes para generar datos de entrenamiento adicionales.
-
-\subsection{Aumento de datos específico para medidores}
-\label{ssec:meter_augmentation}
-Desarrollo de estrategias de aumento de datos adaptadas al dominio de medidores: simulación de condiciones de desgaste, variaciones de iluminación realistas y oclusiones típicas del entorno de instalación.
-
-\section{Aplicaciones móviles offline con capacidades de inferencia local}
-\label{sec:offline_applications}
-Esta sección cubre los principios y prácticas para el desarrollo de aplicaciones móviles que funcionen sin conectividad a internet, integrando capacidades de inteligencia artificial local.
+\section{Desarrollo de aplicaciones móviles offline con IA integrada}
+\label{sec:offline_mobile_ai}
+Esta sección cubre los principios y prácticas para el desarrollo de aplicaciones móviles que funcionen sin conectividad, integrando capacidades de IA local.
 
 \subsection{Arquitecturas offline-first}
-\label{ssec:offline_first}
-Análisis de patrones de diseño y arquitecturas de software que priorizan la funcionalidad local, incluyendo estrategias de sincronización eventual y gestión de conflictos de datos.
+\label{ssec:offline_architectures}
+Patrones de diseño para aplicaciones desconectadas, sincronización eventual y resolución de conflictos, y almacenamiento local eficiente.
 
-\subsection{Integración de modelos de IA en aplicaciones Android}
-\label{ssec:android_integration}
-Estudio técnico de la implementación de modelos TensorFlow Lite en aplicaciones Android, incluyendo manejo de recursos, threading, y optimizaciones específicas de la plataforma.
+\subsection{Integración de modelos de IA en Android}
+\label{ssec:android_ai_integration}
+Ciclo de vida de la inferencia, manejo de memoria y threading, y UI/UX para captura guiada de imágenes.
 
-\subsection{Gestión de datos y persistencia local}
-\label{ssec:local_persistence}
-Exploración de bases de datos embebidas (SQLite, Room) y estrategias de almacenamiento optimizadas para aplicaciones que manejan grandes volúmenes de datos multimedia y resultados de inferencia.
+\subsection{Consideraciones de usabilidad rural}
+\label{ssec:rural_usability}
+Diseño para usuarios con baja alfabetización digital, feedback visual y validación en tiempo real, y manejo de errores y recuperación.
 
-\section{Casos de estudio relevantes en lectura automática de medidores}
-\label{sec:case_studies}
-Esta sección presenta un análisis detallado de implementaciones exitosas de sistemas de lectura automática de medidores, extrayendo lecciones aprendidas y mejores prácticas.
+\section{Análisis comparativo y oportunidades de innovación}
+\label{sec:comparative_innovation}
+Esta sección evalúa sistemáticamente las soluciones existentes y identifica brechas y oportunidades específicas para el contexto de las JAAPS rurales.
 
-\subsection{Sistemas AMR/AMI tradicionales}
-\label{ssec:amr_ami_systems}
-Revisión de sistemas de lectura automática de medidores basados en comunicaciones inalámbricas (RF, PLC, celular), estableciendo el contexto tecnológico y las limitaciones que motivan soluciones basadas en visión artificial.
+\subsection{Matriz de evaluación de soluciones existentes}
+\label{ssec:evaluation_matrix}
+Criterios técnicos de precisión, latencia y recursos, criterios operativos de costo, mantenimiento y escalabilidad, y criterios sociales de adopción, capacitación e impacto.
 
-\subsection{Implementaciones basadas en visión por computadora}
-\label{ssec:vision_implementations}
-Análisis crítico de proyectos de investigación y productos comerciales que utilizan técnicas de visión artificial para la lectura de medidores, evaluando sus enfoques metodológicos y resultados.
+\subsection{Brechas identificadas en el estado del arte}
+\label{ssec:identified_gaps}
+Limitaciones técnicas no resueltas, barreras de implementación en JAAPS, y oportunidades de mejora específicas.
 
-\subsection{Aplicaciones móviles para lectura de medidores}
-\label{ssec:meter_applications}
-Estudio de aplicaciones móviles existentes en el mercado, analizando sus funcionalidades, limitaciones y estrategias de implementación, con especial atención a las soluciones offline.
-
-\section{Análisis comparativo de soluciones existentes en contextos rurales}
-\label{sec:comparative_analysis}
-Esta sección evalúa sistemáticamente las soluciones existentes en el contexto específico de las zonas rurales y organizaciones comunitarias como las JAAPS.
-
-\subsection{Criterios de evaluación para contextos rurales}
-\label{ssec:evaluation_criteria}
-Definición de métricas específicas para evaluar soluciones en entornos rurales: costo de implementación, requisitos de infraestructura, facilidad de uso, mantenimiento y sostenibilidad a largo plazo.
-
-\subsection{Matriz comparativa de soluciones}
-\label{ssec:comparative_matrix}
-Construcción de una tabla comparativa sistemática que evalúe las soluciones identificadas según los criterios establecidos, identificando fortalezas, debilidades y aplicabilidad al contexto ecuatoriano.
-
-\subsection{Factores de adopción tecnológica en comunidades rurales}
-\label{ssec:rural_adoption}
-Análisis de los factores socio-técnicos que influyen en la adopción exitosa de tecnologías en comunidades rurales, incluyendo aspectos culturales, económicos y de capacitación técnica.
-
-\section{Brechas tecnológicas y oportunidades para innovación}
-\label{sec:gaps_opportunities}
-Esta sección identifica las limitaciones de las soluciones actuales y las oportunidades de investigación e innovación en el campo de la lectura automática de medidores para contextos rurales.
-
-\subsection{Limitaciones de las soluciones actuales}
-\label{ssec:current_limitations}
-Análisis crítico de las deficiencias identificadas en la literatura: dependencia de conectividad, altos costos de implementación, falta de adaptación a variabilidad de medidores locales, y limitaciones de precisión en condiciones adversas.
-
-\subsection{Oportunidades de investigación}
-\label{ssec:research_opportunities}
-Identificación de áreas de investigación prometedoras: modelos híbridos de OCR, técnicas de few-shot learning para nuevos tipos de medidores, y optimizaciones específicas para hardware móvil de gama media y baja.
-
-\subsection{Innovaciones propuestas para el contexto ecuatoriano}
-\label{ssec:proposed_innovations}
-Delineación de las contribuciones específicas que este proyecto pretende realizar: dataset especializado en medidores ecuatorianos, modelo optimizado para dispositivos de recursos limitados, y validación en condiciones reales de JAAPS.
-
-\section{Síntesis del estado del arte y lineamientos para el diseño del sistema}
-\label{sec:synthesis_guidelines}
-Esta sección final del marco teórico sintetiza los hallazgos de la revisión de literatura y establece los lineamientos técnicos que guiarán el diseño e implementación del sistema propuesto.
-
-\subsection{Lecciones aprendidas del estado del arte}
-\label{ssec:lessons_learned}
-Consolidación de los principales hallazgos de la revisión de literatura, destacando las mejores prácticas, errores comunes a evitar, y enfoques metodológicos más prometedores para el desarrollo del sistema.
-
-\subsection{Lineamientos de diseño derivados}
-\label{ssec:design_guidelines}
-Establecimiento de principios de diseño específicos para el sistema propuesto, basados en el análisis del estado del arte: arquitectura offline-first, optimización para hardware limitado, y enfoque en usabilidad para usuarios con baja alfabetización digital.
-
-\subsection{Métricas de éxito y criterios de validación}
-\label{ssec:validation_metrics}
-Definición de métricas cuantitativas y cualitativas para evaluar el éxito del sistema desarrollado, incluyendo precisión de OCR (≥98\%), tiempo de procesamiento, usabilidad, y aceptación por parte de usuarios finales en JAAPS.
+\subsection{Justificación del enfoque propuesto}
+\label{ssec:proposed_approach}
+Ventajas competitivas de la solución, alineación con necesidades del contexto, y contribuciones esperadas al campo.
