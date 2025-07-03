@@ -36,35 +36,105 @@ En este contexto, las soluciones basadas en visión artificial y dispositivos m�
 
 \section{Reconocimiento óptico de caracteres aplicado a medidores}
 \label{sec:ocr_meters}
-Esta sección examina las tecnologías OCR específicamente aplicadas al reconocimiento de dígitos en medidores de agua, desde fundamentos hasta implementaciones avanzadas.
+Habiendo establecido la necesidad de una solución de bajo costo y alta eficiencia para las JAAPS en la sección anterior, esta sección profundiza en la tecnología clave que permite dicha solución: el Reconocimiento Óptico de Caracteres (OCR). Se examinan las tecnologías OCR específicamente aplicadas al reconocimiento de dígitos en medidores de agua, desde sus fundamentos y la evolución hacia el deep learning, hasta las arquitecturas de redes neuronales más avanzadas y los conjuntos de datos necesarios para su entrenamiento y validación.
 
 \subsection{Fundamentos del OCR en entornos industriales}
 \label{ssec:ocr_industrial}
-Del OCR tradicional al deep learning, características específicas de dígitos en medidores analógicos, y métricas de evaluación y umbrales de precisión requeridos.
+El Reconocimiento Óptico de Caracteres es un campo de la inteligencia artificial y la visión por computadora cuyo objetivo es convertir imágenes que contienen texto, ya sea manuscrito, mecanografiado o impreso, en texto codificado que una máquina puede procesar. Históricamente, los sistemas de OCR se basaban en un pipeline de múltiples etapas, fuertemente dependiente de técnicas clásicas de procesamiento de imágenes. Este pipeline tradicional generalmente incluía: preprocesamiento de la imagen (ej. conversión a escala de grises, binarización mediante umbrales como el de Otsu), segmentación para aislar caracteres individuales (ej. mediante análisis de perfiles de proyección), extracción de características de cada caracter (ej. momentos, transformadas de Fourier) y, finalmente, clasificación usando algoritmos como Support Vector Machines (SVM) o k-Nearest Neighbors (k-NN) \parencite{Chaki2019Automation}.
+
+Sin embargo, el entorno industrial, y en particular la lectura de medidores analógicos, presenta desafíos únicos que exponen las limitaciones de estos métodos tradicionales. A diferencia del texto en documentos, los dígitos de un medidor tienen características muy específicas:
+\begin{itemize}
+    \item \textbf{Fuentes y alineación:} Los dígitos suelen ser de tipo siete segmentos o similares, pero sufren de una alineación imperfecta y rotaciones parciales, especialmente durante la transición de un número al siguiente (ej. un `3' que está a medio camino de convertirse en un `4').
+    \item \textbf{Condiciones de la carátula:} La superficie del medidor está expuesta a suciedad, rayones, condensación y reflejos especulares que pueden ocultar o distorsionar los dígitos.
+    \item \textbf{Iluminación variable:} La captura de imágenes en campo se realiza bajo condiciones de iluminación no controladas, desde la luz solar directa hasta la sombra profunda.
+\end{itemize}
+Estos factores hacen que la segmentación precisa de los dígitos, un paso crucial para los métodos tradicionales, sea extremadamente frágil. Un fallo en la segmentación conduce inevitablemente a un error en el reconocimiento.
+
+La llegada del aprendizaje profundo (deep learning) ha revolucionado el OCR. Las Redes Neuronales Convolucionales (CNNs) y arquitecturas más complejas permiten un enfoque de extremo a extremo (end-to-end) que aprende a extraer características relevantes directamente de los datos brutos de la imagen, mostrando una robustez significativamente mayor a las variaciones mencionadas. Para evaluar el rendimiento de estos sistemas, se utilizan métricas estándar como la Tasa de Error de Caracteres (CER, del inglés \textit{Character Error Rate}) y la Tasa de Error de "Palabra" (WER, de \textit{Word Error Rate}), donde una ``palabra'' se define como la secuencia completa de dígitos del medidor. Para que una solución de lectura automática sea viable para la facturación, la industria exige umbrales de precisión por dígito extremadamente altos, comúnmente superiores al 98\% o 99\%, ya que cualquier error tiene un impacto económico directo \parencite{Laroca2021Towards}.
 
 \subsection{Arquitecturas de redes neuronales para OCR}
 \label{ssec:neural_architectures}
-CNNs para detección y segmentación, modelos end-to-end como CRNN, EAST y TextSnake, y trade-offs entre precisión y eficiencia computacional.
+Las redes neuronales profundas han dado lugar a una variedad de arquitecturas para abordar el problema del OCR. Las más simples consisten en una CNN seguida de capas completamente conectadas para clasificar dígitos individuales previamente segmentados. Si bien superan a los clasificadores tradicionales, todavía dependen de una etapa de segmentación externa. Los modelos más avanzados y robustos integran la detección y el reconocimiento en un único pipeline end-to-end.
+
+En el campo del OCR, estos modelos suelen dividirse en dos categorías principales. Primero, los \textbf{detectores de texto}, cuyo objetivo es localizar las regiones de la imagen que contienen texto (en nuestro caso, el contador de dígitos). Arquitecturas como EAST (Efficient and Accurate Scene Text Detector) o CRAFT (Character-Region Awareness for Text) han demostrado una gran eficacia en la localización precisa de texto en escenas naturales mediante la predicción de bounding boxes o mapas de afinidad de caracteres \parencite{Peng2023Deep}. Segundo, los \textbf{reconocedores de texto}, que toman la región detectada como entrada y la transcriben a una secuencia de caracteres.
+
+Una de las arquitecturas end-to-end más influyentes y exitosas es la Red Neuronal Convolucional Recurrente (CRNN, \textit{Convolutional Recurrent Neural Network}) \parencite{Laroca2021Towards}. Un modelo CRNN se compone de tres partes principales:
+\begin{enumerate}
+    \item \textbf{Capas Convolucionales (CNN):} Extraen un mapa de características robustas de la imagen de entrada. Estas capas son invariantes a ciertas distorsiones, lo que las hace ideales para manejar las difíciles condiciones de los medidores.
+    \item \textbf{Capas Recurrentes (RNN):} Una Red Neuronal Recurrente, típicamente una LSTM (Long Short-Term Memory) bidireccional, procesa la secuencia de vectores de características generada por la CNN. Esto le permite al modelo aprender el contexto secuencial de los dígitos.
+    \item \textbf{Capa de Transcripción:} Utiliza una función de pérdida especializada, como la Clasificación Temporal Conexionista (CTC, \textit{Connectionist Temporal Classification}), para traducir las predicciones por-paso-de-tiempo de la RNN a la secuencia final de etiquetas.
+\end{enumerate}
+
+La función de pérdida CTC es fundamental, ya que elimina la necesidad de una segmentación explícita a nivel de caracter. Permite que el modelo sea entrenado con la imagen del contador y la secuencia de dígitos correcta, sin requerir la ubicación exacta de cada dígito. La pérdida CTC suma las probabilidades de todas las posibles alineaciones de la secuencia de predicciones con la secuencia objetivo, lo que permite al modelo aprender a manejar espacios en blanco y caracteres repetidos. Formalmente, la probabilidad de una secuencia objetivo $\pi$ dada una secuencia de entrada $y$ se define como:
+
+\begin{equation}
+    P(\pi|y) = \sum_{\mathbf{a} \in \mathcal{A}_{\pi,y}} \prod_{t=1}^{T} p_t(a_t|y)
+\end{equation}
+
+donde $\mathcal{A}_{\pi,y}$ es el conjunto de todas las posibles alineaciones y $p_t(a_t|y)$ es la probabilidad del caracter $a_t$ en el tiempo $t$.
+
+El principal \textit{trade-off} en la elección de una arquitectura es entre la precisión y la eficiencia computacional. Modelos más grandes y complejos pueden ofrecer mayor precisión, pero a costa de un mayor tamaño, un mayor tiempo de inferencia y un mayor consumo de energía, lo que los hace inadecuados para dispositivos móviles con recursos limitados \parencite{Zou2021, Carvalho2023}. Por tanto, la investigación actual se centra en arquitecturas ligeras (\textit{lightweight}) que logren un equilibrio óptimo para la implementación en el borde (\textit{edge computing}).
 
 \subsection{Datasets y benchmarks relevantes}
 \label{ssec:datasets_benchmarks}
-Análisis de datasets públicos de medidores, estrategias de anotación y calidad de datos, y técnicas de data augmentation específicas del dominio.
+El rendimiento de cualquier modelo de aprendizaje profundo está intrínsecamente ligado a la calidad y cantidad de los datos de entrenamiento. En el dominio de la lectura de medidores de agua, la creación de un dataset robusto y diverso es un desafío en sí mismo. Aunque existen algunos datasets públicos, a menudo presentan limitaciones. Por ejemplo, el \textbf{UFPR-AMR Dataset} \parencite{Laroca2021Towards} y su extensión \parencite{Salomon2022ImageBased} son referencias clave en la comunidad académica, pero pueden no capturar la enorme variabilidad de modelos de medidores, estados de degradación y condiciones ambientales presentes en un contexto específico como el de las JAAPS en Ecuador.
+
+Las estrategias de anotación de datos son cruciales. Se debe decidir si anotar con simples \textit{bounding boxes} alrededor del contador o realizar una segmentación a nivel de dígito, lo cual es más laborioso pero puede permitir enfoques más flexibles. La anotación de dígitos parcialmente visibles o en transición es particularmente desafiante y requiere un protocolo de anotación claro y consistente para garantizar la calidad de las etiquetas.
+
+Dada la dificultad de recolectar y anotar miles de imágenes de campo, las técnicas de \textbf{aumento de datos (data augmentation)} son indispensables. Más allá de las transformaciones genéricas como rotaciones, escalado o cambios de brillo, se deben aplicar técnicas específicas del dominio para simular los desafíos del mundo real:
+\begin{itemize}
+    \item \textbf{Transformaciones Geométricas:} Simulación de distorsiones de perspectiva para imitar la captura desde diferentes ángulos.
+    \item \textbf{Simulación de Condiciones Adversas:} Aplicación de desenfoque de movimiento (\textit{motion blur}), ruido gaussiano, y simulación de reflejos y gotas de agua sobre el visor.
+    \item \textbf{Generación de Datos Sintéticos:} Uso de gráficos por computadora (CGI) para generar imágenes fotorrealistas de medidores en una variedad infinita de estados y condiciones. Esto permite un control total sobre las características de la imagen, incluyendo los dígitos en transición \parencite{Sripanuskul2022Generative}.
+\end{itemize}
+Estas técnicas no solo incrementan el tamaño del dataset, sino que también mejoran la robustez y la capacidad de generalización del modelo entrenado. Un benchmarking riguroso contra datasets públicos y, más importante aún, contra un conjunto de prueba representativo del entorno de despliegue final, es esencial para validar la eficacia del modelo propuesto.
+
+La necesidad de modelos eficientes que puedan ejecutarse en dispositivos móviles con recursos limitados es el puente hacia la siguiente fase de esta investigación. Habiendo explorado las arquitecturas OCR, el siguiente paso es analizar cómo estas pueden ser optimizadas e implementadas para un rendimiento eficaz en el borde, abordando directamente las restricciones identificadas en las comunidades rurales.
 
 \section{Deep Learning en dispositivos móviles con recursos limitados}
 \label{sec:mobile_deep_learning}
-Esta sección explora las tecnologías de deep learning optimizadas para dispositivos móviles, considerando las limitaciones de recursos y requisitos de eficiencia.
+Las arquitecturas de deep learning para OCR, discutidas en la sección anterior, suelen ser computacionalmente intensivas. Su despliegue en un prototipo móvil, destinado a operar en el campo y a menudo en dispositivos con recursos limitados, no es trivial. Esta sección explora las tecnologías y estrategias que hacen posible la ejecución eficiente de modelos de deep learning en el borde (\textit{edge computing}), abordando las limitaciones de hardware y los requisitos de rendimiento que impone una aplicación del mundo real.
 
 \subsection{Arquitecturas eficientes para edge computing}
 \label{ssec:efficient_architectures}
-MobileNet, EfficientNet y variantes, técnicas de diseño como depthwise separable convolutions y squeeze-and-excitation, y comparativa de arquitecturas para OCR móvil.
+El \textit{edge computing} se refiere al paradigma de procesar datos cerca de donde se generan, en lugar de enviarlos a un servidor centralizado en la nube. Para una aplicación de lectura de medidores, este enfoque ofrece ventajas críticas: funcionamiento sin conexión a internet, baja latencia en la respuesta y mayor privacidad de los datos. Sin embargo, requiere el uso de arquitecturas de redes neuronales diseñadas específicamente para ser ligeras y rápidas.
+
+La evolución de estas arquitecturas se basa en innovaciones como la \textbf{convolución separable en profundidad (depthwise separable convolution)}, que reduce drásticamente la carga computacional. Esta técnica fue la piedra angular de la familia de redes \textbf{MobileNet}, que progresivamente introdujo mejoras como los \textit{inverted residuals} y la búsqueda de arquitecturas neuronales (NAS). Paralelamente, la familia \textbf{EfficientNet} propuso un \textbf{método de escalado compuesto (compound scaling)} para balancear de manera sistemática la profundidad, el ancho y la resolución de la red. Estos desarrollos sentaron las bases para los modelos de visión móvil eficientes que se utilizan hoy en día \parencite{Poddar2024Survey}.
+
+Investigaciones más recientes han continuado esta línea. \textbf{EfficientNetV2} \parencite{Tan2021EfficientNetV2} mejoró la velocidad de entrenamiento y la eficiencia de parámetros. Más recientemente, arquitecturas híbridas que combinan convoluciones con mecanismos de atención de los Transformers, como \textbf{MobileViT} \parencite{Mehta2022MobileViT}, han demostrado ser muy prometedoras, capturando representaciones locales y globales de manera eficiente. La elección final depende del trade-off específico entre la precisión deseada y la latencia máxima tolerable en el dispositivo objetivo \parencite{Poddar2024Survey}.
+
+% Aquí podrías insertar una tabla comparativa actualizada.
+\begin{table}[h!]
+\centering
+\caption{Comparativa de arquitecturas eficientes modernas (ejemplo en ImageNet).}
+\label{tab:arch_compare_updated}
+\begin{tabular}{l c c}
+\hline
+\textbf{Modelo} & \textbf{Precisión Top-1 (\%)} & \textbf{Parámetros (M)} \\
+\hline
+MobileNetV3-Large & 75.2 & 5.5 \\
+EfficientNet-B0 & 77.1 & 5.3 \\
+EfficientNetV2-S & 83.9 & 21.5 \\
+MobileViT-S & 78.4 & 5.6 \\
+\hline
+\end{tabular}
+\end{table}
 
 \subsection{Optimización y compresión de modelos}
 \label{ssec:model_optimization}
-Cuantización post-training vs quantization-aware training, pruning y knowledge distillation, y benchmarks en dispositivos Android de gama media.
+Diseñar una arquitectura eficiente es solo el primer paso. Para lograr un rendimiento óptimo en dispositivos de gama media, como los que probablemente usarían los operarios de las JAAPS, es necesario aplicar técnicas de optimización y compresión.
+
+La \textbf{cuantización} es la técnica más común y efectiva, reduciendo la precisión de los pesos de punto flotante de 32 bits (FP32) a enteros de 8 bits (INT8). El \textbf{entrenamiento consciente de la cuantización (QAT)} simula la cuantización durante el entrenamiento y generalmente preserva mejor la precisión que la \textbf{cuantización post-entrenamiento (PTQ)}. Estudios recientes han demostrado que, con técnicas adecuadas, la pérdida de precisión por la cuantización INT8 puede ser mínima, incluso para tareas complejas de visión por computadora \parencite{Ghosh2023SurveyQuantization}.
+
+El \textbf{podado (pruning)} elimina pesos o canales redundantes del modelo para reducir su tamaño y acelerar la inferencia. La \textbf{destilación del conocimiento (knowledge distillation)} utiliza un modelo "profesor" grande para entrenar a un modelo "estudiante" más pequeño, transfiriendo su conocimiento y mejorando la precisión del modelo compacto. La combinación de estas técnicas se ha vuelto una práctica estándar para la optimización de modelos en el borde \parencite{Li2023EdgeAI}.
 
 \subsection{Frameworks de inferencia móvil}
 \label{ssec:mobile_frameworks}
-TensorFlow Lite con arquitectura y optimizaciones, aceleración hardware mediante NNAPI y GPU delegates, y gestión de recursos y consumo energético.
+Para desplegar estos modelos optimizados en un dispositivo Android, se necesita un framework de inferencia especializado. \textbf{TensorFlow Lite (TFLite)} es la solución líder, proporcionando un intérprete ligero y un conjunto de herramientas para la conversión y optimización de modelos.
+
+La característica principal de TFLite son los \textbf{delegados (delegates)}, que permiten redirigir la computación a aceleradores de hardware. El \textbf{delegado de GPU} utiliza la Unidad de Procesamiento Gráfico, mientras que el \textbf{delegado de NNAPI (Android Neural Networks API)} actúa como una capa de abstracción para acceder a aceleradores específicos de IA, como las Unidades de Procesamiento Neuronal (NPU) o los Procesadores de Señales Digitales (DSP). La correcta utilización de estos delegados es crucial para minimizar la latencia y el consumo de energía \parencite{Albonico2023Benchmarking}. Estudios comparativos recientes analizan el rendimiento de estos delegados en diferentes generaciones de SoCs (System-on-Chip), proporcionando una guía valiosa para predecir el rendimiento en una amplia gama de dispositivos móviles.
+
+La gestión de recursos, incluyendo el control de hilos de ejecución y la monitorización de la temperatura para evitar el \textit{thermal throttling}, es esencial para la estabilidad de la aplicación. Herramientas como el \textit{Profiler} de Android Studio y la \textit{TFLite benchmark tool} son indispensables en el ciclo de desarrollo para asegurar que el prototipo no solo sea preciso, sino también robusto y eficiente en condiciones de uso prolongado en campo. La combinación de una arquitectura moderna, técnicas de compresión y el uso inteligente de TFLite es lo que permitirá construir una solución sostenible para las JAAPS.
 
 \section{Sistemas de visión artificial para lectura automática de medidores}
 \label{sec:computer_vision_systems}
