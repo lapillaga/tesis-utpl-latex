@@ -137,20 +137,88 @@ La característica principal de TFLite son los \textbf{delegados (delegates)}, q
 La gestión de recursos, incluyendo el control de hilos de ejecución y la monitorización de la temperatura para evitar el \textit{thermal throttling}, es esencial para la estabilidad de la aplicación. Herramientas como el \textit{Profiler} de Android Studio y la \textit{TFLite benchmark tool} son indispensables en el ciclo de desarrollo para asegurar que el prototipo no solo sea preciso, sino también robusto y eficiente en condiciones de uso prolongado en campo. La combinación de una arquitectura moderna, técnicas de compresión y el uso inteligente de TFLite es lo que permitirá construir una solución sostenible para las JAAPS.
 
 \section{Sistemas de visión artificial para lectura automática de medidores}
-\label{sec:computer_vision_systems}
-Esta sección aborda los sistemas completos de visión artificial diseñados específicamente para la lectura automática de medidores, incluyendo robustez y implementaciones existentes.
+\label{sec:vision_systems}
+La implementación práctica de sistemas de visión artificial para la lectura de medidores trasciende los componentes individuales de OCR y detección. Requiere una integración cuidadosa de múltiples etapas de procesamiento que operen de manera robusta en las condiciones del mundo real \parencite{Laroca2021Towards}. Estos sistemas deben no solo alcanzar una alta precisión en condiciones ideales, sino también mantener su desempeño ante la variabilidad inherente de los entornos no controlados, donde factores como una iluminación deficiente, ángulos de captura subóptimos y el deterioro físico de los equipos representan desafíos constantes \parencite{Hong2021ImageBased}. Esta sección desglosa la arquitectura de dichos sistemas, analiza las estrategias para superar los desafíos operativos y realiza una evaluación crítica de las implementaciones existentes.
 
 \subsection{Pipeline completo de procesamiento}
-\label{ssec:processing_pipeline}
-Detección y localización del medidor, pre-procesamiento y normalización de imagen, y segmentación y reconocimiento de dígitos.
+\label{ssec:full_pipeline}
+Un sistema robusto de lectura automática de medidores comprende múltiples etapas interdependientes, cada una crítica para el éxito global del proceso. El pipeline típico inicia con la adquisición de la imagen y culmina con la validación y registro de la lectura, requiriendo decisiones de diseño que equilibren precisión, eficiencia computacional y robustez \parencite{Khan2024LowCost}.
+
+\begin{figure}[h!]
+\centering
+% Se recomienda crear un diagrama de flujo con TikZ o insertar una imagen.
+% El siguiente código es un placeholder descriptivo.
+\fbox{\parbox{0.9\textwidth}{
+\textbf{Diagrama de Flujo del Pipeline de Lectura Automática:}\\
+\begin{enumerate}
+    \item \textbf{Adquisición de Imagen:} El usuario captura una imagen del medidor con un smartphone.
+    \item \textbf{Detección del Medidor (YOLOv8):} La imagen completa es procesada por un modelo de detección de objetos (ej. YOLOv8) que localiza el medidor, devolviendo un \textit{bounding box}.
+    \item \textbf{Extracción y Pre-procesamiento de ROI:}
+        \begin{itemize}
+            \item Se recorta la Región de Interés (ROI) correspondiente al contador de dígitos.
+            \item \textbf{Corrección de Perspectiva:} Se aplica una transformación de homografía para rectificar la ROI y obtener una vista frontal.
+            \item \textbf{Normalización de Iluminación:} Se utilizan técnicas como CLAHE para estandarizar el contraste y la iluminación.
+        \end{itemize}
+    \item \textbf{Reconocimiento de Dígitos (CRNN):} La ROI procesada se introduce en un modelo OCR (ej. CRNN optimizado) que transcribe la secuencia de dígitos.
+    \item \textbf{Post-procesamiento y Validación:}
+        \begin{itemize}
+            \item \textbf{Validación de Coherencia:} Se verifica si la lectura es numéricamente coherente (ej. no menor que la lectura anterior).
+            \item \textbf{Confirmación del Usuario:} La lectura reconocida se muestra al usuario para una confirmación final antes de ser almacenada.
+        \end{itemize}
+\end{enumerate}
+}}
+\caption{Pipeline completo de procesamiento para la lectura automática de medidores.}
+\label{fig:pipeline}
+\end{figure}
+
+La primera etapa computacional es la \textbf{detección y localización del medidor}. Mientras que métodos clásicos como la transformada de Hough o el análisis de contornos pueden funcionar en condiciones controladas, son demasiado frágiles para el campo. Los sistemas modernos utilizan modelos de detección de objetos basados en deep learning. Arquitecturas como YOLO (You Only Look Once), en sus versiones más recientes como YOLOv8, son particularmente adecuadas por su excelente equilibrio entre velocidad y precisión, lo que las hace ideales para su despliegue en móviles \parencite{Khan2024LowCost, Wang2025}. Estos modelos pueden ser entrenados para localizar específicamente el \textit{bounding box} del contador de dígitos, incluso en imágenes complejas con múltiples objetos de fondo.
+
+Una vez localizada la Región de Interés (ROI), la etapa de \textbf{pre-procesamiento y normalización} es crucial para estandarizar la entrada al modelo OCR. Un paso fundamental es la \textbf{corrección de perspectiva}. Capturar una imagen perfectamente frontal es casi imposible en la práctica. Por ello, se detectan los cuatro puntos de esquina del contador (a menudo con un modelo ligero como el propuesto por \textcite{Peng2023Deep}) para calcular una matriz de homografía y aplicar una transformación que rectifique la ROI a una vista frontal. A continuación, se aplican técnicas de normalización de iluminación como el \textit{Contrast Limited Adaptive Histogram Equalization} (CLAHE) para mitigar los efectos de sombras y reflejos.
+
+Finalmente, la ROI normalizada se envía a la etapa de \textbf{segmentación y reconocimiento}. Como se discutió en la sección \ref{ssec:neural_architectures}, los modelos modernos como CRNN evitan la necesidad de una segmentación explícita de cada dígito, leyendo la secuencia completa. Esto aumenta la robustez, ya que no depende de que cada dígito esté perfectamente separado. La salida del modelo OCR debe ser sometida a un \textbf{post-procesamiento}, que puede incluir la validación de la coherencia numérica (ej., la lectura actual no puede ser inferior a la del mes anterior) y la implementación de una lógica para solicitar una nueva captura si la confianza de la predicción es baja.
 
 \subsection{Robustez ante condiciones adversas}
-\label{ssec:adverse_conditions}
-Variaciones de iluminación y ángulo, oclusiones y deterioro de medidores, y técnicas de mejora de imagen en tiempo real.
+\label{ssec:robustness}
+La principal diferencia entre un prototipo de laboratorio y un sistema desplegable en campo es su capacidad para manejar condiciones no ideales. La robustez es, por tanto, una característica de diseño primordial.
+
+Las \textbf{variaciones de iluminación} son el desafío más común. Los reflejos especulares pueden ocultar dígitos por completo, mientras que las sombras profundas pueden reducir el contraste hasta hacerlos ilegibles. Aunque las técnicas de normalización en tiempo de ejecución como CLAHE ayudan, la estrategia más efectiva es entrenar al modelo para que sea invariante a estas condiciones. Esto se logra mediante una agresiva \textbf{aumentación de datos (data augmentation)} durante el entrenamiento, donde se simulan programáticamente una amplia gama de condiciones de iluminación, reflejos, y contrastes sobre el dataset de entrenamiento \parencite{Hong2021ImageBased}.
+
+Las \textbf{variaciones geométricas}, como los ángulos de captura extremos o la distorsión de la lente, se abordan principalmente con la corrección de perspectiva mencionada anteriormente. Sin embargo, para que esta funcione, el modelo de detección de esquinas debe ser robusto. Entrenarlo en imágenes con una amplia variedad de ángulos y distorsiones es fundamental para asegurar que la rectificación sea precisa.
+
+El \textbf{deterioro físico de los medidores} es otro factor crítico, especialmente en sistemas de agua que pueden tener décadas de uso. Las carátulas rayadas, la condensación interna que empaña el visor, o la suciedad acumulada son problemas frecuentes. Un modelo de deep learning bien entrenado puede aprender a "ver a través" de muchas de estas obstrucciones, pero los casos severos pueden requerir estrategias más avanzadas. Algunos sistemas proponen un pre-clasificador que evalúa la calidad de la imagen de la ROI. Si la calidad es demasiado baja (ej. por desenfoque de movimiento o una obstrucción severa), el sistema puede rechazar la imagen y solicitar al operario una nueva captura, en lugar de arriesgarse a una lectura incorrecta \parencite{Laroca2021Towards}. Técnicas de mejora de imagen en tiempo real, como la super-resolución ligera o el deblurring, son un área de investigación activa, pero su costo computacional a menudo las hace inviables para dispositivos móviles de gama media \parencite{Carvalho2023Deep}.
 
 \subsection{Implementaciones existentes: análisis crítico}
 \label{ssec:existing_implementations}
-Soluciones académicas vs comerciales, evaluación de precisión y escalabilidad, y limitaciones identificadas para contextos rurales.
+En los últimos años, han surgido numerosas propuestas académicas y algunas soluciones comerciales para la lectura automática de medidores. Un análisis crítico de estas implementaciones revela tanto el progreso del campo como las brechas que aún existen.
+
+Las \textbf{soluciones académicas} han demostrado consistentemente la viabilidad de los enfoques basados en deep learning, alcanzando precisiones superiores al 99% en varios datasets públicos \parencite{Liang2022Research, Maheshwari2023Automatic}. Proyectos como los de \textcite{Laroca2021Towards} y \textcite{Hong2021ImageBased} presentan pipelines completos y robustos, a menudo liberando su código y datasets, lo cual ha impulsado enormemente la investigación en el área. Sin embargo, muchas de estas implementaciones se validan en condiciones que no siempre representan la extrema variabilidad de los entornos rurales de países en desarrollo. A menudo se centran en un número limitado de modelos de medidores y no abordan explícitamente problemas como la conectividad intermitente o la necesidad de funcionar en hardware de muy bajo costo.
+
+Las \textbf{soluciones comerciales} de empresas de servicios tecnológicos a menudo se presentan como productos pulidos, pero operan como "cajas negras" con poca información pública sobre sus arquitecturas, rendimiento en condiciones adversas o costos reales. Generalmente están diseñadas para grandes empresas de servicios públicos urbanos y se basan en un modelo de negocio de licencia por dispositivo o por lectura, lo cual es económicamente inviable para una JAAP. Además, estas soluciones suelen requerir una infraestructura de backend en la nube, lo que las hace dependientes de una conectividad a internet constante, un requisito prohibitivo en el contexto de esta tesis \parencite{Fieldeke2021}.
+
+\begin{table}[h!]
+\centering
+\caption{Análisis crítico de tipos de implementaciones de lectura automática.}
+\label{tab:impl_analysis}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l l l l}
+\hline
+\textbf{Criterio} & \textbf{Métodos Tradicionales} & \textbf{Soluciones Académicas (DL)} & \textbf{Soluciones Comerciales} \\
+\hline
+\textbf{Precisión} & Baja a media, frágil & Muy alta (\textgreater99\%) en benchmarks & Alta (declarada) \\
+\textbf{Robustez} & Muy baja & Alta, dependiente del dataset & Desconocida, propietaria \\
+\textbf{Costo} & Bajo (desarrollo) & Bajo a medio (requiere datos) & Alto (licencias, TCO) \\
+\textbf{Hardware} & Ligero & Variable, optimizable para móviles & Generalmente requiere backend \\
+\textbf{Conectividad} & No necesaria & Puede ser offline & Generalmente requiere online \\
+\textbf{Adaptabilidad} & Específico, difícil de generalizar & Alta, re-entrenable & Baja, caja negra \\
+\textbf{Viabilidad JAAPS} & \textbf{Inviable (frágil)} & \textbf{Potencialmente viable} & \textbf{Inviable (costo, conectividad)} \\
+\hline
+\end{tabular}%
+}
+\end{table}
+
+Las \textbf{limitaciones para contextos rurales} son la principal brecha que estas implementaciones no abordan satisfactoriamente. La dependencia de la conectividad, los altos costos, los requisitos de hardware y la falta de adaptabilidad a la diversidad de medidores antiguos y deteriorados instalados en las zonas rurales de Ecuador son barreras significativas.
+
+Esto define una clara \textbf{oportunidad de mejora y un nicho para la presente investigación}: el desarrollo de un sistema de código abierto, diseñado desde cero para operación offline, optimizado para hardware de gama media-baja, y entrenado en un dataset específico que capture la realidad de los medidores gestionados por las JAAPS. Las lecciones aprendidas de las implementaciones existentes son claras: la clave no está solo en alcanzar la máxima precisión en un benchmark, sino en diseñar una solución holística, sostenible y verdaderamente adaptada a las restricciones y necesidades del usuario final. Esto prepara el terreno para el diseño metodológico de nuestro prototipo.
 
 \section{Desarrollo de aplicaciones móviles offline con IA integrada}
 \label{sec:offline_mobile_ai}
