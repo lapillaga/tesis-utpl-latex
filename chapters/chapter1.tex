@@ -1,4 +1,5 @@
 \chapter{Introducción}
+\label{ch:introduccion}
 
 \section{Contextualización del Problema: El Agua y Saneamiento en el Sector Rural}
 \label{sec:problem_context}
@@ -33,19 +34,17 @@ Finalmente, el proyecto presenta una clara justificación científica. Si bien e
 \label{sec:objectives}
 
 \subsection{Objetivo general}
-\label{ssec:general_objective}
-
-Desarrollar un prototipo móvil que permita la lectura automática de medidores de agua potable mediante técnicas de procesamiento de imágenes, orientado a optimizar la gestión de las JAAPS en el sector rural ecuatoriano.
+\label{subsec:general_objective}
+Desarrollar un prototipo móvil para la lectura automática de medidores de agua potable mediante técnicas de procesamiento de imágenes, que permita extraer indicadores de consumo con alta precisión y eficiencia.
 
 \subsection{Objetivos específicos}
-\label{ssec:specific_objectives}
+\label{subsec:specific_objectives}
 
 \begin{enumerate}
-    \item Fundamentar el diseño técnico del sistema mediante un análisis crítico del estado del arte en arquitecturas de OCR y visión artificial optimizadas para entornos móviles.
-    \item Crear un dataset especializado que capture la diversidad de medidores y las condiciones de campo adversas (suciedad, oclusiones, iluminación variable) propias de las JAAPS, para contextualizar el entrenamiento del modelo.
-    \item Implementar un pipeline de IA eficiente, integrando detección y reconocimiento, que logre una precisión de lectura $>$98\% con inferencia local (\textit{offline}) en dispositivos móviles de gama media.
-    \item Integrar el pipeline optimizado en una aplicación Android funcional, diseñada con una arquitectura \textit{offline-first} para asegurar su operatividad en zonas de conectividad intermitente o nula.
-    \item Cuantificar la mejora en eficiencia y precisión del prototipo mediante una validación comparativa en campo contra el método de lectura manual, estableciendo métricas de rendimiento en un contexto real.
+    \item Realizar una revisión sistemática de literatura para identificar arquitecturas y herramientas que fundamenten el diseño técnico del sistema de lectura de medidores de agua.
+    \item Desarrollar una aplicación móvil para la captura y procesamiento de imágenes, implementando algoritmos de visión por computadora resistentes a variaciones ambientales, para obtener datos de entrada optimizados para el reconocimiento.
+    \item Implementar un modelo de Reconocimiento Óptico de Caracteres, utilizando técnicas de aprendizaje automático optimizadas para dispositivos móviles, para extraer con precisión las lecturas numéricas de los medidores.
+    \item Validar la funcionalidad del prototipo completo, mediante pruebas comparativas en condiciones reales, para demostrar su viabilidad como solución al problema de lectura manual de medidores.
 \end{enumerate}
 
 \section{Alcance y Limitaciones}
@@ -54,7 +53,7 @@ Desarrollar un prototipo móvil que permita la lectura automática de medidores 
 A continuación, se definen las fronteras del presente trabajo de titulación, especificando tanto los entregables y funcionalidades que se desarrollarán, como los aspectos que quedan fuera del estudio.
 
 \subsection{Alcance del Proyecto}
-\label{ssec:project_scope}
+\label{subsec:project_scope}
 
 El alcance de esta investigación cubre los siguientes puntos:
 \begin{itemize}
@@ -66,7 +65,7 @@ El alcance de esta investigación cubre los siguientes puntos:
 \end{itemize}
 
 \subsection{Limitaciones de la Investigación}
-\label{ssec:research_limitations}
+\label{subsec:research_limitations}
 
 Para mantener el enfoque del proyecto, se establecen las siguientes limitaciones:
 \begin{itemize}
@@ -84,15 +83,10 @@ El presente trabajo de titulación se articula en seis capítulos, diseñados pa
 
 \begin{itemize}
     \item \textbf{Capítulo 1: Introducción.} Presenta la problemática de la lectura manual de medidores en las JAAPS rurales, justificando la solución propuesta y definiendo los objetivos y el alcance del proyecto.
-
     \item \textbf{Capítulo 2: Estado del Arte.} Analiza la literatura científica sobre gestión del agua, visión por computadora y modelos de OCR optimizados para dispositivos móviles, estableciendo el fundamento teórico del trabajo.
-
     \item \textbf{Capítulo 3: Metodología.} Detalla el diseño experimental y las fases del proyecto, incluyendo la creación del dataset, la selección y entrenamiento de los modelos de IA, y el protocolo para la validación en campo.
-
     \item \textbf{Capítulo 4: Desarrollo del sistema.} Describe la implementación técnica del prototipo, detallando la arquitectura del sistema, la optimización del modelo y el desarrollo de la aplicación Android con funcionalidad \textit{offline}.
-
     \item \textbf{Capítulo 5: Evaluación y resultados.} Expone los resultados cuantitativos de la validación en campo, comparando la precisión y eficiencia del prototipo frente al método manual mediante métricas de rendimiento objetivas.
-
     \item \textbf{Capítulo 6: Conclusiones y recomendaciones.} Discute los hallazgos de la investigación, extrae las conclusiones sobre la viabilidad de la solución, y propone recomendaciones para trabajos futuros y la escalabilidad del proyecto.
 \end{itemize}
 
