@@ -148,3 +148,54 @@ La segunda categoría es la \textbf{mejora de la calidad visual}. Esto incluye o
     \item \textbf{Filtrado de ruido:} La aplicación de filtros como el gaussiano o el de mediana puede ayudar a suavizar el ruido de la imagen capturada por sensores de baja calidad o en condiciones de poca luz.
 \end{itemize}
 La aplicación de un pipeline de preprocesamiento robusto es una condición indispensable para que los modelos de aprendizaje profundo puedan generalizar su rendimiento del laboratorio al impredecible entorno de campo \parencite{Chaki2019Automation}.
+
+\section{Reconocimiento Óptico de Caracteres (OCR) en el Contexto de AMR}
+\label{sec:ocr_for_amr}
+
+Una vez que la región de interés ha sido localizada, aislada y normalizada, la tarea central del sistema es transcribir la imagen de los dígitos a una secuencia de caracteres procesable. Esta es la función del Reconocimiento Óptico de Caracteres (OCR). Al igual que en la etapa de detección, el campo del OCR ha experimentado una profunda transformación, migrando desde métodos clásicos basados en reglas y características manuales hacia arquitecturas de aprendizaje profundo que ofrecen una robustez y precisión significativamente mayores, especialmente en los desafiantes entornos de campo.
+
+\subsection{Evolución de Enfoques: De Métodos Clásicos a Deep Learning}
+\label{ssec:ocr_evolution}
+
+Los primeros enfoques para el OCR en la lectura de medidores se basaban en técnicas de procesamiento de imágenes tradicionales. Un método común era la \textbf{coincidencia de plantillas (template matching)}, donde imágenes predefinidas de cada dígito (del 0 al 9) se comparan con segmentos de la imagen de entrada. La plantilla con la mayor similitud, a menudo medida por un coeficiente de correlación, determina el dígito reconocido \parencite{Chaki2019Automation}. Si bien este enfoque es computacionalmente simple, su fragilidad es su principal inconveniente; es extremadamente sensible a variaciones de escala, rotación, grosor del trazo y ruido en la imagen, lo que limita severamente su aplicabilidad en escenarios no controlados.
+
+Una alternativa más robusta dentro de los métodos clásicos es el uso de motores de OCR de código abierto como \textbf{Tesseract}. Estos sistemas son más avanzados, ya que internamente realizan sus propios procesos de segmentación y reconocimiento de características. Algunos trabajos lo han utilizado como base para sus sistemas \parencite{Maheshwari2023Automatic}. No obstante, aunque Tesseract funciona bien con texto impreso de alta calidad (como documentos escaneados), su rendimiento tiende a decaer en imágenes ``salvajes'' o \textit{in the wild}, como las fotografías de medidores, que presentan ruido, baja resolución y condiciones de iluminación deficientes.
+
+La revolución del \textit{deep learning} superó estas limitaciones. En lugar de depender de características o plantillas predefinidas, las Redes Neuronales Convolucionales (CNNs) aprenden a extraer jerarquías de características visuales directamente de los datos de entrenamiento. Esto les confiere una capacidad de generalización y una robustez muy superiores frente a las variaciones que inutilizan a los métodos clásicos. El cambio de paradigma más significativo fue la adopción de arquitecturas \textit{end-to-end}, que procesan la secuencia completa de dígitos en la ROI sin necesidad de una segmentación previa y explícita de cada carácter individual. Este enfoque holístico es inherentemente más robusto a los problemas de alineación y espaciado irregular entre los dígitos del medidor.
+
+\subsection{Análisis Comparativo de Arquitecturas Neuronales para OCR en Medidores}
+\label{ssec:ocr_architectures_comparison}
+
+Dentro del dominio del aprendizaje profundo, varias arquitecturas han sido propuestas y validadas para la tarea de reconocimiento de secuencias de texto en medidores. Una de las más influyentes y utilizadas como base es la \textbf{Red Neuronal Convolucional Recurrente (CRNN, por sus siglas en inglés)}. Un modelo CRNN combina lo mejor de dos mundos: las capas convolucionales (CNN) para la extracción de características visuales de la imagen, y las capas recurrentes (RNN), usualmente con unidades LSTM bidireccionales, para capturar el contexto secuencial de los dígitos. Finalmente, una capa de transcripción, que a menudo utiliza la función de pérdida de Clasificación Temporal Conexionista (CTC), traduce las predicciones de la red a la secuencia de caracteres final sin requerir una segmentación perfecta \parencite{Shen2023, Carvalho2023}.
+
+Si bien la arquitectura CRNN ha demostrado ser un punto de partida sólido, la investigación reciente se ha centrado en evaluar y desarrollar modelos aún más precisos. Un estudio comparativo exhaustivo realizado por \textcite{Nguyen2025Water} evaluó seis arquitecturas diferentes para la lectura de medidores de agua, incluyendo CRNN, TrOCR (basado en Transformers) y PP-OCRv3. Sus resultados concluyeron que \textbf{PP-OCRv3} obtuvo la mayor precisión (93\%), atribuyendo su éxito a sus módulos de optimización de imagen y a una arquitectura robusta que maneja eficientemente las anomalías de los caracteres. Este hallazgo es consistente con otros trabajos, como el de \textcite{Khan2024LowCost}, quienes lograron una precisión del 96.92\% al afinar un modelo de PaddleOCR, la base sobre la que se construye PP-OCRv3.
+
+La Tabla \ref{tab:ocr_comparison} presenta una síntesis de las arquitecturas de OCR más relevantes discutidas en la literatura para el AMR.
+
+\begin{table}[H]
+    \centering
+    \caption{Comparativa de Arquitecturas de OCR para Lectura de Medidores.}
+    \label{tab:ocr_comparison}
+    \begin{singlespace}
+    \begin{tabularx}{\textwidth}{>{\bfseries}l >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X}
+        \toprule
+        \textbf{Modelo} & \textbf{Principio de Funcionamiento} & \textbf{Precisión Reportada (Aprox.)} & \textbf{Referencia Clave} \\
+        \midrule
+        \textbf{Tesseract} & Motor de OCR clásico basado en análisis de componentes conectados y reconocimiento de patrones. & Variable, pero generalmente inferior a los modelos de DL en imágenes de campo. & \parencite{Maheshwari2023Automatic} \\
+        \addlinespace
+        \textbf{CRNN} & Combina una CNN para extracción de características, una RNN (LSTM) para contexto secuencial y una pérdida CTC para transcripción. & Sólida como base, pero superada por arquitecturas más modernas. & \parencite{Carvalho2023, Shen2023} \\
+        \addlinespace
+        \textbf{PP-OCRv3} & Sistema de OCR ultraligero con módulos optimizados para detección, corrección de dirección y reconocimiento. & 93\% en estudios comparativos, destacando por su robustez y eficiencia. & \parencite{Nguyen2025Water} \\
+        \addlinespace
+        \textbf{PaddleOCR} & Framework de OCR basado en DL (similar a PP-OCRv3) que, al ser afinado, ha demostrado un rendimiento de vanguardia. & 96.92\% en implementaciones específicas para medidores. & \parencite{Khan2024LowCost} \\
+        \bottomrule
+    \end{tabularx}
+    \end{singlespace}
+    \vspace{1ex} 
+    \parbox{\textwidth}{
+        \singlespace
+        \textit{Nota.} La precisión reportada puede variar significativamente según el dataset y las condiciones del experimento. La tabla busca sintetizar los hallazgos generales de la literatura citada.
+    }
+\end{table}
+
+La literatura reciente permite concluir que, para generar datos de consumo fiables que sirvan como base para un ciclo de facturación, el umbral de precisión de los métodos clásicos de OCR es insuficiente. La evidencia apunta de manera consistente hacia la adopción de modelos de aprendizaje profundo, donde una exactitud superior al 98\% se vuelve un requisito indispensable para minimizar errores con impacto económico y asegurar la confianza en el sistema automatizado. En este panorama, arquitecturas como CRNN se establecen como un estándar de base robusto, mientras que sistemas más optimizados como PP-OCRv3 representan la vanguardia, ofreciendo el rendimiento necesario para el prototipo que esta investigación se propone construir.
