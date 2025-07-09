@@ -100,3 +100,51 @@ A nivel global, la industria de servicios públicos avanza hacia la adopción ma
 Para una organización comunitaria como una JAAP, el costo de reemplazar cientos de medidores mecánicos por medidores inteligentes, sumado al despliegue y mantenimiento de la red de comunicaciones (AMI), es una barrera insuperable. Este escenario crea la oportunidad para el desarrollo de ``soluciones puente'', que ofrezcan los beneficios de la digitalización sin requerir una sustitución completa de la infraestructura existente.
 
 Aquí es donde la visión por computadora aplicada a través de dispositivos móviles se posiciona como la alternativa más viable y costo-efectiva. Este enfoque, que se enmarca dentro de las tendencias de Industria 4.0 y Ciudades Inteligentes, aprovecha dos recursos ya existentes y extendidos: la base instalada de medidores mecánicos y la alta penetración de los teléfonos inteligentes \parencite{Ktari2022Lightweight}. Al desarrollar una aplicación móvil que actúa como un ``lector inteligente'', se eliminan los principales costos de inversión. La solución se centra en el software y el uso de un hardware de consumo, democratizando el acceso a la medición avanzada. Proyectos como los de \parencite{Carvalho2023} y \parencite{Santiago2020Deployment} validan la factibilidad técnica de ejecutar estos sistemas en dispositivos de borde (edge devices), demostrando que es posible lograr una alta precisión en la lectura de forma rápida y, crucialmente, sin depender de una conexión a internet para el procesamiento.
+
+\section{Visión por Computadora Aplicada a la Lectura Automatizada de Medidores (AMR)}
+\label{sec:cv_for_amr}
+
+La visión por computadora (CV) constituye el pilar tecnológico que habilita la automatización de la lectura de medidores a partir de imágenes. Su objetivo es emular la capacidad humana de percepción visual para interpretar y extraer información estructurada —en este caso, una secuencia numérica— a partir de datos no estructurados como son los píxeles de una fotografía. En el contexto del AMR, la aplicación de CV no se limita a un único algoritmo, sino que implica el diseño de un \textit{pipeline} o secuencia de etapas de procesamiento, donde cada una resuelve una parte específica del problema general \parencite{Hong2021ImageBased}. Este enfoque modular permite abordar la complejidad de la tarea de una manera ordenada y robusta.
+
+\subsection{Fundamentos del Pipeline de Detección-Reconocimiento}
+\label{ssec:pipeline_fundamentals}
+
+El análisis de la literatura más influyente revela un consenso en torno a un \textit{pipeline} de dos etapas fundamentales como el enfoque más efectivo para el AMR basado en imágenes \parencite{Nguyen2025Water, Khan2024LowCost, Laroca2021Towards}. Esta arquitectura secuencial ha demostrado ser superior a los intentos de resolver el problema en un único paso, ya que descompone la tarea en dos subproblemas más manejables y computacionalmente optimizados.
+
+La \textbf{primera etapa es la detección y localización de la Región de Interés (ROI)}. Su propósito es encontrar y aislar el área específica del medidor que contiene los dígitos (el contador o la ``rueda de palabras''), descartando el resto del fondo de la imagen. Este paso es crítico porque reduce drásticamente la cantidad de información irrelevante y el ruido visual que se debe procesar en la siguiente fase, permitiendo que el modelo de reconocimiento se concentre exclusivamente en su tarea \parencite{Liang2022Research}.
+
+La \textbf{segunda etapa es el reconocimiento de la secuencia de caracteres}. Una vez que la ROI ha sido extraída y, a menudo, normalizada, se introduce en un modelo de Reconocimiento Óptico de Caracteres (OCR) cuyo objetivo es transcribir los píxeles de los dígitos en una secuencia de texto editable. La eficacia de esta etapa depende en gran medida de la calidad y precisión de la localización obtenida en la primera \parencite{Peng2023Deep}. El flujo general de este proceso se ilustra en la Figura \ref{fig:pipeline_diagram}.
+
+% --- Marcador de posición para el diagrama ---
+\begin{figure}[H]
+    \centering
+    % El código PlantUML para generar esta imagen se proporciona por separado.
+    % Deberás generar la imagen .png y colocarla en tu carpeta de imágenes.
+    \includegraphics[width=0.4\textwidth]{figures/pipeline}
+    \caption{Diagrama de flujo del pipeline de dos etapas para AMR.}
+    \label{fig:pipeline_diagram}
+\end{figure}
+
+\subsection{El Desafío de la Detección: De Cajas Delimitadoras a la Segmentación Semántica}
+\label{ssec:detection_challenge}
+
+La etapa de detección ha experimentado una notable evolución. Los primeros enfoques y los más directos utilizan modelos de detección de objetos, como las diferentes versiones de YOLO, para predecir una \textbf{caja delimitadora (bounding box)} horizontal que enmarque la ROI \parencite{Liang2022Research}. Si bien este método es rápido y eficaz en imágenes frontales y bien alineadas, su rendimiento se degrada significativamente cuando las imágenes son capturadas desde ángulos oblicuos, un escenario común en el trabajo de campo.
+
+Para superar esta limitación, la investigación de vanguardia ha avanzado hacia técnicas más sofisticadas. Un enfoque intermedio es la \textbf{detección de puntos clave (keypoint detection)}, donde el modelo no predice una caja, sino las cuatro esquinas del contador. Esto permite aplicar una transformación de perspectiva para rectificar la imagen y obtener una vista frontal normalizada, mejorando drásticamente los resultados del posterior OCR \parencite{Peng2023Deep}.
+
+El enfoque más avanzado y preciso hasta la fecha es la \textbf{segmentación semántica}. En lugar de predecir coordenadas, el modelo predice a nivel de píxel a qué clase pertenece cada uno (fondo o región del contador). Modelos recientes como CAM-YOLOv8 utilizan mecanismos de atención para lograr una segmentación extremadamente precisa de la ``rueda de palabras'', logrando delinear el contorno exacto de la ROI incluso en condiciones complejas \parencite{Wang2025}. Esta precisión en la localización es fundamental para maximizar el rendimiento de la etapa de reconocimiento.
+
+\subsection{Técnicas de Preprocesamiento de Imágenes para Escenarios Reales}
+\label{ssec:preprocessing_techniques}
+
+Independientemente de la sofisticación del modelo de detección o reconocimiento, la calidad de la imagen de entrada es un factor determinante en el rendimiento del sistema. Dado que las imágenes capturadas en campo rara vez son ideales, el preprocesamiento de imágenes no es un paso opcional, sino una etapa obligatoria para la normalización y mejora de los datos de entrada \parencite{Zou2021}.
+
+Las técnicas de preprocesamiento se pueden agrupar en dos categorías principales. La primera son las \textbf{correcciones geométricas}, destinadas a normalizar la pose y la orientación del medidor. Como se mencionó anteriormente, la corrección de perspectiva es la más importante para manejar ángulos de cámara variables \parencite{Peng2023Deep}. Adicionalmente, módulos específicos de \textbf{alineación de orientación} pueden corregir la rotación en el plano de la imagen, asegurando que los dígitos se presenten horizontalmente al modelo de OCR \parencite{Hong2021ImageBased}.
+
+La segunda categoría es la \textbf{mejora de la calidad visual}. Esto incluye operaciones más tradicionales pero igualmente efectivas:
+\begin{itemize}
+    \item \textbf{Conversión a escala de grises:} Reduce la complejidad computacional al procesar un solo canal de color en lugar de tres, sin perder la información esencial de la forma de los dígitos.
+    \item \textbf{Normalización de la iluminación:} Técnicas como la ecualización de histograma, y en particular la ecualización adaptativa de histograma limitada por contraste (CLAHE), son efectivas para mitigar los efectos de sombras profundas o reflejos brillantes, estandarizando el contraste de la ROI.
+    \item \textbf{Filtrado de ruido:} La aplicación de filtros como el gaussiano o el de mediana puede ayudar a suavizar el ruido de la imagen capturada por sensores de baja calidad o en condiciones de poca luz.
+\end{itemize}
+La aplicación de un pipeline de preprocesamiento robusto es una condición indispensable para que los modelos de aprendizaje profundo puedan generalizar su rendimiento del laboratorio al impredecible entorno de campo \parencite{Chaki2019Automation}.
