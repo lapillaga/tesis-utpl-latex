@@ -199,3 +199,44 @@ La Tabla \ref{tab:ocr_comparison} presenta una síntesis de las arquitecturas de
 \end{table}
 
 La literatura reciente permite concluir que, para generar datos de consumo fiables que sirvan como base para un ciclo de facturación, el umbral de precisión de los métodos clásicos de OCR es insuficiente. La evidencia apunta de manera consistente hacia la adopción de modelos de aprendizaje profundo, donde una exactitud superior al 98\% se vuelve un requisito indispensable para minimizar errores con impacto económico y asegurar la confianza en el sistema automatizado. En este panorama, arquitecturas como CRNN se establecen como un estándar de base robusto, mientras que sistemas más optimizados como PP-OCRv3 representan la vanguardia, ofreciendo el rendimiento necesario para el prototipo que esta investigación se propone construir.
+
+\section{Habilitadores Tecnológicos para el Despliegue en Dispositivos Móviles (Edge AI)}
+\label{sec:mobile_deployment_enablers}
+
+La implementación de un sistema de AMR en el contexto de las JAAPS rurales presenta un desafío que va más allá de la precisión del modelo: la necesidad de un despliegue en dispositivos de borde (\textit{edge devices}) con recursos computacionales limitados y sin dependencia de una conexión a internet. Este paradigma, conocido como Inteligencia Artificial en el Borde (Edge AI), implica que todo el procesamiento, desde la captura de la imagen hasta la inferencia del modelo, se realiza localmente en el dispositivo móvil del operario \parencite{Li2023EdgeAI}. Este enfoque es la única alternativa viable frente a los modelos basados en la nube, ya que ofrece una latencia mínima, garantiza el funcionamiento en zonas sin cobertura y mantiene la privacidad de los datos al no transmitirlos a servidores externos.
+
+\subsection{Requerimientos del Procesamiento en el Borde: Latencia, Memoria y Consumo Energético}
+\label{ssec:edge_requirements}
+
+El hardware de un teléfono inteligente, aunque potente, es un entorno de recursos restringidos en comparación con un servidor. El despliegue de modelos de aprendizaje profundo en estos dispositivos impone un conjunto estricto de requerimientos no funcionales que deben ser abordados desde el diseño \parencite{Poddar2024Survey}.
+
+El primero es la \textbf{latencia}. Para que la aplicación sea usable en campo, el tiempo total desde que se captura la foto hasta que se muestra la lectura reconocida debe ser mínimo, idealmente inferior a un par de segundos. Una latencia elevada frustra al usuario y reduce drásticamente la eficiencia que se busca lograr \parencite{Carvalho2023}.
+
+El segundo requerimiento es el uso de \textbf{memoria}. Los modelos de \textit{deep learning} pueden ocupar cientos de megabytes, tanto en almacenamiento (el tamaño del archivo del modelo) como en RAM durante la ejecución. Un modelo demasiado grande no solo es difícil de distribuir e instalar, sino que corre el riesgo de ser terminado por el sistema operativo Android si su consumo de RAM es excesivo, especialmente en dispositivos de gama media o baja.
+
+Finalmente, el \textbf{consumo energético} es un factor crítico. Las operaciones de las redes neuronales, particularmente las convoluciones, son computacionalmente intensivas y pueden drenar la batería del dispositivo rápidamente. Una solución que agote la batería del teléfono del operario a mitad de su jornada de trabajo es, en la práctica, inviable. Por tanto, la eficiencia energética del modelo es tan importante como su precisión \parencite{Poddar2024Survey}.
+
+\subsection{Arquitecturas Optimizadas y Frameworks (TensorFlow Lite)}
+\label{ssec:efficient_architectures_frameworks}
+
+Para satisfacer los estrictos requerimientos del borde, la comunidad de investigación ha desarrollado arquitecturas de redes neuronales diseñadas explícitamente para la eficiencia. La innovación clave fue la introducción de las \textbf{convoluciones separables en profundidad (\textit{depthwise separable convolutions})}, que reducen drásticamente el número de parámetros y operaciones computacionales en comparación con las convoluciones estándar. Esta técnica es la piedra angular de familias de redes tan influyentes como \textbf{MobileNet} \parencite{Poddar2024Survey}.
+
+Posteriormente, arquitecturas como \textbf{EfficientNet} introdujeron un método de escalado compuesto que optimiza de manera balanceada la profundidad, el ancho y la resolución de la red para lograr un mejor equilibrio entre precisión y eficiencia \parencite{Tan2021EfficientNetV2}. Investigaciones más recientes incluso han explorado la adaptación de los Transformers, tradicionalmente pesados, a entornos móviles con modelos como \textbf{MobileViT} \parencite{Mehta2022MobileViT}. Trabajos aplicados al AMR, como el de \textcite{Zou2021}, demuestran que es posible diseñar CNNs ligeras y personalizadas que alcanzan una alta precisión con una complejidad reducida.
+
+Para desplegar estos modelos en un dispositivo Android, es necesario utilizar un \textit{framework} de inferencia móvil. El estándar de la industria para este fin es \textbf{TensorFlow Lite (TFLite)}. TFLite no es un entorno de entrenamiento, sino un conjunto de herramientas que permite tomar un modelo estándar de TensorFlow, convertirlo y optimizarlo para su ejecución en el borde. El \textit{framework} proporciona un intérprete ligero que se integra en la aplicación móvil y que es capaz de aprovechar los aceleradores de hardware del dispositivo (GPU, DSP, NPU) para una inferencia más rápida y eficiente \parencite{Albonico2023Benchmarking, Santiago2020Deployment}.
+
+\subsection{Técnicas de Optimización: Cuantización y Transferencia de Aprendizaje}
+\label{ssec:optimization_techniques}
+
+Además de elegir una arquitectura ligera, existen técnicas de optimización post-entrenamiento que son cruciales para reducir aún más el tamaño y la latencia del modelo. La más importante de ellas es la \textbf{cuantización}. Este proceso consiste en reducir la precisión numérica de los pesos del modelo, usualmente de números de punto flotante de 32 bits (FP32) a enteros de 8 bits (INT8). Los beneficios de la cuantización son triples: reduce el tamaño del modelo en aproximadamente 4 veces, acelera la inferencia (especialmente en hardware con soporte para operaciones con enteros) y disminuye el consumo de energía \parencite{Ghosh2023SurveyQuantization}. El entrenamiento consciente de la cuantización (QAT) es una técnica que simula los efectos de la cuantización durante el entrenamiento, lo que generalmente permite preservar una mayor precisión en el modelo final en comparación con la cuantización post-entrenamiento (PTQ).
+
+Otra estrategia fundamental para proyectos con datasets limitados, como es el caso de esta investigación, es la \textbf{transferencia de aprendizaje (\textit{transfer learning})}. En lugar de entrenar una red neuronal desde cero, lo que requeriría una enorme cantidad de imágenes, se parte de un modelo ligero pre-entrenado en un dataset a gran escala (como MobileNet entrenado en ImageNet). Se congelan las capas iniciales que han aprendido a extraer características visuales genéricas (bordes, texturas, formas) y se re-entrenan únicamente las últimas capas sobre el dataset específico de medidores de agua. Esta técnica reduce drásticamente el tiempo de entrenamiento y la cantidad de datos necesarios, al tiempo que permite alcanzar una alta precisión \parencite{Poddar2024Survey}.
+
+% --- Marcador de posición para el diagrama ---
+\begin{figure}[H]
+    \centering
+    % El código PlantUML para generar esta imagen se proporciona por separado.
+    \includegraphics[width=0.4\textwidth]{figures/tflite_optimization_flow}
+    \caption{Flujo de trabajo para la optimización de un modelo de deep learning para su despliegue en dispositivos móviles mediante TensorFlow Lite.}
+    \label{fig:tflite_optimization_flow}
+\end{figure}
