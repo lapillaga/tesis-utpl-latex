@@ -241,6 +241,58 @@ Otra estrategia fundamental para proyectos con datasets limitados, como es el ca
     \label{fig:tflite_optimization_flow}
 \end{figure}
 
+\section{Desarrollo de Aplicaciones Móviles para la Captura y Gestión de Datos en Campo}
+\label{sec:mobile_app_development}
+
+Un modelo de inteligencia artificial, por más preciso que sea en el laboratorio, carece de impacto si no está encapsulado en una herramienta de software robusta, usable y adaptada al flujo de trabajo del usuario final. En el contexto de este proyecto, la herramienta es una aplicación móvil para la plataforma Android. Por lo tanto, el estado del arte no solo abarca las técnicas de visión por computadora, sino también las mejores prácticas en la arquitectura y el desarrollo de aplicaciones móviles diseñadas para operar en condiciones de campo, donde la conectividad es un lujo y la simplicidad de uso es un requisito indispensable.
+
+\subsection{Arquitecturas de Software para Aplicaciones ``Offline-First''}
+\label{ssec:offline_first_architecture}
+
+El requisito fundamental de operación en zonas rurales sin acceso a internet obliga a adoptar una arquitectura de software ``offline-first''. En este paradigma, la aplicación debe ser 100\% funcional sin conexión; la sincronización de datos con un servidor central se considera una operación secundaria que ocurre de manera eventual, cuando la conectividad está disponible \parencite{Santiago2020Deployment}.
+
+Para lograr esto, la práctica estándar en el desarrollo de Android moderno es el uso del \textbf{Patrón de Repositorio (Repository Pattern)}. Este patrón de diseño desacopla la lógica de la aplicación de las fuentes de datos. El repositorio actúa como la única fuente de verdad para la aplicación, gestionando internamente si los datos se obtienen de una base de datos local o de un servicio web remoto. Para el almacenamiento local persistente, la biblioteca \textbf{Room}, una capa de abstracción sobre SQLite, es la solución recomendada por Google por su robustez y facilidad de uso.
+
+La sincronización de los datos recolectados (las lecturas de los medidores) se gestiona de manera asíncrona. Herramientas como \textbf{WorkManager}, parte de Android Jetpack, permiten programar tareas de sincronización diferidas y garantizadas. El sistema operativo se encarga de ejecutar la tarea de carga de datos cuando detecta que el dispositivo ha recuperado una conexión a internet, asegurando que ninguna lectura se pierda, incluso si el dispositivo se reinicia.
+
+\begin{figure}[H]
+    \centering
+    % Código PlantUML para generar esta imagen se proporciona por separado.
+    \fbox{\parbox[c][8cm][c]{0.9\textwidth}{\centering Diagrama de Arquitectura Offline-First (generado con PlantUML).}}
+    \caption{Diagrama de una arquitectura de software moderna para Android con enfoque ``offline-first'', mostrando la separación de responsabilidades y el flujo de datos.}
+    \label{fig:offline_architecture}
+\end{figure}
+
+
+\subsection{Frameworks de Desarrollo: Nativo (Kotlin) vs. Multiplataforma (Flutter)}
+\label{ssec:development_frameworks}
+
+La elección del framework de desarrollo tiene implicaciones directas en el rendimiento y las capacidades de la aplicación. En el ecosistema actual, las dos vertientes principales son el desarrollo nativo y el multiplataforma.
+
+El \textbf{desarrollo nativo} para Android, utilizando lenguajes como \textbf{Kotlin} o Java, ofrece la ventaja fundamental de un rendimiento óptimo y un acceso directo y sin restricciones a todas las APIs del sistema operativo. Esto es particularmente crítico para aplicaciones que dependen intensivamente del hardware, como es el caso de un prototipo de visión por computadora. El acceso directo a las APIs de la cámara (CameraX) para un control granular de la captura y, sobre todo, a los delegados de aceleración de hardware (NNAPI) para los modelos de IA, es más sencillo y eficiente en un entorno nativo.
+
+Por otro lado, los \textbf{frameworks multiplataforma} como \textbf{Flutter} (usando el lenguaje Dart) o React Native permiten escribir una única base de código que se compila tanto para Android como para iOS, lo que puede acelerar el desarrollo. Sin embargo, esta abstracción puede introducir una capa de sobrecarga (overhead) que impacte la latencia de la inferencia del modelo. Además, el acceso a las APIs nativas más avanzadas de hardware a menudo requiere el uso de ``puentes'' o \textit{plugins} de terceros, lo que puede añadir complejidad y puntos de fallo. Para una aplicación donde el rendimiento de la inferencia de IA en el borde es el núcleo funcional, la literatura y la práctica de la industria a menudo se inclinan por el enfoque nativo para maximizar la velocidad y la fiabilidad.
+
+\subsection{Integración Práctica de Modelos TFLite en Android}
+\label{ssec:tflite_integration}
+
+La integración de un modelo de TensorFlow Lite (`.tflite`) en una aplicación Android es un proceso técnico que va más allá de simplemente añadir el archivo al proyecto. Requiere una gestión cuidadosa de los recursos para asegurar una ejecución fluida.
+
+El componente central es el \textbf{Intérprete de TFLite}, que se encarga de cargar el modelo y ejecutar la inferencia. Un aspecto crítico es el manejo de hilos de ejecución (\textit{threading}). La inferencia del modelo es una operación bloqueante que puede tardar desde milisegundos hasta varios segundos; ejecutarla en el hilo principal de la interfaz de usuario (UI thread) provocaría que la aplicación se congelara, resultando en un error de ``Aplicación no responde'' (ANR). Por ello, es imperativo que toda la lógica de inferencia se ejecute en un hilo de fondo. Las \textbf{Corrutinas de Kotlin} son la herramienta moderna y recomendada en Android para gestionar estas operaciones asíncronas de manera eficiente y legible.
+
+Para acelerar la ejecución, el intérprete de TFLite puede utilizar \textbf{delegados} para derivar la computación a procesadores especializados. El delegado de GPU puede acelerar modelos con gran cantidad de operaciones en paralelo, mientras que el delegado de NNAPI (Neural Networks API) permite al sistema operativo distribuir la carga entre la GPU, el DSP (Procesador de Señal Digital) o una NPU (Unidad de Procesamiento Neuronal) si el dispositivo dispone de ella \parencite{Albonico2023Benchmarking}.
+
+Finalmente, el desarrollador debe manejar la conversión de datos. La imagen capturada (`Bitmap`) debe ser preprocesada (cambio de tamaño, normalización de píxeles) y convertida a un `TensorBuffer` o `ByteBuffer` con el formato exacto que el modelo espera. De igual manera, los tensores de salida del modelo deben ser decodificados para extraer la información útil, como las coordenadas de las cajas delimitadoras y las probabilidades de cada clase.
+
+\subsection{UI/UX para Captura Guiada y Usabilidad en Campo}
+\label{ssec:guided_capture_ux}
+
+Una aplicación técnicamente perfecta puede fracasar si su uso es complicado o frustrante para el operario. En el contexto de las JAAPS, donde los usuarios pueden tener distintos niveles de familiaridad con la tecnología, el diseño de la Interfaz de Usuario (UI) y la Experiencia de Usuario (UX) es un factor crítico de éxito.
+
+El principio rector debe ser el de un \textbf{diseño centrado en la tarea}, minimizando la cantidad de pasos y decisiones que el usuario debe tomar. Una estrategia clave para mejorar la calidad de las imágenes de entrada es la \textbf{captura guiada}. Utilizando la API \textbf{CameraX} de Android, es posible superponer en la vista previa de la cámara una guía visual (por ejemplo, un recuadro o unas esquinas) que indique al operario cómo debe encuadrar el medidor. La aplicación puede incluso analizar los fotogramas de la vista previa en tiempo real para detectar cuándo el medidor está bien alineado y enfocado, y disparar la captura automáticamente, simplificando al máximo el proceso.
+
+Además, el sistema debe proporcionar \textbf{feedback constante e inequívoco}. El uso de vibraciones (feedback háptico), sonidos cortos y cambios de color en la interfaz puede confirmar acciones como ``captura exitosa'', ``procesando...'' y ``lectura reconocida'', dando seguridad al operario en cada paso del proceso. Estos principios de diseño, enfocados en la simplicidad y la asistencia activa, son fundamentales para asegurar la adopción y el uso efectivo de la herramienta en las condiciones reales de campo.
+
 \section{Desafíos Técnicos en los Ambientes Rurales de la Sierra Ecuatoriana}
 \label{sec:rural_technical_challenges}
 
