@@ -1,359 +1,41 @@
 \chapter{Estado del arte}
-\label{chap:theoretical_framework}
+\label{ch:theoretical_framework}
 
-\section{Gestión del agua en comunidades rurales: contexto y desafíos tecnológicos}
-\label{sec:rural_water_management}
+\section{Contexto Global y Local de la Gestión del Agua Potable}
+\label{sec:global_local_context}
 
-\subsection{Las JAAPS como modelo de gestión comunitaria del agua}
-\label{ssec:jaaps_model}
+La gestión eficiente del agua potable es uno de los pilares fundamentales para el desarrollo sostenible, la salud pública y la estabilidad económica a nivel global. Sin embargo, la brecha entre la disponibilidad del recurso y su acceso equitativo y gestionado de manera sostenible sigue siendo un desafío mayúsculo, especialmente en las zonas rurales de países en desarrollo. En este contexto, la innovación tecnológica, y en particular la inteligencia artificial (IA), emerge no como un fin en sí misma, sino como una herramienta catalizadora con el potencial de transformar modelos de gestión comunitarios, superando barreras históricas de eficiencia, transparencia y viabilidad financiera. Esta sección establece el marco contextual de la presente investigación, partiendo de los objetivos globales de sostenibilidad para aterrizar en los desafíos operativos concretos que enfrentan las organizaciones de agua en el Ecuador rural, identificando así la oportunidad para una intervención tecnológica pertinente y de alto impacto.
 
-En el Ecuador, la cobertura de servicios de agua potable en zonas rurales representa un desafío que el Estado no ha logrado suplir por completo. Para atender esta carencia, el marco legal ecuatoriano impulsa la gestión comunitaria del agua como un eje clave para la garantía de este derecho \parencite[p.~16]{BID2022GestionComunitaria}. Bajo este esquema, las Juntas Administradoras de Agua Potable y Saneamiento (JAAPS) se han consolidado como la principal forma de organización. Se trata de entidades sin fines de lucro, creadas y gestionadas por los propios miembros de la comunidad, quienes asumen la responsabilidad sobre la administración, operación y mantenimiento de los sistemas de agua a pequeña escala. Se calcula que en el país operan más de 5,000 de estas juntas, las cuales proveen servicio a una porción considerable de la población rural dispersa.
+\subsection{Acceso al Agua y Saneamiento como Objetivo de Desarrollo Sostenible (ODS 6)}
+\label{subsec:ods6}
 
-La estructura de una JAAP es, por naturaleza, democrática y voluntaria. Su máxima autoridad es la asamblea general de usuarios, de la cual emana un directorio electo periódicamente, integrado por un presidente, un tesorero, un secretario y vocales. Estos directivos, que generalmente no perciben remuneración, cargan con la totalidad de la gestión administrativa y técnica. Aunque su labor es vital para la sostenibilidad del servicio, esta se ve limitada por las capacidades y el tiempo que sus miembros pueden dedicar, lo que constituye una vulnerabilidad institucional intrínseca \parencite{Toma2020}. El éxito del modelo recae, en gran medida, en el compromiso de la comunidad y en la habilidad de la junta para administrar con eficacia los recursos hídricos y financieros.
+La comunidad internacional, a través de la Agenda 2030 para el Desarrollo Sostenible, reconoció la centralidad del agua al establecer el Objetivo de Desarrollo Sostenible 6 (ODS 6): ``Garantizar la disponibilidad de agua y su gestión sostenible y el saneamiento para todos''~\parencite{NacionesUnidas2015}. Este objetivo va más allá de la simple provisión de acceso a una fuente de agua; su núcleo reside en la \textbf{gestión sostenible}, un concepto que implica eficiencia en el uso, reducción de pérdidas y la creación de sistemas resilientes y económicamente viables. Es precisamente en este punto donde los modelos de gestión tradicionales, basados en procesos manuales, muestran sus limitaciones más profundas.
 
-El proceso de lectura de medidores, que sirve de base para la facturación, es uno de los eslabones más críticos y donde se concentran las mayores ineficiencias. Dicho proceso es casi enteramente manual y sigue una secuencia de pasos propensa a errores:
-\begin{enumerate}
-    \item \textbf{Planificación de la ruta:} El operador de la junta traza un recorrido para visitar los domicilios de los usuarios, los cuales pueden estar geográficamente dispersos en terrenos de difícil acceso.
-    \item \textbf{Toma de lectura manual:} El lector se desplaza a cada domicilio y registra de manera visual el valor del medidor. Este dato se anota a mano en una libreta. Aquí afloran los primeros inconvenientes: medidores deteriorados, con visores opacos o sucios, o situados en lugares que dificultan una lectura precisa.
-    \item \textbf{Transcripción de datos:} Al finalizar la ruta, los datos de la libreta son transcritos a un registro centralizado, que puede ser un cuaderno o una hoja de cálculo básica. Este doble paso de digitación es una fuente significativa de errores.
-    \item \textbf{Cálculo del consumo y facturación:} Utilizando la lectura actual y la del mes anterior, se calcula el consumo y se emite la factura o recibo de pago, nuevamente de forma manual.
-\end{enumerate}
+La falta de datos precisos y oportunos sobre el consumo y las pérdidas de agua impide una gestión informada. Sistemas de lectura manual, propensos a errores y con largos periodos de recolección, obstaculizan la capacidad de los proveedores para implementar estrategias efectivas de conservación y para asegurar la sostenibilidad financiera del servicio. En el nexo Agua-Energía-Alimentos, la gestión ineficiente del agua tiene efectos en cascada, afectando la seguridad alimentaria y la disponibilidad de energía \parencite{RoaGarcia2019}. Por lo tanto, la modernización de los procesos de medición y facturación no es solo una optimización operativa, sino una condición necesaria para avanzar hacia el cumplimiento del ODS 6.
 
-Los errores en este ciclo tienen un impacto directo y severo en la sostenibilidad financiera de las JAAPS. Un simple error de transcripción puede derivar en una subfacturación, privando a la junta de ingresos vitales para cubrir costos operativos, de mantenimiento y de cloración. A la inversa, una sobrefacturación puede erosionar la confianza y generar conflictos con los usuarios. Estudios preliminares en el marco de esta investigación sugieren que las desviaciones en los registros pueden alcanzar hasta un 10\%. Esta cifra es alarmante, pues se agrava con el problema del Agua No Contabilizada (ANC), que en sistemas gestionados localmente puede superar el 50\%, en un país donde el promedio nacional para GAD Municipales ya es del 51.8\% \parencite[p.~15]{INEC2023}. La combinación de pérdidas técnicas, como fugas, y comerciales, como errores de lectura, debilita un modelo de gestión que ya opera con recursos extremadamente limitados \parencite{ANC2025}.
+\subsection{El Desafío de la Gestión Comunitaria en Zonas Rurales de América Latina}
+\label{subsec:latam_rural_management}
 
-\subsection{Evolución tecnológica en la lectura de medidores de agua}
-\label{ssec:meter_reading_evolution}
+En vastas regiones de América Latina, la provisión de servicios de agua y saneamiento en áreas rurales dispersas no es asumida directamente por el Estado, sino por organizaciones de base comunitaria \parencite{BID2022GestionComunitaria}. Este modelo de gestión, si bien es esencial para garantizar la cobertura, se enfrenta a desafíos estructurales que amenazan su perdurabilidad.
 
-La medición del consumo es la piedra angular en la gestión comercial de cualquier proveedor de agua. Tradicionalmente, este proceso ha recaído en métodos manuales, cuyas limitaciones son cada vez más evidentes. La lectura manual, tal como la que practican las JAAPS, es lenta, intensiva en mano de obra y altamente susceptible al error humano \parencite{Chaki2019Automation}. Los retos abarcan desde las dificultades de acceso físico a los medidores y los errores de transcripción, hasta la ausencia de datos en tiempo real que impide una gestión proactiva de la red, como la detección temprana de fugas.
+La principal vulnerabilidad de estos sistemas, a menudo operados por voluntarios con recursos limitados y capacidades técnicas en desarrollo, radica en la fragilidad de sus procesos administrativos y comerciales. La ausencia de herramientas tecnológicas para una medición precisa, una facturación automatizada y un cobro eficiente compromete directamente la viabilidad financiera de la organización. Esta carencia limita severamente su capacidad para reinvertir en el mantenimiento correctivo y la expansión de la infraestructura, afectando en última instancia la sostenibilidad y la calidad del servicio a largo plazo \parencite{BID2022GestionComunitaria, Toma2020}.
 
-Como respuesta, la industria ha desarrollado tecnologías cada vez más sofisticadas. La primera gran innovación fue la Lectura Automática de Medidores (AMR). Los sistemas AMR transmiten los datos del medidor de forma remota a un dispositivo de recolección cercano, usualmente por radiofrecuencia. Esto elimina la necesidad de una inspección visual del medidor, reduciendo errores y agilizando el proceso, ya que un operador puede recoger las lecturas desde un vehículo (\textit{drive-by}) \parencite{IADB2022}. Si bien AMR fue un avance notable, aún requiere el despliegue de personal en campo y carece de comunicación bidireccional.
+\subsection{El Rol de las JAAPS en Ecuador: Desafíos Operativos y la Brecha Tecnológica}
+\label{subsec:jaaps_ecuador}
 
-El siguiente paso evolutivo es la Infraestructura de Medición Avanzada (AMI), la cual emplea redes de comunicación fijas (celulares, fibra óptica) para crear un enlace bidireccional continuo entre el medidor inteligente y el sistema central. AMI no solo automatiza la lectura, sino que también posibilita la monitorización en tiempo real, la gestión remota de válvulas y el suministro de información detallada del consumo al usuario final \parencite{GlobalGrowth2023}. Esta tecnología es el fundamento de las redes de agua inteligentes o \textit{smart water grids}.
+En el Ecuador, las Juntas Administradoras de Agua Potable y Saneamiento (JAAPS) son la manifestación concreta del modelo de gestión comunitaria, amparadas por un marco legal que fomenta su creación para suplir la cobertura estatal. Se estima que más de 5,000 de estas juntas proveen servicio a una porción considerable de la población rural \parencite{BID2022GestionComunitaria}. Su estructura democrática, basada en el trabajo voluntario de sus directivos, es a la vez su mayor fortaleza social y su principal debilidad operativa \parencite{Toma2020}.
 
-Pese a sus beneficios, la adopción de AMR y, sobre todo, de AMI en zonas rurales de países en desarrollo es prácticamente inexistente. El principal impedimento es la barrera económica. Los costos de inversión inicial son prohibitivos para organizaciones comunitarias como las JAAPS. Un medidor inteligente puede costar entre 5 y 10 veces más que uno mecánico tradicional, a lo que se suma el costo de la infraestructura de red, el software y la capacitación técnica para su mantenimiento \parencite{Fieldeke2021}. Adicionalmente, la falta de conectividad fiable a internet y la inestabilidad del suministro eléctrico en muchas áreas rurales plantean obstáculos técnicos insalvables \parencite{IADB2022}.
+El proceso de lectura de medidores ejemplifica claramente estos retos operativos. Al ser un ciclo enteramente manual, el registro visual en cuadernos y su posterior transcripción a sistemas centralizados representa una fuente constante de errores. De hecho, datos preliminares de esta investigación sugieren que estas fallas pueden generar desviaciones de hasta un 10\% en la facturación. Estos errores, catalogados como ``pérdidas comerciales'', se suman al ya crítico problema del Agua No Contabilizada (ANC). A nivel nacional, el promedio de ANC en los Gobiernos Autónomos Descentralizados (GAD) Municipales alcanza un alarmante 51.8\% \parencite[p.~15]{INEC2023}. Es plausible que esta cifra sea aún mayor en los sistemas comunitarios, donde a las pérdidas técnicas por fugas se añade una mayor incidencia de pérdidas comerciales debido, precisamente, a la fragilidad de estos procesos manuales \parencite{ANC2025}.
 
-En este escenario, las soluciones basadas en visión artificial y dispositivos móviles surgen como una alternativa prometedora y de bajo costo. Este enfoque no precisa reemplazar la infraestructura de medidores existente. En su lugar, utiliza la cámara de un smartphone para capturar una imagen del medidor mecánico y un software de Reconocimiento Óptico de Caracteres (OCR) para extraer la lectura \parencite{Laroca2021Towards}. El costo se reduce drásticamente, pues el hardware principal es un teléfono inteligente, dispositivo de uso extendido incluso en zonas rurales. Investigaciones recientes han confirmado la alta precisión de los modelos de \textit{deep learning} para esta tarea, aun en condiciones desafiantes como medidores sucios, con reflejos o en ángulos complejos \parencite{Hong2021ImageBased, Liang2022Research, Peng2023Deep}. Esta aproximación constituye un puente tecnológico que aprovecha la infraestructura de medición existente y la combina con la inteligencia artificial en el borde (\textit{edge AI}) para digitalizar el proceso con una inversión mínima \parencite{Carvalho2023, Ktari2022Lightweight}.
-
-\section{Reconocimiento óptico de caracteres aplicado a medidores}
-\label{sec:ocr_meters}
-
-Tras establecer la necesidad de una solución de bajo costo para las JAAPS, esta sección profundiza en la tecnología clave que la habilita: el Reconocimiento Óptico de Caracteres (OCR). Se exploran las variantes de OCR aplicadas a medidores, desde sus fundamentos y evolución hacia el \textit{deep learning}, hasta las arquitecturas de redes neuronales y los conjuntos de datos necesarios para su desarrollo.
-
-\subsection{Fundamentos del OCR en entornos industriales}
-\label{ssec:ocr_industrial}
-El OCR es un campo de la visión por computadora que busca convertir imágenes de texto en datos codificados y procesables por una máquina. Históricamente, los sistemas OCR se apoyaban en un pipeline de múltiples etapas basado en técnicas de procesamiento de imágenes. Este incluía el preprocesamiento de la imagen (escala de grises, binarización de Otsu), la segmentación para aislar caracteres, la extracción de características de cada uno y, finalmente, su clasificación mediante algoritmos como Support Vector Machines (SVM) \parencite{Chaki2019Automation}.
-
-Sin embargo, el entorno industrial, y específicamente la lectura de medidores analógicos, presenta desafíos que exponen las debilidades de los métodos tradicionales. Los dígitos en un medidor poseen características particulares:
-\begin{itemize}
-    \item \textbf{Fuentes y alineación:} Los dígitos, a menudo de tipo siete segmentos, sufren de alineación imperfecta y rotaciones parciales, sobre todo durante la transición entre números (un `3` a medio camino de ser un `4`).
-    \item \textbf{Condiciones de la carátula:} La superficie está expuesta a suciedad, rayones, condensación y reflejos que pueden ocultar o distorsionar los dígitos.
-    \item \textbf{Iluminación variable:} La captura en campo se realiza bajo condiciones de luz no controladas, desde sol directo hasta sombras profundas.
-\end{itemize}
-Estos factores hacen que la segmentación precisa de los dígitos, un paso crucial en los métodos clásicos, sea extremadamente frágil, llevando a errores de reconocimiento.
-
-El arribo del aprendizaje profundo (\textit{deep learning}) ha revolucionado el OCR. Las Redes Neuronales Convolucionales (CNNs) permiten un enfoque de extremo a extremo (\textit{end-to-end}) que aprende a extraer características relevantes directamente de la imagen, mostrando una robustez muy superior. Para evaluar estos sistemas se emplean métricas como la Tasa de Error de Caracteres (CER) y la Tasa de Error de "Palabra" (WER), donde una "palabra" es la secuencia completa de dígitos. Para que una solución sea viable para facturación, la industria demanda una precisión por dígito superior al 98\% o 99\%, ya que cualquier error tiene un impacto económico directo \parencite{Laroca2021Towards}.
-
-\subsection{Arquitecturas de redes neuronales para OCR}
-\label{ssec:neural_architectures}
-Las redes neuronales profundas han generado diversas arquitecturas para el problema del OCR. Los modelos más avanzados y robustos integran la detección y el reconocimiento en un único pipeline \textit{end-to-end}. Estos se dividen en dos categorías: los \textbf{detectores de texto}, que localizan las regiones de interés (ej. EAST, CRAFT), y los \textbf{reconocedores de texto}, que transcriben la región detectada a una secuencia de caracteres \parencite{Peng2023Deep}.
-
-Una de las arquitecturas más influyentes es la Red Neuronal Convolucional Recurrente (CRNN) \parencite{Laroca2021Towards}. Un modelo CRNN se compone de tres partes:
-\begin{enumerate}
-    \item \textbf{Capas Convolucionales (CNN):} Extraen un mapa de características robustas de la imagen.
-    \item \textbf{Capas Recurrentes (RNN):} Una red LSTM bidireccional procesa la secuencia de características generada por la CNN, permitiendo al modelo aprender el contexto secuencial.
-    \item \textbf{Capa de Transcripción:} Utiliza una función de pérdida como la Clasificación Temporal Conexionista (CTC) para traducir las predicciones de la RNN a la secuencia final de etiquetas.
-\end{enumerate}
-
-La función de pérdida CTC es fundamental, pues elimina la necesidad de segmentar cada caracter explícitamente. Permite entrenar el modelo solo con la imagen y la secuencia de dígitos correcta, sin requerir la ubicación exacta de cada uno. La pérdida CTC suma las probabilidades de todas las posibles alineaciones entre la predicción y el objetivo. Formalmente, la probabilidad de una secuencia $\pi$ dada una entrada $y$ se define como:
-\begin{equation}
-    P(\pi|y) = \sum_{\mathbf{a} \in \mathcal{A}_{\pi,y}} \prod_{t=1}^{T} p_t(a_t|y)
-\end{equation}
-donde $\mathcal{A}_{\pi,y}$ es el conjunto de todas las alineaciones posibles y $p_t(a_t|y)$ es la probabilidad del caracter $a_t$ en el tiempo $t$.
-
-El principal compromiso en la elección de una arquitectura radica en el balance entre precisión y eficiencia computacional. Modelos más grandes pueden ser más precisos, pero su tamaño, latencia y consumo energético los hacen inadecuados para dispositivos móviles \parencite{Zou2021, Carvalho2023}. Por ello, la investigación actual se enfoca en arquitecturas ligeras (\textit{lightweight}) para la implementación en el borde (\textit{edge computing}).
-
-\subsection{Datasets y benchmarks relevantes}
-\label{ssec:datasets_benchmarks}
-El rendimiento de cualquier modelo de aprendizaje profundo depende de la calidad y cantidad de los datos de entrenamiento. En el dominio de la lectura de medidores, la creación de un dataset robusto es un desafío. Aunque existen datasets públicos como \textbf{UFPR-AMR Dataset} \parencite{Laroca2021Towards} y su extensión \parencite{Salomon2022ImageBased}, estos no siempre capturan la enorme variabilidad de medidores y condiciones presentes en contextos específicos como el de las JAAPS en Ecuador.
-
-La dificultad de recolectar y anotar miles de imágenes de campo hace que las técnicas de \textbf{aumento de datos (\textit{data augmentation})} sean indispensables. Más allá de transformaciones genéricas, se deben aplicar técnicas específicas para simular los desafíos del mundo real:
-\begin{itemize}
-    \item \textbf{Transformaciones Geométricas:} Simulación de distorsiones de perspectiva para imitar la captura desde diferentes ángulos.
-    \item \textbf{Simulación de Condiciones Adversas:} Aplicación de desenfoque de movimiento, ruido y simulación de reflejos o gotas de agua.
-    \item \textbf{Generación de Datos Sintéticos:} Uso de gráficos por computadora (CGI) para generar imágenes fotorrealistas de medidores en una variedad infinita de estados y condiciones, incluyendo los dígitos en transición \parencite{Sripanuskul2022Generative}.
-\end{itemize}
-Estas técnicas no solo incrementan el tamaño del dataset, sino que también mejoran la robustez y capacidad de generalización del modelo. Un \textit{benchmarking} riguroso contra un conjunto de prueba representativo del entorno de despliegue final es esencial para validar la eficacia del modelo.
-
-\section{Deep Learning en dispositivos móviles con recursos limitados}
-\label{sec:mobile_deep_learning}
-
-El despliegue de las arquitecturas de OCR en un prototipo móvil, destinado a operar con recursos limitados, presenta desafíos significativos. Esta sección examina las estrategias que permiten la ejecución eficiente de modelos de \textit{deep learning} en el borde (\textit{edge computing}), abordando las restricciones de hardware y los requisitos de rendimiento.
-
-\subsection{Arquitecturas eficientes para edge computing}
-\label{ssec:efficient_architectures}
-El \textit{edge computing} implica procesar datos cerca de su origen, lo cual para la lectura de medidores ofrece ventajas como el funcionamiento offline, baja latencia y mayor privacidad. Esto requiere el uso de arquitecturas de redes neuronales diseñadas para ser ligeras y rápidas.
-
-La evolución de estas arquitecturas se apoya en innovaciones como la \textbf{convolución separable en profundidad (\textit{depthwise separable convolution})}, pilar de la familia de redes \textbf{MobileNet}. Por su parte, la familia \textbf{EfficientNet} introdujo un \textbf{método de escalado compuesto (\textit{compound scaling})} para balancear sistemáticamente la profundidad, el ancho y la resolución de la red \parencite{Poddar2024Survey}.
-
-Desarrollos posteriores como \textbf{EfficientNetV2} \parencite{Tan2021EfficientNetV2} mejoraron la velocidad de entrenamiento y la eficiencia. Más recientemente, arquitecturas híbridas que combinan convoluciones y mecanismos de atención de los Transformers, como \textbf{MobileViT} \parencite{Mehta2022MobileViT}, han mostrado resultados prometedores. La elección final depende del balance específico entre la precisión deseada y la latencia tolerable en el dispositivo objetivo \parencite{Poddar2024Survey}.
-
-\begin{table}[h!]
-\centering
-\caption{Comparativa de arquitecturas eficientes modernas (ejemplo en ImageNet).}
-\label{tab:arch_compare_updated}
-\begin{tabular}{l c c}
-\hline
-\textbf{Modelo} & \textbf{Precisión Top-1 (\%)} & \textbf{Parámetros (M)} \\
-\hline
-MobileNetV3-Large & 75.2 & 5.5 \\
-EfficientNet-B0 & 77.1 & 5.3 \\
-EfficientNetV2-S & 83.9 & 21.5 \\
-MobileViT-S & 78.4 & 5.6 \\
-\hline
-\end{tabular}
-\end{table}
-
-\subsection{Optimización y compresión de modelos}
-\label{ssec:model_optimization}
-Un diseño de arquitectura eficiente es solo el primer paso. Para un rendimiento óptimo en dispositivos de gama media, es crucial aplicar técnicas de optimización. La \textbf{cuantización}, que reduce la precisión de los pesos de punto flotante de 32 bits (FP32) a enteros de 8 bits (INT8), es la más común. El \textbf{entrenamiento consciente de la cuantización (QAT)} suele preservar mejor la precisión que la \textbf{cuantización post-entrenamiento (PTQ)} \parencite{Ghosh2023SurveyQuantization}.
-
-Otras técnicas como el \textbf{podado (\textit{pruning})}, que elimina pesos redundantes, y la \textbf{destilación del conocimiento (\textit{knowledge distillation})}, que usa un modelo "profesor" grande para entrenar un modelo "estudiante" pequeño, son prácticas estándar para la optimización de modelos en el borde \parencite{Li2023EdgeAI}.
-
-\subsection{Frameworks de inferencia móvil}
-\label{ssec:mobile_frameworks}
-Para el despliegue de estos modelos en Android, se requiere un framework de inferencia como \textbf{TensorFlow Lite (TFLite)}. TFLite proporciona un intérprete ligero y herramientas para la conversión de modelos. Su característica principal son los \textbf{delegados (\textit{delegates})}, que redirigen la computación a aceleradores de hardware como la GPU o las Unidades de Procesamiento Neuronal (NPU) a través de la API de redes neuronales de Android (NNAPI). El uso correcto de estos delegados es vital para minimizar la latencia y el consumo de energía \parencite{Albonico2023Benchmarking}.
-
-La gestión de recursos, como el control de hilos y la monitorización de la temperatura para evitar el \textit{thermal throttling}, es esencial para la estabilidad de la aplicación en condiciones de uso prolongado. Herramientas como el \textit{Profiler} de Android Studio y la \textit{TFLite benchmark tool} son indispensables durante el desarrollo para asegurar la robustez y eficiencia del prototipo.
-
-\section{Sistemas de visión artificial para lectura automática de medidores}
-\label{sec:vision_systems}
-
-La implementación práctica de un sistema de visión para la lectura de medidores requiere una integración cuidadosa de múltiples etapas de procesamiento para operar de manera robusta en el mundo real \parencite{Laroca2021Towards}. Estos sistemas deben mantener su desempeño ante la variabilidad de entornos no controlados, donde la iluminación, los ángulos de captura y el deterioro de los equipos plantean desafíos constantes \parencite{Hong2021ImageBased}.
-
-\subsection{Pipeline completo de procesamiento}
-\label{ssec:full_pipeline}
-Un sistema robusto de lectura automática se compone de varias etapas interdependientes. El pipeline típico comienza con la adquisición de la imagen y termina con la validación de la lectura, lo que exige un equilibrio entre precisión, eficiencia y robustez \parencite{Khan2024LowCost}.
-
-\begin{figure}[h!]
-\centering
-\fbox{\parbox{0.9\textwidth}{
-\textbf{Diagrama de Flujo del Pipeline de Lectura Automática:}\\
-\begin{enumerate}
-    \item \textbf{Adquisición de Imagen:} El usuario captura una imagen del medidor.
-    \item \textbf{Detección del Medidor (YOLOv8):} Un modelo de detección de objetos localiza el medidor.
-    \item \textbf{Extracción y Pre-procesamiento de ROI:}
-        \begin{itemize}
-            \item Se recorta la Región de Interés (ROI) del contador.
-            \item \textbf{Corrección de Perspectiva:} Se aplica una transformación de homografía para rectificar la ROI.
-            \item \textbf{Normalización de Iluminación:} Se utilizan técnicas como CLAHE para estandarizar el contraste.
-        \end{itemize}
-    \item \textbf{Reconocimiento de Dígitos (CRNN):} La ROI procesada se introduce en un modelo OCR.
-    \item \textbf{Post-procesamiento y Validación:}
-        \begin{itemize}
-            \item \textbf{Validación de Coherencia:} Se verifica que la lectura sea numéricamente coherente.
-            \item \textbf{Confirmación del Usuario:} La lectura se muestra al usuario para su confirmación final.
-        \end{itemize}
-\end{enumerate}
-}}
-\caption{Pipeline completo de procesamiento para la lectura automática de medidores.}
-\label{fig:pipeline}
+\begin{figure}[H]
+    \centering
+    % Aquí deberás insertar una imagen representativa de un medidor de agua
+    % en su contexto real en la zona de estudio (ej. a la intemperie, con algo de desgaste).
+    \includegraphics[width=0.7\textwidth]{figures/water_meter.jpg}
+    \caption{Ejemplo de medidor de agua en un entorno rural no controlado, similar a los encontrados en el área de estudio. La exposición a la intemperie, la suciedad y el desgaste son desafíos comunes para los sistemas de lectura por visión artificial.}
+    \label{fig:water_meter_example}
 \end{figure}
 
-La primera etapa computacional es la \textbf{detección y localización del medidor}. Los sistemas modernos emplean modelos de detección de objetos como YOLOv8, que ofrecen un excelente balance entre velocidad y precisión para su despliegue en móviles \parencite{Khan2024LowCost, Wang2025}.
+En consecuencia, la adopción de paradigmas modernos como la Infraestructura de Medición Avanzada (AMI) se enfrenta a barreras prácticamente insuperables en este contexto. La viabilidad de una implementación de esta naturaleza se ve comprometida no solo por el prohibitivo costo de inversión en medidores inteligentes y la red de comunicaciones asociada, incompatible con la capacidad financiera de una JAAP, sino también por obstáculos técnicos fundamentales como la intermitencia o ausencia de conectividad a internet y la inestabilidad del suministro eléctrico, factores endémicos en muchas zonas rurales \parencite{Fieldeke2021, IADB2022}.
 
-Una vez localizada la Región de Interés (ROI), la etapa de \textbf{pre-procesamiento y normalización} es crucial. Un paso fundamental es la \textbf{corrección de perspectiva}, donde se detectan las cuatro esquinas del contador para calcular una matriz de homografía y rectificar la ROI a una vista frontal. Enfoques avanzados, como los propuestos por \parencite{Peng2023Deep}, utilizan modelos ligeros adicionales para esta tarea, mejorando la precisión. A continuación, técnicas como CLAHE normalizan la iluminación.
-
-Finalmente, la ROI normalizada se envía a la etapa de \textbf{reconocimiento}. Modelos como CRNN leen la secuencia completa de dígitos, lo que aumenta la robustez. La salida del modelo se somete a un \textbf{post-procesamiento} que incluye la validación de coherencia numérica y puede solicitar una nueva captura si la confianza de la predicción es baja. Adicionalmente, se puede integrar un clasificador de calidad de imagen para rechazar capturas de baja calidad antes del reconocimiento, mejorando la fiabilidad del sistema \parencite{Laroca2021Towards}.
-
-\subsection{Robustez ante condiciones adversas}
-\label{ssec:robustness}
-La diferencia entre un prototipo de laboratorio y un sistema de campo es su capacidad para manejar condiciones no ideales. Las \textbf{variaciones de iluminación}, como reflejos y sombras, son el desafío más común. Aunque técnicas como CLAHE ayudan en tiempo de ejecución, la estrategia más efectiva es entrenar el modelo con una agresiva \textbf{aumentación de datos}, simulando programáticamente una amplia gama de condiciones adversas, una técnica de probada eficacia \parencite{Hong2021ImageBased}.
-
-Las \textbf{variaciones geométricas}, como ángulos de captura extremos, se abordan con la corrección de perspectiva, la cual depende de un modelo de detección de esquinas robusto. El \textbf{deterioro físico de los medidores} (rayones, condensación, suciedad) es otro factor crítico. Un modelo bien entrenado puede aprender a ignorar muchas de estas obstrucciones, pero los casos severos pueden requerir un pre-clasificador que evalúe la calidad de la imagen y solicite una nueva captura si es necesario \parencite{Laroca2021Towards}.
-
-\subsection{Implementaciones existentes: análisis crítico}
-\label{ssec:existing_implementations}
-En los últimos años, han surgido diversas propuestas académicas y comerciales. Las \textbf{soluciones académicas} han demostrado la viabilidad del \textit{deep learning}, alcanzando precisiones superiores al 99\% en datasets públicos \parencite{Liang2022Research, Maheshwari2023Automatic}. Sin embargo, a menudo se validan en condiciones que no representan la extrema variabilidad de los entornos rurales en países en desarrollo.
-
-Las \textbf{soluciones comerciales} operan como "cajas negras", con poca información pública sobre su arquitectura o rendimiento real. Están diseñadas para grandes empresas de servicios públicos urbanos, con un modelo de negocio de licenciamiento inviable para una JAAP y, por lo general, dependientes de una conexión constante a internet, un requisito prohibitivo en este contexto \parencite{Fieldeke2021}.
-
-\begin{table}[h!]
-\centering
-\caption{Análisis crítico de tipos de implementaciones de lectura automática.}
-\label{tab:impl_analysis}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{l l l l}
-\hline
-\textbf{Criterio} & \textbf{Métodos Tradicionales} & \textbf{Soluciones Académicas (DL)} & \textbf{Soluciones Comerciales} \\
-\hline
-\textbf{Precisión} & Baja a media, frágil & Muy alta (\textgreater99\%) en benchmarks & Alta (declarada) \\
-\textbf{Robustez} & Muy baja & Alta, dependiente del dataset & Desconocida, propietaria \\
-\textbf{Costo} & Bajo (desarrollo) & Bajo a medio (requiere datos) & Alto (licencias, TCO) \\
-\textbf{Hardware} & Ligero & Variable, optimizable para móviles & Generalmente requiere backend \\
-\textbf{Conectividad} & No necesaria & Puede ser offline & Generalmente requiere online \\
-\textbf{Adaptabilidad} & Específico, difícil de generalizar & Alta, re-entrenable & Baja, caja negra \\
-\textbf{Viabilidad JAAPS} & \textbf{Inviable (frágil)} & \textbf{Potencialmente viable} & \textbf{Inviable (costo, conectividad)} \\
-\hline
-\end{tabular}%
-}
-\end{table}
-
-Las \textbf{limitaciones para contextos rurales} son la principal brecha que estas implementaciones no cubren. La dependencia de la conectividad, los altos costos y la falta de adaptabilidad a la diversidad de medidores antiguos definen una clara \textbf{oportunidad para la presente investigación}: el desarrollo de un sistema de código abierto, diseñado para operación offline, optimizado para hardware de bajo costo, y entrenado con un dataset que capture la realidad de los medidores gestionados por las JAAPS.
-
-\section{Desarrollo de aplicaciones móviles offline con IA integrada}
-\label{sec:offline_dev}
-
-La construcción de un prototipo para las JAAPS requiere la convergencia de la gestión comunitaria del agua, la visión por computadora y la optimización de modelos. Esta sección se enfoca en la disciplina que une estos campos: el desarrollo de aplicaciones móviles con capacidad offline e inteligencia artificial integrada.
-
-\subsection{Arquitecturas offline-first}
-\label{ssec:offline_arch}
-Diseñar una aplicación para zonas con conectividad intermitente exige un enfoque \textit{offline-first}, donde la aplicación funciona de manera autónoma y la conexión a la red es un recurso opcional. La fuente de verdad principal es la base de datos local del dispositivo.
-
-Para ello, se emplea el \textbf{Patrón de Repositorio (Repository Pattern)}, que aísla las fuentes de datos (red, base de datos local) de la lógica de negocio. El repositorio gestiona si los datos se obtienen de la caché local o se sincronizan con un servidor cuando hay conexión. La \textbf{sincronización eventual} se maneja con herramientas como \textbf{WorkManager} de Android Jetpack, que programa tareas de sincronización para cuando se restablezca la conexión. Para el almacenamiento local, la biblioteca \textbf{Room Database} sobre SQLite es el estándar en Android.
-
-\begin{figure}[h!]
-\centering
-\fbox{\parbox{0.9\textwidth}{
-\textbf{Diagrama de Arquitectura Offline-First con Patrón Repositorio:}\\
-\texttt{UI Layer (Activity/Fragment)} $\leftrightarrow$ \texttt{ViewModel (con LiveData/Flow)}\\
-$\downarrow$\\
-\texttt{Repository}\\
-$\downarrow \qquad \searrow$\\
-\texttt{Local Data Source (Room DB)} \quad \texttt{Remote Data Source (API/Retrofit)}\\
-$\updownarrow$\\
-\texttt{SyncManager (WorkManager)}
-}}
-\caption{Arquitectura recomendada para una aplicación offline-first en Android.}
-\label{fig:offline_arch}
-\end{figure}
-
-\subsection{Integración de modelos de IA en Android}
-\label{ssec:ia_integration}
-Integrar un modelo de TensorFlow Lite (TFLite) en una aplicación Android requiere una gestión cuidadosa del rendimiento. La inicialización del intérprete de TFLite debe realizarse en un hilo de fondo para no bloquear la UI. El siguiente fragmento en Kotlin muestra una inicialización que configura el número de hilos y un delegado de GPU.
-
-\begin{verbatim}
-// Ejemplo de inicialización de modelo TFLite en Kotlin
-private fun initializeInterpreter(modelPath: String): Interpreter {
-    val modelBuffer = FileUtil.loadMappedFile(context, modelPath)
-    val options = Interpreter.Options()
-    options.setNumThreads(4)
-    
-    // Intentar usar el delegado de GPU
-    val gpuDelegate = GpuDelegate()
-    options.addDelegate(gpuDelegate)
-    
-    try {
-        return Interpreter(modelBuffer, options)
-    } catch (e: Exception) {
-        // Si falla la GPU, volver a intentarlo solo con CPU
-        options.removeDelegate(gpuDelegate)
-        return Interpreter(modelBuffer, options)
-    }
-}
-\end{verbatim}
-
-El manejo de \textbf{hilos y concurrencia} es vital. La inferencia del modelo debe ejecutarse en un hilo de fondo para no causar bloqueos (ANR). Las \textbf{Coroutines} de Kotlin son la herramienta recomendada para gestionar operaciones asíncronas. La \textbf{optimización de la memoria} también es crítica; los `Bitmaps` de Android deben manejarse con cuidado y los modelos de TFLite pueden ser cargados como `MappedByteBuffer` para un uso más eficiente de la memoria. Finalmente, una \textbf{UI/UX de captura guiada}, utilizando la API \textbf{CameraX}, puede superponer un recuadro sobre la vista previa de la cámara para ayudar al operario a alinear el medidor y proporcionar feedback en tiempo real.
-
-\subsection{Consideraciones de usabilidad rural}
-\label{ssec:rural_usability}
-Una aplicación técnicamente robusta puede fracasar si no se adapta a sus usuarios finales. Para los operarios de las JAAPS, que pueden tener baja alfabetización digital, el diseño de la interfaz y la experiencia de usuario (UI/UX) es tan crucial como la precisión del modelo.
-
-El diseño debe ser \textbf{minimalista y centrado en la tarea}, priorizando la iconografía sobre el texto. Los flujos de trabajo deben ser lineales y divididos en pasos claros. El \textbf{feedback al usuario} debe ser constante y multisensorial (visual, auditivo, háptico) para confirmar acciones. Los mensajes de error deben ser simples y accionables.
-
-\begin{table}[h!]
-\centering
-\caption{Tabla de consideraciones de diseño de UI/UX para contextos rurales.}
-\label{tab:usability_considerations}
-\begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
-\hline
-\textbf{Consideración} & \textbf{Implementación Sugerida} \\
-\hline
-Baja alfabetización digital & Iconos grandes y universales, mínimo texto, tutoriales guiados. \\
-Condiciones de campo & Interfaz de alto contraste (modo para luz solar), botones grandes para uso con guantes, operación con una mano. \\
-Confirmación de acciones & Feedback visual (colores), auditivo (sonidos) y háptico (vibración) para cada acción clave. \\
-Manejo de errores & Mensajes de error en lenguaje simple con sugerencias claras para la recuperación. Logging local para soporte técnico remoto. \\
-Batería y recursos & Modo de ahorro de energía opcional, optimización del uso de la cámara y del procesador. \\
-Contexto cultural & Soporte para español y, potencialmente, quechua. Uso de formatos de fecha y número locales. \\
-\hline
-\end{tabular}
-\end{table}
-
-La aplicación debe, además, adaptarse al \textbf{contexto físico de uso}, con interfaces de alto contraste para visibilidad bajo luz solar y botones grandes. La suma de estas consideraciones de diseño centrado en el ser humano es lo que puede transformar un motor de IA en una herramienta adoptable y útil para las comunidades a las que busca servir.
-
-\section{Análisis comparativo y oportunidades de innovación}
-\label{sec:comparative_analysis}
-El presente capítulo ha realizado un recorrido desde el contexto socio-operativo de las JAAPS hasta los detalles técnicos del deep learning móvil. Esta sección final sintetiza el conocimiento, evalúa críticamente las soluciones existentes, identifica las brechas en la investigación y, a partir de ello, justifica el enfoque propuesto por esta tesis.
-
-\subsection{Matriz de evaluación de soluciones existentes}
-\label{ssec:evaluation_matrix}
-Para contextualizar la propuesta, es imperativo comparar las alternativas existentes frente a criterios ponderados por las realidades del entorno rural ecuatoriano. Ninguna solución puede ser evaluada en el vacío; su valor es relativo a las necesidades y limitaciones del contexto de aplicación.
-
-\begin{table}[h!]
-\centering
-\caption{Matriz de evaluación comparativa de soluciones para lectura de medidores en el contexto de las JAAPS.}
-\label{tab:solution_matrix}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{p{2.5cm}|l|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{3cm}}
-\hline
-\multicolumn{2}{c|}{\textbf{Criterio}} & \textbf{Lectura Manual (Baseline)} & \textbf{AMI/AMR Comercial} & \textbf{App OCR (Cloud-based)} & \textbf{Académico (Genérico)} & \textbf{Propuesta Tesis (Offline-first)} \\
-\hline
-\multirow{4}{*}{\rotatebox[origin=c]{90}{\textbf{Técnicos}}} & \textbf{Precisión} & Baja ($\sim$90-95\%), sujeta a error humano. & Muy alta (>99.5\%). & Alta (>98\%), dependiente de la calidad de imagen. & Alta (>99\% en benchmarks), no validada en campo. & \textbf{Objetivo: >98.5\% en campo.} \\
-& \textbf{Latencia} & Días (proceso completo). & Segundos a minutos. & Segundos (dependiente de red). & ms a segundos (dependiente de hardware). & \textbf{< 2 segundos en dispositivo.} \\
-& \textbf{Offline} & Totalmente offline. & No, requiere infraestructura de red fija. & No, requiere conexión a internet para procesar. & Parcialmente, no diseñado para ello. & \textbf{Totalmente offline (diseño central).} \\
-& \textbf{Consumo Energético} & N/A. & Alto (infraestructura de red). & Moderado (uso de red y cámara). & No especificado. & \textbf{Optimizado para bajo consumo.} \\
-\hline
-\multirow{4}{*}{\rotatebox[origin=c]{90}{\textbf{Operativos}}} & \textbf{Costo Inicial} & Cero. & Prohibitivo (> \$50k). & Bajo (< \$1k para desarrollo inicial). & N/A (investigación). & \textbf{Muy bajo (< \$500 para prototipo).} \\
-& \textbf{Costo Mantenimiento} & Tiempo del operario. & Alto (licencias, soporte, hardware). & Moderado (costos de servidor/API). & N/A. & \textbf{Casi nulo (software libre).} \\
-& \textbf{Escalabilidad} & Muy baja y lineal. & Alta, con alta inversión. & Moderada, limitada por costos de nube. & N/A. & \textbf{Alta, sin costo de infraestructura.} \\
-& \textbf{Capacitación} & Baja. & Alta (personal técnico especializado). & Moderada. & Alta (requiere conocimiento de IA). & \textbf{Baja, diseñada para usabilidad.} \\
-\hline
-\multirow{4}{*}{\rotatebox[origin=c]{90}{\textbf{Sociales}}} & \textbf{Adopción Rural} & Establecida. & Muy baja, por barreras económicas y técnicas. & Baja, por dependencia de red. & N/A. & \textbf{Alta (diseñada para el contexto).} \\
-& \textbf{Sostenibilidad} & Baja (depende de voluntarios y es ineficiente). & Baja (insostenible para JAAPS). & Media (depende de pagos recurrentes). & N/A. & \textbf{Alta (autonomía local).} \\
-& \textbf{Alineación Local} & Total. & Nula. & Baja. & Baja. & \textbf{Total (co-diseño implícito).} \\
-\hline
-\end{tabular}%
-}
-\end{table}
-
-El análisis de la matriz revela un panorama claro. La \textbf{lectura manual}, pese a su imprecisión, persiste por ser la única solución de costo cero y funcionamiento offline. Los sistemas \textbf{AMI/AMR comerciales}, aunque técnicamente superiores, son inviables por sus barreras económicas y de infraestructura. Las aplicaciones \textbf{OCR basadas en la nube} resuelven la precisión, pero sustituyen la dependencia de infraestructura física por la de conectividad, una barrera igualmente crítica en el Ecuador rural. Las \textbf{soluciones académicas} han sentado las bases técnicas, pero tienden a operar en condiciones de laboratorio y rara vez abordan integralmente los requisitos de una implementación offline y usable para personal no especializado.
-
-\subsection{Brechas identificadas en el estado del arte}
-\label{ssec:gaps_identified}
-La síntesis anterior permite identificar un conjunto de brechas críticas que representan la oportunidad para la innovación.
-
-\textbf{Brechas Técnicas:}
-\begin{itemize}
-    \item \textbf{Robustez en el ``último 1\%'':} Mientras que muchos modelos alcanzan >99\% de precisión en benchmarks, falta investigación sobre las causas de fallo en el <1\% restante, que a menudo corresponden a las condiciones más extremas (reflejos severos, oclusión parcial, dígitos en transición) que son frecuentes en campo.
-    \item \textbf{Generalización a la ``fauna'' de medidores locales:} Los modelos suelen entrenarse en datasets con poca variedad de medidores. No existe una solución probada que generalice bien a la enorme diversidad de modelos, antigüedades y estados de conservación de los medidores instalados en la zona andina.
-    \item \textbf{Ausencia de un pipeline integral y optimizado para el borde:} No se ha documentado en la literatura una solución que integre un pipeline completo (detección, rectificación, reconocimiento) y que esté explícitamente optimizado mediante técnicas como la cuantización y el podado para funcionar eficientemente en dispositivos móviles de gama media-baja, prevalentes en el contexto rural.
-\end{itemize}
-
-\textbf{Brechas de Implementación y Contexto:}
-\begin{itemize}
-    \item \textbf{El ``abismo'' del costo y la conectividad:} Existe una brecha abismal entre las soluciones comerciales (altamente funcionales pero inaccesibles) y la realidad operativa de las JAAPS. Ninguna solución comercial actual está diseñada para un modelo de negocio de costo casi nulo y operación offline.
-    \item \textbf{Falta de validación en campo real latinoamericano:} La gran mayoría de los estudios académicos se realizan en Asia, Europa o Norteamérica, o en contextos urbanos de Brasil. Faltan estudios que validen estas tecnologías en las condiciones geográficas, climáticas y socio-técnicas específicas de las comunidades rurales andinas.
-    \item \textbf{El eslabón perdido de la usabilidad:} Se ha prestado poca atención al diseño de la interfaz de usuario y la experiencia de usuario (UI/UX) para operarios con baja alfabetización digital. La tecnología, sin una interfaz que facilite su adopción, está destinada al fracaso.
-\end{itemize}
-
-\subsection{Justificación del enfoque propuesto}
-\label{ssec:justification}
-El análisis anterior demuestra que no existe una solución que aborde simultáneamente los requisitos técnicos, operativos y sociales de las JAAPS. Esta intersección de necesidades no cubiertas es precisamente donde se posiciona y justifica la presente tesis. El enfoque propuesto no busca simplemente mejorar la precisión en un pequeño porcentaje, sino crear una solución holística y apropiada tecnológicamente.
-
-\textbf{Ventajas y Alineación con el Contexto:}
-La propuesta de desarrollar un prototipo móvil para la lectura de medidores con operación 100\% offline y optimizado para hardware de gama media responde directamente a las principales barreras identificadas:
-\begin{enumerate}
-    \item \textbf{Resuelve la barrera de la conectividad:} Al ser offline-first, la herramienta es funcional en el 100\% del territorio de operación de las JAAPS.
-    \item \textbf{Supera la barrera del costo:} Al basarse en software de código abierto y hardware de consumo (smartphones que los operarios a menudo ya poseen), el costo de implementación y mantenimiento es marginal, alineándose con el modelo económico de las juntas.
-    \item \textbf{Cierra la brecha de la usabilidad:} El diseño centrado en el usuario para personal con capacidades digitales variables es un pilar de la propuesta, buscando maximizar la adopción y minimizar la frustración.
-    \item \textbf{Aborda la diversidad de medidores:} La creación de un dataset específico del contexto ecuatoriano permitirá entrenar un modelo adaptado a la realidad local, en lugar de usar modelos genéricos con menor rendimiento.
-\end{enumerate}
-
-\textbf{Contribuciones Científicas y Prácticas Esperadas:}
-Esta tesis aspira a realizar las siguientes contribuciones originales al campo:
-\begin{itemize}
-    \item \textbf{Técnica:} El diseño y validación de un pipeline completo de visión artificial (detección + OCR) optimizado para una alta eficiencia (latencia < 2s) en dispositivos móviles de recursos limitados, con un análisis detallado de los trade-offs de las técnicas de cuantización en esta tarea específica.
-    \item \textbf{Empírica:} La creación y publicación de un nuevo dataset de imágenes de medidores de agua del contexto rural ecuatoriano, anotado y validado, que sirva como benchmark para futuras investigaciones en la región.
-    \item \textbf{Metodológica:} El desarrollo de un modelo de implementación y validación de una solución de IA en un entorno comunitario real, documentando no solo los resultados técnicos sino también el proceso de adopción, capacitación y el impacto socioeconómico medible.
-\end{itemize}
-
-El estado del arte muestra que las herramientas existen, pero están desarticuladas y no han sido ensambladas y adaptadas para el problema específico que nos ocupa. La innovación de esta tesis no radica en inventar un nuevo algoritmo de deep learning desde cero, sino en el \textbf{diseño, la integración, la optimización y la validación de un sistema completo en un contexto real y desatendido}, demostrando que la inteligencia artificial puede ser una herramienta poderosa y accesible para fortalecer la gestión comunitaria del agua. Este capítulo ha sentado las bases teóricas y ha justificado la necesidad de este trabajo; el siguiente capítulo detallará la metodología para llevarlo a cabo.
+Esta confluencia de factores define una clara ``brecha tecnológica'': mientras existe una necesidad urgente de automatización, las soluciones comerciales de vanguardia resultan inaccesibles. Es en este vacío donde la visión por computadora ejecutada en dispositivos móviles emerge como un ``puente tecnológico'' idóneo. Dicho enfoque aprovecha la base de medidores mecánicos ya instalada y el hardware de consumo masivo —los teléfonos inteligentes— para digitalizar el proceso de lectura con una inversión marginal, garantizando además una operación completamente autónoma y offline, adaptada a las realidades del entorno rural \parencite{Santiago2020Deployment, Carvalho2023}.
