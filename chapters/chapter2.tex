@@ -39,3 +39,64 @@ El proceso de lectura de medidores ejemplifica claramente estos retos operativos
 En consecuencia, la adopción de paradigmas modernos como la Infraestructura de Medición Avanzada (AMI) se enfrenta a barreras prácticamente insuperables en este contexto. La viabilidad de una implementación de esta naturaleza se ve comprometida no solo por el prohibitivo costo de inversión en medidores inteligentes y la red de comunicaciones asociada, incompatible con la capacidad financiera de una JAAP, sino también por obstáculos técnicos fundamentales como la intermitencia o ausencia de conectividad a internet y la inestabilidad del suministro eléctrico, factores endémicos en muchas zonas rurales \parencite{Fieldeke2021, IADB2022}.
 
 Esta confluencia de factores define una clara ``brecha tecnológica'': mientras existe una necesidad urgente de automatización, las soluciones comerciales de vanguardia resultan inaccesibles. Es en este vacío donde la visión por computadora ejecutada en dispositivos móviles emerge como un ``puente tecnológico'' idóneo. Dicho enfoque aprovecha la base de medidores mecánicos ya instalada y el hardware de consumo masivo —los teléfonos inteligentes— para digitalizar el proceso de lectura con una inversión marginal, garantizando además una operación completamente autónoma y offline, adaptada a las realidades del entorno rural \parencite{Santiago2020Deployment, Carvalho2023}.
+
+\section{Paradigmas de Medición: De la Lectura Manual a la Medición Inteligente}
+\label{sec:metering_paradigms}
+
+La evolución en la gestión de servicios públicos está intrínsecamente ligada a la evolución de sus tecnologías de medición. El medidor no es solo un dispositivo de facturación; es el principal sensor de la red, cuya capacidad para generar datos define el potencial de un proveedor para optimizar sus operaciones. El paso de un paradigma de lectura manual y reactiva a uno de gestión inteligente y proactiva depende fundamentalmente del tipo de tecnología de medición desplegada en el campo.
+
+\subsection{Medidores Tradicionales (Analógicos y Digitales) vs. Medidores Inteligentes (Smart Meters)}
+\label{ssec:meter_types}
+
+El parque de medidores de agua instalado a nivel mundial es tecnológicamente heterogéneo. En un extremo se encuentran los \textbf{medidores mecánicos o analógicos}, que constituyen la gran mayoría de los dispositivos en servicio, especialmente en instalaciones antiguas y en la mayoría de las zonas rurales de América Latina \parencite{Salomon2022ImageBased, Santiago2020Deployment}. Estos dispositivos operan mediante mecanismos internos (como turbinas o discos oscilantes) que mueven un conjunto de engranajes. La lectura se presenta en un contador de tipo ciclómetro (ruedas numéricas) o, en modelos más antiguos, en una serie de diales analógicos. Su principal característica, y a la vez su mayor limitación, es la ausencia total de capacidades de comunicación; son dispositivos pasivos que requieren una inspección visual directa.
+
+Una evolución de estos son los \textbf{medidores digitales}, que reemplazan el contador mecánico por una pantalla de cristal líquido (LCD). Aunque la medición interna puede seguir siendo mecánica, la presentación digital elimina los errores de interpretación de los diales. No obstante, en su gran mayoría, estos medidores tampoco cuentan con módulos de comunicación integrados, por lo que siguen dependiendo de una lectura visual en sitio \parencite{Peng2023Deep}.
+
+El salto cualitativo lo representan los \textbf{medidores inteligentes (Smart Meters)}. Un medidor inteligente es un dispositivo electrónico que no solo registra el consumo de agua, sino que fundamentalmente posee capacidad de comunicación bidireccional. Esta característica es la que habilita la implementación de una Infraestructura de Medición Avanzada (AMI, por sus siglas en inglés), permitiendo la transmisión automática y periódica de datos a un sistema central y la recepción de comandos remotos \parencite{Laroca2021Towards, IADB2022}. Esta tecnología es el fundamento de las redes de agua inteligentes o \textit{smart water grids}. La Tabla \ref{tab:meter_comparison} resume las características clave de cada tipología.
+
+\begin{table}[H]
+    \centering
+    \caption{Comparativa de Tecnologías de Medición de Agua.}
+    \label{tab:meter_comparison}
+    \begin{singlespace} 
+    \begin{tabularx}{\textwidth}{>{\bfseries}l >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X}
+        \toprule
+        \textbf{Característica} & \textbf{Mecánico / Analógico} & \textbf{Digital (No-comunicante)} & \textbf{Inteligente (Smart Meter)} \\
+        \midrule
+        Principio de Lectura & Visual (ruedas numéricas o diales). & Visual (pantalla LCD). & Electrónica y remota. \\
+        \addlinespace
+        Comunicación & Inexistente. & Inexistente. & Bidireccional (RF, celular, PLC). \\
+        \addlinespace
+        Recolección de Datos & Manual, en sitio. & Manual, en sitio. & Automática (AMR/AMI). \\
+        \addlinespace
+        Frecuencia de Datos & Mensual o bimensual. & Mensual o bimensual. & Desde casi tiempo real (minutos) hasta diaria. \\
+        \addlinespace
+        Capacidades Adicionales & Ninguna. & Ninguna. & Detección de fugas, gestión de válvulas, alertas de manipulación, perfil de consumo. \\
+        \addlinespace
+        Costo Relativo & Bajo. & Bajo-Medio. & Alto. \\
+        \bottomrule
+    \end{tabularx}
+    \end{singlespace}
+    \parbox{\textwidth}{
+        \singlespace
+        \textit{Nota.} La información se basa en la síntesis de las características descritas en la literatura por \parencite{Salomon2022ImageBased, Santiago2020Deployment, Peng2023Deep, IADB2022, Laroca2021Towards}.
+    }
+\end{table}
+
+\subsection{Ineficiencias y Costos de los Sistemas de Lectura Manual}
+\label{ssec:manual_reading_inefficiencies}
+
+El paradigma de la lectura manual, si bien es el más extendido por su bajo costo inicial, arrastra una serie de ineficiencias sistémicas que impactan directamente en la sostenibilidad de los proveedores de agua. La principal es la \textbf{ineficiencia operativa}, que se manifiesta en altos costos de tiempo y mano de obra. En contextos rurales con usuarios dispersos, el desplazamiento físico de un operario para visitar cada medidor representa el costo operativo más significativo para una JAAP \parencite{Santiago2020Deployment}.
+
+A esto se suma una alta \textbf{propensión al error humano}. La literatura identifica dos fuentes principales de error: los de lectura y los de transcripción. Los errores de lectura ocurren en campo debido a factores como el ángulo de visión (error de paralaje), medidores en lugares de difícil acceso, o carátulas deterioradas por la suciedad o la condensación \parencite{Laroca2021Towards}. Los errores de transcripción, por su parte, se producen cuando el dato anotado manualmente en una libreta es posteriormente digitado en un sistema de registro, un doble paso que inevitablemente introduce fallos \parencite{Khan2024LowCost, Chaki2019Automation}. Estos errores, aunque parezcan menores, pueden llevar a una facturación incorrecta, generando conflictos con los usuarios y pérdidas financieras directas para la organización.
+
+Quizás la deficiencia más crítica de la lectura manual es la \textbf{pobreza de los datos} que genera. Al obtener un único dato de consumo al mes, es imposible realizar una gestión proactiva de la red. Tareas como la elaboración de perfiles de consumo, la optimización de la presión o la detección temprana de fugas —una de las principales causas del Agua No Contabilizada— son inviables con datos tan espaciados en el tiempo \parencite{Kainz2021Measurement}. La falta de datos granulares impide a los gestores pasar de un modelo reactivo a uno predictivo.
+
+\subsection{El Mercado del ``Smart Metering'' y la Oportunidad para Soluciones Alternativas}
+\label{ssec:smart_metering_market}
+
+A nivel global, la industria de servicios públicos avanza hacia la adopción masiva de medidores inteligentes, un mercado en constante crecimiento impulsado por la necesidad de eficiencia y digitalización \parencite{GlobalGrowth2023}. Sin embargo, esta tendencia global encuentra barreras significativas para su despliegue en contextos rurales y en países en vías de desarrollo. Los informes del Banco Interamericano de Desarrollo y otros estudios señalan dos obstáculos principales: el \textbf{costo prohibitivo de la inversión} y la \textbf{dependencia de una infraestructura de conectividad} robusta \parencite{IADB2022, Fieldeke2021}.
+
+Para una organización comunitaria como una JAAP, el costo de reemplazar cientos de medidores mecánicos por medidores inteligentes, sumado al despliegue y mantenimiento de la red de comunicaciones (AMI), es una barrera insuperable. Este escenario crea la oportunidad para el desarrollo de ``soluciones puente'', que ofrezcan los beneficios de la digitalización sin requerir una sustitución completa de la infraestructura existente.
+
+Aquí es donde la visión por computadora aplicada a través de dispositivos móviles se posiciona como la alternativa más viable y costo-efectiva. Este enfoque, que se enmarca dentro de las tendencias de Industria 4.0 y Ciudades Inteligentes, aprovecha dos recursos ya existentes y extendidos: la base instalada de medidores mecánicos y la alta penetración de los teléfonos inteligentes \parencite{Ktari2022Lightweight}. Al desarrollar una aplicación móvil que actúa como un ``lector inteligente'', se eliminan los principales costos de inversión. La solución se centra en el software y el uso de un hardware de consumo, democratizando el acceso a la medición avanzada. Proyectos como los de \parencite{Carvalho2023} y \parencite{Santiago2020Deployment} validan la factibilidad técnica de ejecutar estos sistemas en dispositivos de borde (edge devices), demostrando que es posible lograr una alta precisión en la lectura de forma rápida y, crucialmente, sin depender de una conexión a internet para el procesamiento.
