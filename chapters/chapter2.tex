@@ -295,7 +295,7 @@ Una vez examinados los componentes tecnológicos y los desafíos inherentes a la
     \label{tab:sota_comparison}
     \begin{singlespace}
     \begin{tabularx}{\textwidth}{
-        >{\bfseries}p{1cm} 
+        >{\bfseries}p{2cm} 
         >{\raggedright\arraybackslash}X 
         >{\raggedright\arraybackslash}X 
         >{\raggedright\arraybackslash}X 
@@ -330,3 +330,39 @@ Una vez examinados los componentes tecnológicos y los desafíos inherentes a la
 % --- FIN DE LA TABLA SINTETIZADA ---
 
 El análisis comparativo de la Tabla \ref{tab:sota_comparison} permite destilar varias tendencias clave. Primero, existe un consenso abrumador en la adopción de arquitecturas de aprendizaje profundo, habiendo dejado atrás los métodos de procesamiento de imágenes clásicos por su falta de robustez. Segundo, dentro de los modelos de detección, la familia YOLO, y específicamente sus versiones más recientes como YOLOv8, se ha consolidado como el estándar de facto por su excelente equilibrio entre velocidad y precisión. Tercero, se observa una clara evolución en la complejidad del pipeline: los trabajos más avanzados ya no se conforman con una simple caja delimitadora, sino que incorporan pasos de corrección de perspectiva y orientación, reconociendo que la calidad de la localización de la ROI es un factor determinante para el éxito del OCR. Finalmente, una línea de investigación emergente y de alta relevancia para aplicaciones prácticas se centra en la eficiencia computacional y el despliegue en dispositivos de borde, validando la factibilidad de llevar estas soluciones de IA al campo de manera autónoma y offline.
+
+\section{Conclusiones: Brecha Identificada y Oportunidades para el Proyecto}
+\label{sec:conclusion_and_gap}
+
+El recorrido a través del estado del arte, desde el contexto socio-operativo de la gestión del agua hasta las arquitecturas de inteligencia artificial más avanzadas, permite trazar un mapa claro del panorama actual. Se ha evidenciado que la tecnología de visión por computadora para AMR es un campo maduro y en rápida evolución. Sin embargo, un análisis crítico de la literatura también revela brechas significativas entre las soluciones existentes y las necesidades concretas de las organizaciones comunitarias como las JAAPS. Esta sección final sintetiza las tendencias, define con precisión el vacío en la investigación actual y posiciona el presente proyecto de tesis como una respuesta directa y pertinente a dicho vacío.
+
+\subsection{Tendencias Actuales y Futuras en la Automatización de Lectura de Medidores}
+\label{ssec:trends_and_future}
+
+El análisis comparativo de la sección anterior desvela tres tendencias dominantes que definen la frontera de la investigación en AMR:
+
+\begin{enumerate}
+    \item \textbf{De la Precisión a la Robustez Total:} La investigación ha trascendido la simple meta de reconocer dígitos en condiciones ideales. El foco actual está en desarrollar pipelines \textit{end-to-end} que sean inherentemente robustos a los ``escenarios no controlados''. Esto se manifiesta en la incorporación de módulos de corrección de perspectiva y orientación como un estándar de facto, y en la exploración de técnicas avanzadas, como el aumento de datos con redes generativas, para manejar los casos más complejos como los dígitos en transición \parencite{Peng2023Deep, Sripanuskul2022Generative}.
+
+    \item \textbf{La Inevitable Transición al Borde (Edge AI):} Existe un reconocimiento creciente de que la viabilidad de las soluciones de AMR a gran escala, especialmente en contextos con conectividad limitada, depende de su capacidad para operar en el borde. Esto ha impulsado una intensa investigación en arquitecturas de CNN ligeras (Lightweight CNNs) y en técnicas de optimización como la cuantización, con el objetivo de ejecutar modelos complejos en el hardware limitado de un dispositivo móvil sin sacrificar la precisión \parencite{Zou2021, Carvalho2023}.
+
+    \item \textbf{Hacia Aplicaciones de Valor Añadido:} La tendencia futura apunta a utilizar los datos recolectados no solo para la facturación, sino para una gestión más inteligente de la red. La capacidad de analizar patrones de consumo en tiempo casi real abre la puerta a servicios como la detección temprana de fugas y la gestión proactiva de la demanda, transformando al medidor en un sensor clave para la sostenibilidad del sistema hídrico \parencite{Kainz2021Measurement}.
+\end{enumerate}
+
+\subsection{El Vacío Existente: La Falta de Soluciones Validadas para el Contexto Específico de las JAAPS}
+\label{ssec:identified_gap}
+
+A pesar de la sofisticación técnica alcanzada, el estado del arte presenta una brecha fundamental cuando se contrasta con la realidad de las Juntas Administradoras de Agua Potable y Saneamiento. Esta brecha no es principalmente tecnológica, sino contextual y de aplicación.
+
+Primero, la gran mayoría de los estudios y datasets públicos de alto impacto, como UFPR-AMR o Copel-AMR, se han desarrollado y validado en contextos geográficos y operativos (Brasil, China, Europa) muy diferentes a los de la sierra andina ecuatoriana \parencite{Laroca2021Towards, Liang2022Research}. No existen garantías de que un modelo entrenado con medidores brasileños pueda generalizar su rendimiento a la ``fauna'' de medidores, a menudo más antiguos y de diversa procedencia, que se encuentran en las JAAPS. Las condiciones climáticas (humedad, radiación UV) y ambientales (polvo) también presentan particularidades que no están representadas en los benchmarks existentes.
+
+Segundo, y más importante, existe un abismo socio-económico. Las soluciones propuestas en la literatura son o bien prototipos académicos que no abordan la implementación completa, o bien se enmarcan en una lógica de mercado industrial inviable para una organización comunitaria y sin fines de lucro. No se ha reportado en la literatura una solución \textit{end-to-end} que sea a la vez técnicamente robusta, de código abierto, diseñada para operación offline y con un modelo de despliegue y mantenimiento de costo casi nulo. La literatura sobre las barreras a la digitalización en zonas rurales confirma que la falta de soluciones tecnológicamente ``apropiadas'' es un obstáculo clave para el desarrollo \parencite{Fieldeke2021}.
+
+\subsection{Justificación del Enfoque Propuesto a la Luz del Estado del Arte}
+\label{ssec:project_justification}
+
+El enfoque de esta tesis se posiciona directamente en la intersección de las brechas identificadas. No busca inventar un nuevo algoritmo de reconocimiento desde cero, sino diseñar, integrar, optimizar y, crucialmente, \textbf{validar una solución completa en el contexto específico donde se necesita}.
+
+El desarrollo de un prototipo móvil, basado en una arquitectura de CNN ligera para su ejecución offline en dispositivos Android, se alinea directamente con la tendencia de la industria hacia el Edge AI \parencite{Carvalho2023, Zou2021}. La selección de un pipeline que utiliza un detector basado en YOLOv8 y un reconocedor de OCR avanzado como CRNN o PP-OCRv3 sigue el paradigma que la comunidad científica ha validado como el más efectivo \parencite{Khan2024LowCost, Nguyen2025Water}.
+
+La contribución original y fundamental de esta investigación radica en abordar la brecha de validación contextual. Al crear un dataset propio a partir de los medidores de la JAAP de Jerusalén y probar el prototipo en las condiciones reales de campo que enfrentan sus operarios, este trabajo generará un conocimiento empírico invaluable sobre la aplicabilidad real de estas tecnologías de vanguardia en un entorno rural andino. Por lo tanto, esta tesis no solo aportará una solución tecnológica tangible y de alto impacto social, sino que también contribuirá con datos y hallazgos que enriquecerán el estado del arte global sobre la implementación de IA para la gestión sostenible del agua en comunidades.
