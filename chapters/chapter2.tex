@@ -240,3 +240,44 @@ Otra estrategia fundamental para proyectos con datasets limitados, como es el ca
     \caption{Flujo de trabajo para la optimización de un modelo de deep learning para su despliegue en dispositivos móviles mediante TensorFlow Lite.}
     \label{fig:tflite_optimization_flow}
 \end{figure}
+
+\section{Desafíos Técnicos en los Ambientes Rurales de la Sierra Ecuatoriana}
+\label{sec:rural_technical_challenges}
+
+Si bien las secciones anteriores han delineado los habilitadores tecnológicos que hacen posible el AMR en dispositivos móviles, la eficacia de cualquier sistema de visión por computadora no se mide en condiciones ideales de laboratorio, sino en su capacidad para operar de manera robusta en el entorno de despliegue real. El contexto de las JAAPS en la sierra ecuatoriana presenta un conjunto de desafíos particulares que deben ser abordados explícitamente desde el diseño del modelo y el pipeline de procesamiento para garantizar su éxito y fiabilidad.
+
+\subsection{Impacto de las Condiciones Variables de Iluminación y Oclusión por Suciedad/Humedad}
+\label{ssec:environmental_conditions}
+
+Los medidores de agua en el contexto rural no suelen encontrarse en condiciones ideales para una captura de imagen limpia. Su ubicación, a menudo a la intemperie o en nichos de difícil acceso, implica una exposición constante a factores ambientales que degradan la calidad de la imagen. De hecho, la literatura especializada en AMR para ``escenarios no controlados'' ha identificado precisamente estas condiciones como la causa principal de fallos en los sistemas de reconocimiento automático \parencite{Salomon2022ImageBased, Hong2021ImageBased}.
+
+Las \textbf{condiciones de iluminación} son el desafío más recurrente. Por un lado, la luz solar directa puede causar deslumbramientos y reflejos especulares sobre el visor de plástico o cristal del medidor, ocultando parcial o totalmente los dígitos. Por otro lado, los medidores ubicados en nichos o en días muy nublados sufren de sombras profundas y bajo contraste, dificultando la diferenciación entre los trazos de los dígitos y el fondo \parencite{Laroca2021Towards}.
+
+La \textbf{oclusión por suciedad y humedad} es igualmente problemática. El polvo, el lodo y las telarañas pueden acumularse sobre el visor, obstruyendo la vista. Adicionalmente, la condensación interna o las gotas de lluvia en la superficie externa actúan como lentes que distorsionan la imagen subyacente, alterando la forma de los números y confundiendo a los algoritmos de reconocimiento. A esto se suma el \textbf{deterioro físico} de los propios medidores, muchos de los cuales llevan años en servicio y presentan rayones, visores amarillentos o descoloridos que reducen aún más la legibilidad.
+
+\begin{figure}[H]
+    \centering
+    % El código PlantUML para generar esta imagen se proporciona por separado.
+    % Deberás generar la imagen .png o .svg y colocarla en tu carpeta de imágenes.
+    \includegraphics[width=\textwidth]{figures/challenges}
+    \caption{Mapa mental que categoriza los principales desafíos para la lectura automática de medidores en entornos no controlados.}
+    \label{fig:visual_challenges_mindmap}
+\end{figure}
+
+\subsection{El Problema de los Dígitos en Transición (``Rolling Digits'')}
+\label{ssec:rolling_digits}
+
+Un desafío inherente a los medidores mecánicos de tipo ciclómetro es el estado de transición de los dígitos. A medida que el consumo avanza, las ruedas numéricas giran, y durante un breve periodo, un dígito no se muestra de forma completa, sino que se observa la mitad inferior del número actual y la mitad superior del siguiente. Este fenómeno, conocido en la literatura como ``rolling digits'' o dígitos en transición, es una de las principales causas de error de los sistemas de OCR, incluso en los más avanzados \parencite{Laroca2021Towards}.
+
+La ambigüedad de estos ``medios caracteres'' puede llevar al modelo a una clasificación incorrecta, generando un error de lectura que, dependiendo de la posición del dígito, puede tener un impacto significativo en la facturación. Abordar este problema requiere estrategias específicas que vayan más allá del entrenamiento con imágenes de dígitos completos. Una de las soluciones propuestas es la de tratar estos estados intermedios como clases nuevas y distintas. Por ejemplo, \textcite{Shen2023} propone un esquema de ``caracteres agentes'', donde se re-etiquetan manualmente estos casos para que el modelo aprenda a interpretarlos.
+
+Sin embargo, la recolección de suficientes ejemplos de cada posible transición es una tarea ardua. Una solución más escalable y potente es el \textbf{aumento de datos generativo}. El trabajo de \textcite{Sripanuskul2022Generative} demuestra el uso de redes generativas (en su caso, un Y-Autoencoder) para crear artificialmente un gran volumen de imágenes sintéticas de alta calidad que simulan estos estados de transición. Al entrenar el modelo de OCR con este dataset aumentado, su capacidad para reconocer correctamente los dígitos en rotación mejora de manera drástica, demostrando ser una técnica de vanguardia para solventar este desafío específico.
+
+\subsection{La Necesidad del Procesamiento Offline ante la Conectividad Intermitente}
+\label{ssec:offline_processing_need}
+
+Una de las restricciones más determinantes del contexto rural de la sierra ecuatoriana es la infraestructura de comunicaciones. La cobertura de datos móviles es, en el mejor de los casos, intermitente, y en muchas de las áreas donde operan las JAAPS, es simplemente inexistente. Esta realidad invalida cualquier solución tecnológica que dependa de una conexión constante a internet para enviar imágenes a un servidor en la nube para su procesamiento \parencite{Fieldeke2021}.
+
+Por tanto, el \textbf{procesamiento offline} no es una característica deseable, sino un requisito de diseño fundamental y no negociable. El pipeline completo de visión por computadora —desde la detección del medidor y la corrección de perspectiva hasta el reconocimiento final de los dígitos— debe ejecutarse íntegramente en el hardware del dispositivo móvil. Esta restricción tiene implicaciones directas en la elección de la arquitectura del modelo y las técnicas de optimización, reforzando la necesidad de los habilitadores tecnológicos discutidos en la sección \ref{sec:mobile_deployment_enablers}.
+
+El enfoque ``offline-first'' garantiza la funcionalidad y autonomía de la herramienta en el 100\% del territorio de trabajo del operario. La sincronización de los datos ya procesados (las lecturas finales en formato de texto) puede ser gestionada de manera asíncrona, programando su envío a un servidor central para cuando el dispositivo se conecte a una red WiFi o de datos móviles, sin interrumpir ni depender de la conectividad durante la crucial tarea de recolección en campo \parencite{Santiago2020Deployment, Carvalho2023}.
