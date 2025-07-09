@@ -281,3 +281,52 @@ Una de las restricciones más determinantes del contexto rural de la sierra ecua
 Por tanto, el \textbf{procesamiento offline} no es una característica deseable, sino un requisito de diseño fundamental y no negociable. El pipeline completo de visión por computadora —desde la detección del medidor y la corrección de perspectiva hasta el reconocimiento final de los dígitos— debe ejecutarse íntegramente en el hardware del dispositivo móvil. Esta restricción tiene implicaciones directas en la elección de la arquitectura del modelo y las técnicas de optimización, reforzando la necesidad de los habilitadores tecnológicos discutidos en la sección \ref{sec:mobile_deployment_enablers}.
 
 El enfoque ``offline-first'' garantiza la funcionalidad y autonomía de la herramienta en el 100\% del territorio de trabajo del operario. La sincronización de los datos ya procesados (las lecturas finales en formato de texto) puede ser gestionada de manera asíncrona, programando su envío a un servidor central para cuando el dispositivo se conecte a una red WiFi o de datos móviles, sin interrumpir ni depender de la conectividad durante la crucial tarea de recolección en campo \parencite{Santiago2020Deployment, Carvalho2023}.
+
+\section{Análisis Comparativo de Investigaciones Clave}
+\label{sec:comparative_analysis}
+
+Una vez examinados los componentes tecnológicos y los desafíos inherentes a la lectura automática de medidores, es pertinente realizar un análisis comparativo y sistemático de las investigaciones más influyentes que conforman el estado del arte. Este análisis no busca ser un mero listado de trabajos, sino una síntesis crítica que permita identificar patrones, tendencias dominantes y, fundamentalmente, las brechas de conocimiento que justifican la presente investigación. Para ello, se ha seleccionado una decena de estudios representativos publicados entre 2019 y 2025, los cuales se evalúan en función de su enfoque metodológico, el problema central que abordan, los conjuntos de datos que emplean y sus resultados más destacados. La Tabla \ref{tab:sota_comparison} consolida esta evaluación comparativa.
+
+% --- INICIO DE LA TABLA SINTETIZADA ---
+\begin{table}[H]
+    \centering
+    \small % Se mantiene para mejorar ajuste y legibilidad en tablas densas.
+    \caption{Análisis comparativo de investigaciones previas en AMR.}
+    \label{tab:sota_comparison}
+    \begin{singlespace}
+    \begin{tabularx}{\textwidth}{
+        >{\bfseries}p{1cm} 
+        >{\raggedright\arraybackslash}X 
+        >{\raggedright\arraybackslash}X 
+        >{\raggedright\arraybackslash}X 
+        >{\raggedright\arraybackslash}X
+    }
+        \toprule
+        \textbf{Referencia} & \textbf{Problema Central} & \textbf{Enfoque Metodológico} & \textbf{Resultados Clave} & \textbf{Contribución Principal} \\
+        \midrule
+        \textcite{Chaki2019Automation} & Automatización con métodos clásicos. & Proc. de Imágenes (Hough, Otsu, Correlación). & Acc: 96\%. & Demuestra un pipeline no basado en DL, aunque frágil. \\
+        \addlinespace
+        \textcite{Hong2021ImageBased} & Robustez en entornos adversos. & YOLOv3 + Corrección de orientación y guianza espacial. & Mejora la robustez ante rotación y baja calidad. & Aporta corrección geométrica como paso clave pre-OCR. \\
+        \addlinespace
+        \textcite{Zou2021} & Eficiencia en dispositivos de borde. & Lightweight CNN con capas reconstruidas. & Acc: 98.85\% con modelo de baja complejidad. & Valida el alto rendimiento de arquitecturas ligeras. \\
+        \addlinespace
+        \textcite{Sripanuskul2022Generative} & Escasez de datos y dígitos en transición. & Data Augmentation con Redes Generativas (Y-Autoencoder). & Mejora drástica en la precisión de ``rolling digits''. & Soluciona la escasez de datos para casos difíciles. \\
+        \addlinespace
+        \textcite{Carvalho2023} & Despliegue en tiempo real en el borde. & EAST Detector + CRNN en Android. & Latencia < 1.5s en móvil de gama baja. & Valida la factibilidad de un pipeline completo en hardware real. \\
+        \addlinespace
+        \textcite{Peng2023Deep} & Distorsión de perspectiva. & YOLO-CPDM (detección de esquinas) + OCR. & Acc: >99.6\%, Lat: <9ms. & Aporta rectificación de ROI de alta precisión. \\
+        \addlinespace
+        \textcite{Shen2023} & Reconocimiento de ``medios caracteres''. & DBnet + CRNN. Propone esquema de ``caracteres agentes''. & Mejora la precisión en `rolling digits` del 61\% al 81\%. & Ofrece un enfoque pragmático para el re-etiquetado. \\
+        \addlinespace
+        \textcite{Khan2024LowCost} & AMR de bajo costo y alta precisión. & YOLOv8 + PaddleOCR afinado. & Acc. Reconocimiento: 96.92\%. & Demuestra el alto rendimiento de arquitecturas SOTA. \\
+        \addlinespace
+        \textcite{Nguyen2025Water} & Comparativa de modelos de OCR. & YOLOv8 + 6 modelos OCR. & PP-OCRv3 es el más preciso (93\%). & Ofrece un benchmark directo para la etapa de OCR. \\
+        \addlinespace
+        \textcite{Wang2025} & Segmentación precisa de la ROI. & CAM-YOLOv8 (atención coordinada + MobileNet). & Acc. Segmentación: >99\%. & Representa el SOTA en la delimitación de la ROI. \\
+        \bottomrule
+    \end{tabularx}
+    \end{singlespace}
+\end{table}
+% --- FIN DE LA TABLA SINTETIZADA ---
+
+El análisis comparativo de la Tabla \ref{tab:sota_comparison} permite destilar varias tendencias clave. Primero, existe un consenso abrumador en la adopción de arquitecturas de aprendizaje profundo, habiendo dejado atrás los métodos de procesamiento de imágenes clásicos por su falta de robustez. Segundo, dentro de los modelos de detección, la familia YOLO, y específicamente sus versiones más recientes como YOLOv8, se ha consolidado como el estándar de facto por su excelente equilibrio entre velocidad y precisión. Tercero, se observa una clara evolución en la complejidad del pipeline: los trabajos más avanzados ya no se conforman con una simple caja delimitadora, sino que incorporan pasos de corrección de perspectiva y orientación, reconociendo que la calidad de la localización de la ROI es un factor determinante para el éxito del OCR. Finalmente, una línea de investigación emergente y de alta relevancia para aplicaciones prácticas se centra en la eficiencia computacional y el despliegue en dispositivos de borde, validando la factibilidad de llevar estas soluciones de IA al campo de manera autónoma y offline.
