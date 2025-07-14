@@ -101,6 +101,8 @@ Para una organización comunitaria como una JAAP, el costo de reemplazar cientos
 
 Aquí es donde la visión por computadora aplicada a través de dispositivos móviles se posiciona como la alternativa más viable y costo-efectiva. Este enfoque, que se enmarca dentro de las tendencias de Industria 4.0 y Ciudades Inteligentes, aprovecha dos recursos ya existentes y extendidos: la base instalada de medidores mecánicos y la alta penetración de los teléfonos inteligentes \parencite{Ktari2022Lightweight}. Al desarrollar una aplicación móvil que actúa como un ``lector inteligente'', se eliminan los principales costos de inversión. La solución se centra en el software y el uso de un hardware de consumo, democratizando el acceso a la medición avanzada. Proyectos como los de \parencite{Carvalho2023} y \parencite{Santiago2020Deployment} validan la factibilidad técnica de ejecutar estos sistemas en dispositivos de borde (edge devices), demostrando que es posible lograr una alta precisión en la lectura de forma rápida y, crucialmente, sin depender de una conexión a internet para el procesamiento.
 
+Este enfoque basado en la inteligencia artificial, sin embargo, introduce un nuevo requisito fundamental que no existía en los paradigmas anteriores: la necesidad de un conjunto de datos robusto y representativo para entrenar los modelos de visión. La eficacia de cualquier sistema de IA no reside únicamente en la arquitectura de su modelo, sino, y de manera primordial, en la calidad y pertinencia de los datos con los que aprende. Por lo tanto, antes de profundizar en las arquitecturas y algoritmos, es indispensable analizar el estado del arte en lo que respecta a la materia prima de estos sistemas: los datasets para AMR.
+
 \section{Datasets y aumento de datos como fundamento para el AMR}
 \label{sec:datasets_and_augmentation}
 
@@ -304,6 +306,8 @@ Además de elegir una arquitectura ligera, existen técnicas de optimización po
 
 Otra estrategia fundamental para proyectos con datasets limitados, como es el caso de esta investigación, es la \textbf{transferencia de aprendizaje (\textit{transfer learning})}. En lugar de entrenar una red neuronal desde cero, lo que requeriría una enorme cantidad de imágenes, se parte de un modelo ligero pre-entrenado en un dataset a gran escala (como MobileNet entrenado en ImageNet). Se congelan las capas iniciales que han aprendido a extraer características visuales genéricas (bordes, texturas, formas) y se re-entrenan únicamente las últimas capas sobre el dataset específico de medidores de agua. Esta técnica reduce drásticamente el tiempo de entrenamiento y la cantidad de datos necesarios, al tiempo que permite alcanzar una alta precisión \parencite{Poddar2024Survey}.
 
+La culminación de este proceso de optimización es un archivo de modelo ligero y eficiente, listo para ser integrado como el ``cerebro'' de una aplicación móvil.
+
 % --- Marcador de posición para el diagrama ---
 \begin{figure}[H]
     \centering
@@ -316,7 +320,7 @@ Otra estrategia fundamental para proyectos con datasets limitados, como es el ca
 \section{Desarrollo de aplicaciones móviles para la captura y gestión de datos en campo}
 \label{sec:mobile_app_development}
 
-Un modelo de inteligencia artificial, por más preciso que sea en el laboratorio, carece de impacto si no está encapsulado en una herramienta de software robusta, usable y adaptada al flujo de trabajo del usuario final. En el contexto de este proyecto, la herramienta es una aplicación móvil para la plataforma Android. Por lo tanto, el estado del arte no solo abarca las técnicas de visión por computadora, sino también las mejores prácticas en la arquitectura y el desarrollo de aplicaciones móviles diseñadas para operar en condiciones de campo, donde la conectividad es un lujo y la simplicidad de uso es un requisito indispensable.
+La efectividad de un modelo de inteligencia artificial optimizado se materializa únicamente a través de su integración en una aplicación de software que sea robusta, usable y adaptada al flujo de trabajo del usuario final. En el marco de este proyecto, dicha herramienta es un prototipo móvil para la plataforma Android, concebido para operar en las exigentes condiciones del trabajo de campo. Por consiguiente, un análisis completo debe trascender los algoritmos de visión por computadora para abarcar también las mejores prácticas en la arquitectura y el desarrollo de software móvil, especialmente aquellas que garantizan la operación offline y una alta usabilidad en entornos rurales.
 
 \subsection{Arquitecturas de software para aplicaciones ``offline-first''}
 \label{ssec:offline_first_architecture}
@@ -364,6 +368,8 @@ Una aplicación técnicamente perfecta puede fracasar si su uso es complicado o 
 El principio rector debe ser el de un \textbf{diseño centrado en la tarea}, minimizando la cantidad de pasos y decisiones que el usuario debe tomar. Una estrategia clave para mejorar la calidad de las imágenes de entrada es la \textbf{captura guiada}. Utilizando la API \textbf{CameraX} de Android, es posible superponer en la vista previa de la cámara una guía visual (por ejemplo, un recuadro o unas esquinas) que indique al operario cómo debe encuadrar el medidor. La aplicación puede incluso analizar los fotogramas de la vista previa en tiempo real para detectar cuándo el medidor está bien alineado y enfocado, y disparar la captura automáticamente, simplificando al máximo el proceso.
 
 Además, el sistema debe proporcionar \textbf{feedback constante e inequívoco}. El uso de vibraciones (feedback háptico), sonidos cortos y cambios de color en la interfaz puede confirmar acciones como ``captura exitosa'', ``procesando...'' y ``lectura reconocida'', dando seguridad al operario en cada paso del proceso. Estos principios de diseño, enfocados en la simplicidad y la asistencia activa, son fundamentales para asegurar la adopción y el uso efectivo de la herramienta en las condiciones reales de campo.
+
+Sin embargo, incluso la aplicación mejor diseñada y más usable fracasará si el motor de inteligencia artificial que la impulsa no es capaz de manejar la enorme variabilidad del entorno de campo. El diseño de la interfaz ayuda al usuario a capturar una buena imagen, pero es el modelo de IA el que debe ser intrínsecamente robusto a los desafíos visuales que presentan los medidores reales. La siguiente sección profundiza en estos desafíos específicos del contexto rural, que constituyen la prueba de fuego final para la viabilidad de la tecnología.
 
 \section{Desafíos técnicos en los ambientes rurales de la sierra ecuatoriana}
 \label{sec:rural_technical_challenges}
