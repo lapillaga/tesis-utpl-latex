@@ -101,6 +101,78 @@ Para una organización comunitaria como una JAAP, el costo de reemplazar cientos
 
 Aquí es donde la visión por computadora aplicada a través de dispositivos móviles se posiciona como la alternativa más viable y costo-efectiva. Este enfoque, que se enmarca dentro de las tendencias de Industria 4.0 y Ciudades Inteligentes, aprovecha dos recursos ya existentes y extendidos: la base instalada de medidores mecánicos y la alta penetración de los teléfonos inteligentes \parencite{Ktari2022Lightweight}. Al desarrollar una aplicación móvil que actúa como un ``lector inteligente'', se eliminan los principales costos de inversión. La solución se centra en el software y el uso de un hardware de consumo, democratizando el acceso a la medición avanzada. Proyectos como los de \parencite{Carvalho2023} y \parencite{Santiago2020Deployment} validan la factibilidad técnica de ejecutar estos sistemas en dispositivos de borde (edge devices), demostrando que es posible lograr una alta precisión en la lectura de forma rápida y, crucialmente, sin depender de una conexión a internet para el procesamiento.
 
+\section{Datasets y aumento de datos como fundamento para el AMR}
+\label{sec:datasets_and_augmentation}
+
+El rendimiento, la robustez y la capacidad de generalización de cualquier modelo de aprendizaje profundo están fundamentalmente determinados por la calidad, cantidad y diversidad de los datos con los que es entrenado. En el campo de la Lectura Automatizada de Medidores, la creación de un conjunto de datos (dataset) de alta calidad es un desafío en sí mismo, presentando problemas específicos de adquisición, anotación, balance de clases y representatividad del entorno real de despliegue.
+
+\subsection{Análisis de datasets públicos para AMR}
+\label{ssec:public_datasets}
+
+La existencia de datasets públicos y benchmarks estandarizados es vital para el avance de la investigación, ya que permite una comparación objetiva y reproducible entre diferentes enfoques metodológicos. En los últimos años, la comunidad académica ha publicado varios datasets significativos para AMR.
+
+Uno de los más influyentes es el \textbf{UFPR-AMR}, que en sus distintas versiones ha servido como base para numerosos estudios \parencite{Laroca2021Towards}. Este conjunto de datos, aunque valioso, fue recolectado en condiciones relativamente controladas (un almacén de la empresa de servicios), lo que no captura toda la complejidad de las instalaciones en campo. Para abordar esto, el mismo grupo de investigación liberó posteriormente el dataset \textbf{Copel-AMR}, mucho más grande (12,500 imágenes) y representativo, ya que fue capturado ``en la naturaleza'' por los propios empleados de la compañía eléctrica. De manera crucial, Copel-AMR incluye una categoría de medidores ``ilegibles/defectuosos'', lo que permite entrenar y evaluar sistemas en su capacidad de rechazar lecturas inviables, una función indispensable para una aplicación real \parencite{Laroca2021Towards}.
+
+Otros investigadores también han creado y utilizado datasets específicos para sus estudios, como el de \textcite{Hong2021ImageBased}, enfocado en capturar una amplia gama de ``entornos desafiantes'', o el dataset SYSU-DM de \textcite{Peng2023Deep}, centrado en medidores digitales de multímetro capturados desde múltiples ángulos para validar sus técnicas de corrección de perspectiva. Si bien estos recursos son fundamentales para el desarrollo de algoritmos, su principal limitación es la especificidad contextual: están compuestos por modelos de medidores y condiciones ambientales propias de Brasil, China o entornos de laboratorio, que no necesariamente se corresponden con la realidad de las JAAPS en Ecuador.
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{figures/copel}
+        \vspace{1ex}
+        (a) Copel-AMR
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{figures/ufpr}
+        \vspace{1ex}
+        (b) UFPR-ADMR (Dial)
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{figures/sysu}
+        \vspace{1ex}
+        (c) SYSU-DM (Digital)
+    \end{minipage}
+    \caption{Ejemplos de la diversidad de medidores y condiciones en diferentes datasets públicos. (a) Medidor electromecánico en un escenario no controlado \parencite{Laroca2021Towards}. (b) Medidor de diales \parencite{Salomon2022ImageBased}. (c) Medidor digital de multímetro \parencite{Peng2023Deep}.}
+    \label{fig:dataset_examples}
+\end{figure}
+
+\subsection{Metodología de adquisición y anotación de datos de campo}
+\label{ssec:data_acquisition_methodology}
+
+La creación de un dataset de alta calidad no es un acto improvisado, sino un proceso metodológico que requiere planificación y una ejecución sistemática para asegurar la diversidad y la fiabilidad de los datos. El objetivo no es solo acumular imágenes, sino construir un conjunto de datos que represente fielmente la variabilidad del problema. Este proceso, ilustrado en la Figura \ref{fig:acquisition_workflow}, se desglosa en varias fases clave.
+
+El primer paso es el \textbf{diseño del protocolo de adquisición}. Esto implica definir las condiciones bajo las cuales se realizarán las capturas. Para asegurar la diversidad, la recolección de imágenes debe planificarse para cubrir: variabilidad temporal (diferentes horas del día), variabilidad climática (días soleados, nublados) y variabilidad de pose (múltiples ángulos y distancias).
+
+El segundo paso es la \textbf{captura y validación en campo}. Utilizando una aplicación de captura de datos específica, el operario toma la fotografía y, en el mismo instante, ingresa manualmente la lectura correcta del medidor. Este dato, conocido como \textit{ground-truth}, se almacena como metadato de la imagen y es crucial para la posterior validación del modelo de IA.
+
+Finalmente, el \textbf{proceso de anotación} transforma las imágenes en datos de entrenamiento. Con herramientas de etiquetado como CVAT o LabelImg, se generan las anotaciones para cada imagen, incluyendo la localización de la Región de Interés (ROI) y la transcripción de la secuencia de texto. Este ciclo concluye con una fase de revisión de calidad para asegurar la máxima fiabilidad del dataset.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{figures/data_workflow}
+    \caption{Flujo de trabajo metodológico para la adquisición y anotación de un dataset de campo.}
+    \label{fig:acquisition_workflow}
+\end{figure}
+
+\subsection{Desafíos inherentes a la creación de datasets propios}
+\label{ssec:custom_dataset_challenges}
+
+Aun siguiendo una metodología rigurosa, la creación de un dataset presenta desafíos intrínsecos. El primero es la \textbf{representatividad}, es decir, asegurar que la muestra de imágenes capture adecuadamente la ``fauna'' local de medidores en todos sus modelos, antigüedades y estados de conservación.
+
+El proceso de \textbf{anotación o etiquetado} es el cuello de botella más significativo por su alta demanda de tiempo y su propensión al error humano. Finalmente, un problema inherente a los datos de medidores es el \textbf{desbalance de clases}. Los dígitos más significativos (a la izquierda) cambian con muy poca frecuencia, lo que resulta en un dataset donde el dígito `0` es abrumadoramente más común en esas posiciones que, por ejemplo, un `8` o un `9`. Sin una estrategia para mitigar este desbalance, el modelo no tendrá suficientes ejemplos para aprender a reconocer los dígitos menos frecuentes \parencite{Laroca2021Towards}.
+
+\subsection{Estrategias de aumento de datos para mejorar la robustez}
+\label{ssec:data_augmentation_strategies}
+
+El aumento de datos (\textit{data augmentation}) es el conjunto de técnicas utilizadas para incrementar artificialmente el tamaño y la diversidad de un dataset de entrenamiento. Es la principal estrategia para combatir el sobreajuste y los problemas de desbalance de clases.
+
+Las \textbf{técnicas tradicionales} incluyen transformaciones geométricas y fotométricas. Si bien son esenciales, no resuelven el problema del desbalance de clases. Para ello, enfoques específicos como la \textbf{permutación de caracteres} \parencite{Laroca2021Towards} o, de manera más avanzada, el \textbf{aumento de datos generativo}, han demostrado ser soluciones efectivas. Este último utiliza redes neuronales generativas para crear imágenes sintéticas fotorrealistas de los dígitos menos frecuentes, e incluso de los esquivos dígitos en transición, fortaleciendo la robustez del modelo de una manera que las otras técnicas no pueden lograr \parencite{Sripanuskul2022Generative}.
+
 \section{Visión por computadora aplicada a la lectura automatizada de medidores (AMR)}
 \label{sec:cv_for_amr}
 
