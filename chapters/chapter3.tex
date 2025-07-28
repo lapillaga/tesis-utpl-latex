@@ -1,38 +1,115 @@
 \chapter{Metodología}
-\label{chap:methodology}
+\label{ch:methodology}
 
-\section{Enfoque general del desarrollo}
-\label{sec:general_approach}
-% TODO: Describir el enfoque metodológico general adoptado para el desarrollo del prototipo móvil de lectura automática de medidores, incluyendo el paradigma de investigación aplicada y los principios de desarrollo de software utilizados.
+La construcción de un sistema que permita automatizar la lectura de medidores de agua requiere una planificación cuidadosa. Este capítulo expone la metodología seguida durante la investigación, desde los fundamentos teóricos hasta las pruebas finales con usuarios reales. Se busca documentar el proceso de manera que otros investigadores puedan comprenderlo y, si lo desean, replicarlo en contextos similares.
 
-\section{Fases metodológicas del proyecto}
-\label{sec:methodological_phases}
-% TODO: Detallar cada una de las fases del proyecto, estableciendo objetivos específicos, entregables y criterios de validación para cada etapa.
+\section{Enfoque Metodológico}
+\label{sec:methodological_approach}
 
-\subsection{Revisión de literatura}
-\label{ssec:literature_review}
-% TODO: Describir la metodología de búsqueda sistemática de literatura, bases de datos consultadas, criterios de inclusión/exclusión, y proceso de síntesis de información sobre OCR móvil, computer vision y lectura de medidores.
+Para abordar este proyecto se ha optado por una metodología de investigación aplicada. Esta elección responde a la naturaleza práctica del problema: las juntas de agua comunitarias necesitan soluciones concretas y funcionales, no solo desarrollos teóricos. El enfoque combina aspectos empíricos con un desarrollo iterativo del software.
 
-\subsection{Construcción del dataset}
+¿Por qué empírico? Porque los medidores de agua en el campo presentan condiciones muy diversas. No es lo mismo un medidor nuevo y limpio que uno con diez años de uso, cubierto de polvo o con el visor rayado. Estas variaciones obligan a trabajar con datos reales, capturados directamente en el terreno donde el sistema será utilizado. Solo así se puede garantizar que la solución funcione en la práctica y no únicamente en condiciones controladas de laboratorio.
+
+Cuando se habla del aspecto iterativo se hace referencia a la naturaleza del desarrollo de software cuya primera versión no siempre cumple con todos los requisitos, es necesario cumplir una serie de pasos como desarrollar, probar, identificar fallos y mejorar continuamente. Por cada iteración se extraen conlusiones muy valiosas que permiten refinar ya sea los algoritmos de visión artifical ó el aplicativo móvil.
+
+\section{Fases del Proyecto}
+\label{sec:project_phases}
+
+El trabajo se ha organizado en cinco fases principales. Aunque se presentan de forma secuencial, en la práctica existe retroalimentación entre ellas, especialmente cuando los resultados de una fase sugieren ajustes en etapas anteriores.
+
+\subsection{Fundamentación y Selección Tecnológica}
+\label{ssec:tech_foundation}
+
+Todo proyecto tecnológico comienza con decisiones fundamentales sobre qué herramientas utilizar. En este caso, la revisión bibliográfica fue reveladora: los sistemas exitosos de lectura automática de medidores coinciden en usar dos etapas de procesamiento. Primero localizan dónde está el medidor en la imagen, luego leen los números.
+
+Este pipeline de visión artificial busca optimizar el proceso de detección de mediciones y para ello primero es necesario identificar la región de interés ya que computacionalmente es menos costoso. El resultado de este proceso permitirá concentrar el esfuerzo en el reconocimiento de los dígitos y la optimización del modelo para dispositivos móviles. 
+
+La elección específica de YOLOv8 para detección y una CNN personalizada para reconocimiento de dígitos no fue arbitraria. Se evaluaron múltiples alternativas considerando precisión, velocidad y tamaño del modelo. YOLOv8 en su versión "nano" ofrece el mejor equilibrio para dispositivos móviles, mientras que diseñar una CNN específica para dígitos permite optimizar el reconocimiento para las características particulares de los números en medidores de agua.
+
+\subsection{Construcción y Curación del Dataset de Campo}
 \label{ssec:dataset_construction}
-% TODO: Explicar el proceso de recolección de imágenes de medidores en JAAPS, criterios de selección, procedimientos de captura, estrategias de etiquetado, y consideraciones de calidad y diversidad del dataset.
 
-\subsection{Entrenamiento y optimización de modelos}
-\label{ssec:model_training}
-% TODO: Detallar la metodología de entrenamiento de modelos de OCR, técnicas de data augmentation aplicadas, estrategias de optimización para dispositivos móviles, y criterios de evaluación de rendimiento.
+Sin datos de calidad, no hay inteligencia artificial que funcione. Esta fase, aunque puede parecer rutinaria, es crítica para el éxito del proyecto. El plan es fotografiar los 355 medidores que gestiona la Junta de Agua de Jerusalén, en Biblián. Pero no basta con una foto por medidor.
 
-\subsection{Desarrollo de la aplicación}
-\label{ssec:application_development}
-% TODO: Describir la metodología de desarrollo de la aplicación Android, patrones de diseño utilizados, proceso de integración del modelo de IA, y estrategias de testing.
+La variabilidad es clave. Cada medidor debe ser capturado en diferentes condiciones: con sol directo que genera reflejos, en días nublados con luz difusa, por la mañana temprano cuando puede haber rocío en el visor, al mediodía con sombras marcadas. También es importante documentar los problemas comunes: medidores sucios, con telarañas, con el visor opaco por el tiempo, parcialmente cubiertos por vegetación.
 
-\subsection{Validación del prototipo}
-\label{ssec:prototype_validation}
-% TODO: Explicar el diseño de experimentos para validación en campo, selección de participantes de JAAPS, métricas de evaluación, y procedimientos de recolección de datos de usabilidad y eficiencia.
+Para ampliar aún más el conjunto de datos, se aplicarán transformaciones digitales a las imágenes originales. No se trata de modificaciones arbitrarias, sino de simular condiciones realistas que el sistema podría encontrar: ligeras rotaciones porque el operador no siempre sostiene el teléfono perfectamente horizontal, cambios de brillo para representar diferentes condiciones de luz, adición de ruido para simular fotos tomadas con prisa o con manos temblorosas.
 
-\section{Herramientas y tecnologías utilizadas}
-\label{sec:tools_technologies}
-% TODO: Listar y justificar la selección de herramientas de desarrollo, frameworks de machine learning (TensorFlow, TensorFlow Lite), entornos de desarrollo (Android Studio), bases de datos, y herramientas de análisis de datos.
+Finalmente el último paso corresponde al etiquetado manual de imagenes usando la herramienta CVAT. En esta etapa final se pretende marcar exactamente donde están los digitos del medidor.
 
-\section{Consideraciones éticas y operativas}
+\subsection{Diseño y Entrenamiento del Pipeline de Visión Computacional}
+\label{ssec:pipeline_design}
+
+Aquí es donde la teoría se encuentra con la práctica. El sistema de visión computacional debe ser preciso pero también eficiente. No sirve de nada tener un modelo que acierte el 99.9\% de las veces si tarda 30 segundos en procesar cada imagen en un teléfono.
+
+El modelo YOLOv8n será adaptado mediante transfer learning. Esto significa aprovechar que el modelo ya sabe detectar objetos en general, y solo enseñarle a reconocer específicamente los contadores de medidores de agua. Este proceso es mucho más rápido que entrenar desde cero y requiere menos datos.
+
+Para el reconocimiento de dígitos, la decisión de crear una CNN personalizada en lugar de usar un OCR genérico tiene varias ventajas. Los OCR comerciales están diseñados para reconocer texto en múltiples fuentes y estilos. Aquí solo necesitamos reconocer dígitos del 0 al 9 en un estilo específico. Una red especializada puede ser más pequeña, más rápida y más precisa para esta tarea específica. La arquitectura propuesta es deliberadamente simple: tres capas convolucionales son suficientes para extraer las características relevantes de los dígitos, seguidas de capas densas para la clasificación final.
+
+\subsection{Optimización e Integración en el Prototipo Móvil}
+\label{ssec:optimization_integration}
+
+Hacer que los modelos entrenados funcionen en un teléfono móvil es un desafío técnico considerable. Los modelos que funcionan bien en servidores con GPUs potentes a menudo son demasiado grandes o lentos para dispositivos móviles.
+
+La conversión a TensorFlow Lite es el primer paso. Pero la verdadera optimización viene con la cuantización: convertir los pesos del modelo de números flotantes de 32 bits a enteros de 8 bits. Esto reduce el tamaño del modelo a una cuarta parte y acelera significativamente las operaciones, con una pérdida mínima de precisión. En pruebas preliminares, la diferencia en precisión es menor al 1\%, perfectamente aceptable para esta aplicación.
+
+La aplicación móvil se desarrollará en Kotlin siguiendo las mejores prácticas de Android. La decisión de usar una base de datos SQLite local no es solo por la falta de conectividad en zonas rurales. También proporciona respaldo en caso de fallos y permite que los operadores revisen su trabajo antes de sincronizar. Cada lectura se almacena con todos sus metadatos: la imagen original, el resultado del reconocimiento, las coordenadas GPS, la fecha y hora exactas.
+
+La sincronización automática cuando hay conexión disponible es una característica clave. Los operadores no deberían preocuparse por transferir datos manualmente. El sistema detecta cuando hay WiFi o datos móviles disponibles y envía automáticamente las lecturas pendientes al servidor central.
+
+\subsection{Validación en Entorno Operativo y Análisis de Resultados}
+\label{ssec:validation}
+
+Las pruebas en condiciones reales son donde se demuestra si todo el trabajo anterior valió la pena. No basta con métricas de laboratorio; el sistema debe funcionar cuando lo use un operador real, caminando por terreno irregular, con prisa por terminar su ruta, bajo lluvia o sol intenso.
+
+Se medirán aspectos cuantitativos como la precisión de las lecturas y el tiempo ahorrado. El objetivo del 98\% de precisión puede parecer ambicioso, pero es necesario para que el sistema sea confiable. Un 2\% de error significa que de cada 100 medidores, solo 2 requerirán corrección manual, lo cual es manejable. El ahorro de tiempo del 60\% se basa en estudios previos y en mediciones preliminares del proceso actual.
+
+Pero las métricas técnicas no lo son todo. La aceptación por parte de los usuarios finales es igualmente importante. Las entrevistas con los operadores buscarán entender no solo si el sistema funciona, sino si es práctico, si genera confianza, si realmente facilita su trabajo o si introduce nuevas complicaciones. Sus sugerencias serán fundamentales para mejoras futuras.
+
+\section{Stack Tecnológico}
+\label{sec:tech_stack}
+
+Las tecnologías seleccionadas para este proyecto no son necesariamente las más nuevas o populares, sino las más adecuadas para el contexto específico. Python con Django en el backend ofrece estabilidad y facilidad de mantenimiento. PostgreSQL maneja eficientemente los datos centralizados, mientras que SQLite es perfecta para el almacenamiento local en los dispositivos.
+
+\begin{table}[H]
+    \caption{Tecnologías utilizadas en el proyecto.}
+    \label{tab:tech_stack}
+    \begin{singlespace} 
+    \begin{tabularx}{\textwidth}{>{\bfseries}l >{\raggedright\arraybackslash}X}
+        \toprule
+        \textbf{Área} & \textbf{Tecnología} \\
+        \midrule
+        Backend & Python 3.9 con Django 4.0 \\
+        \addlinespace
+        Base de datos & PostgreSQL 14 (servidor) y SQLite (móvil) \\
+        \addlinespace
+        Aplicación móvil & Kotlin con Android SDK 31 \\
+        \addlinespace
+        Inteligencia artificial & PyTorch para entrenamiento, TensorFlow para conversión \\
+        \addlinespace
+        Modelos & YOLOv8 nano y CNN de 3 capas \\
+        \addlinespace
+        Optimización móvil & TensorFlow Lite 2.13 \\
+        \addlinespace
+        Etiquetado & CVAT versión 2.5 \\
+        \addlinespace
+        Versionado & Git y GitHub \\
+        \bottomrule
+    \end{tabularx}
+    \end{singlespace}
+\end{table}
+
+Para el desarrollo móvil, Kotlin es la elección obvia para Android moderno. Ofrece seguridad de tipos, sintaxis concisa y excelente interoperabilidad con las librerías de TensorFlow Lite. La elección de PyTorch para el entrenamiento inicial y TensorFlow para la conversión puede parecer redundante, pero cada framework tiene fortalezas en diferentes etapas del proceso.
+
+\section{Consideraciones Éticas}
 \label{sec:ethical_considerations}
-% TODO: Abordar aspectos éticos de la investigación incluyendo consentimiento informado, privacidad de datos, impacto en las comunidades rurales, y consideraciones de sostenibilidad del proyecto.
+
+Trabajar con tecnología en comunidades rurales implica responsabilidades que van más allá de los aspectos técnicos. La Junta de Agua de Jerusalén ha funcionado durante décadas con métodos tradicionales. Introducir tecnología debe hacerse con respeto y consideración por las dinámicas existentes.
+
+El consentimiento informado no es solo un requisito formal. Es fundamental que tanto directivos como usuarios comprendan qué se está haciendo y por qué. Las reuniones comunitarias servirán para explicar el proyecto en términos sencillos, responder preguntas y asegurar que todos estén cómodos con la iniciativa. Se preparará material visual que muestre claramente cómo funciona el sistema y qué beneficios traerá.
+
+La privacidad es otra preocupación central. Aunque el objetivo es fotografiar medidores, inevitablemente se capturará información del entorno. Por eso, el sistema está diseñado para extraer y almacenar solo la región del medidor. Las imágenes completas se procesarán localmente en el teléfono y se descartarán una vez extraída la información relevante. En el servidor central solo se almacenarán las lecturas numéricas y metadatos generales, nunca información que pueda identificar domicilios específicos.
+
+Finalmente, el diseño del sistema reconoce que la tecnología debe adaptarse a las personas, no al revés. Por eso la interfaz es simple e intuitiva. Por eso el operador siempre tiene la última palabra sobre si una lectura es correcta. Por eso se mantiene un registro completo de quién hizo qué lectura y cuándo. La transparencia y el control humano son principios fundamentales que guían todo el desarrollo.
+
+Esta metodología busca crear no solo una herramienta técnicamente competente, sino una solución que realmente mejore el trabajo de la junta de agua respetando su contexto y necesidades específicas.
